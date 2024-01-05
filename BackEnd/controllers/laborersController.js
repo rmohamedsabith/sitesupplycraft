@@ -1,0 +1,119 @@
+const asyncHandler = require("express-async-handler");
+const { JobSeeker, User } = require("../models/userModel");
+const apiFeatures = require("../util/apiFeatures");
+
+//getAll laborers /laborers
+const getLaborers=asyncHandler(async(req,res)=>{
+    const resultperpage=8;
+    const apifeature=new apiFeatures(JobSeeker.find({status:'Active'}),req.query)
+      apifeature.search();
+      await apifeature.filter('JobSeeker');
+      apifeature.paginate(resultperpage);   
+    const datas=await apifeature.query
+    let Products;
+    apifeature.data?Products=datas.filter(data=>{if((data.address.district===apifeature.data.district&&apifeature.data.city===null)||(data.address.district===apifeature.data.district && data.address.city===apifeature.data.city))return data}):Products=datas
+    const totalProductsCount=await JobSeeker.countDocuments({status:'Active'});
+    if(!Products)
+    {
+        return res.status(400).json({message:"There are no laborers"})
+    }
+    res.status(200).json(
+        {
+            Success:true,
+            Total_count:totalProductsCount,
+            count:Products.length,
+            resPerPage:resultperpage,
+            Products
+
+        })
+})
+//create review  /laborer/:id/addreview
+const addReview=asyncHandler(async(req,res,next)=>{
+    const productId=req.params.id
+    const user=req.user.id
+    const {rating,comment}=req.body
+
+    const review={user,rating,comment}
+
+    const Product=await JobSeeker.findById(productId).exec()
+    const isReviewed=Product.reviews.find(review=>{
+        return review.user.toString()===user.toString()
+    })
+    if(isReviewed){
+        //updating the  review
+        Product.reviews.forEach(review => {
+            if(review.user.toString() === user.toString()){
+                review.comment = comment
+                review.rating = rating
+                review.date=Date.now()
+            }
+
+        })
+
+    }else{
+        //creating the review
+        Product.reviews.push(review)
+        Product.numOfReviews = Product.reviews.length;
+    }
+//find the average of the product reviews
+    Product.ratings = Product.reviews.reduce((acc, review) => {
+        return review.rating + acc;
+    }, 0) / Product.reviews.length;
+    Product.ratings = isNaN(Product.ratings)?0:Product.ratings;
+    
+    await Product.save({validateBeforeSave: false});
+
+    res.status(200).json({
+        success: true,
+        Product
+    })
+})
+//get all Reviews /laborer/:id/reviews
+const getAllReviews=asyncHandler(async(req,res,next)=>{
+    const Product=await JobSeeker.findById({_id:req.params.id}).populate('reviews.user','firstname lastname profile');
+    res.status(200).json(
+        {
+            success:true,
+            noOfReview:Product.numOfReviews,
+            reviews:Product.reviews
+        }
+    )
+})
+
+//delete review /laborer/:id/deletereview
+const deleteReview=asyncHandler(async(req,res,next)=>{
+    const Product =await JobSeeker.findById(req.params.id)
+
+    const reviews=Product.reviews.filter(review=>{
+        return review.user.toString()!==req.user.id.toString()
+    })
+
+    console.log(reviews)
+
+    //number of reviews
+    const numOfReviews=reviews.length
+
+     //finding the average with the filtered reviews
+     let ratings = reviews.reduce((acc, review) => {
+        return review.rating + acc;
+    }, 0) / reviews.length;
+    ratings = isNaN(ratings)?0:ratings;
+
+    //save the product document
+    await JobSeeker.findByIdAndUpdate(req.params.id, {
+        reviews,
+        numOfReviews,
+        ratings
+    })
+    res.status(200).json({
+        success: true
+       
+    })
+})
+
+module.exports={
+    getLaborers,
+    getAllReviews,
+    addReview,
+    deleteReview
+}

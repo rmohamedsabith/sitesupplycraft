@@ -1,0 +1,384 @@
+const asyncHandler=require('express-async-handler')
+const {User,ProductOwner,JobSeeker,Admin}=require('../models/userModel')
+const sendToken=require('../util/jwt')
+const sendmail = require('../util/sendMail')
+const crypto=require('crypto')
+const Processing=require('../models/processingModel')
+const fs=require('fs').promises
+const path=require('path')
+const { deleteUserAllProducts } = require('./productController')
+
+//Registration:- SideSupplyCraft/Registration
+const register=asyncHandler(async(req,res,next)=>{
+  try {
+ 
+    const{role}=req.body
+
+    if(req.files){
+      req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${req.files['profile'][0].filename}`
+      req.files['certificate']?req.body.certificate=`${process.env.BACK_END_URL}/uploads/users/${req.files['certificate'][0].filename}`:null
+      req.files['currentBill']?req.body.currentBill=`${process.env.BACK_END_URL}/uploads/users/${req.files['currentBill'][0].filename}`:null
+    }
+
+    //Duplicate data find
+    const duplicate1=await User.findOne({email:req.body.email}).lean()
+    const duplicate2=await Processing.findOne({email:req.body.email}).lean()
+
+    if (duplicate1||duplicate2) {
+        return res.status(409).json({ message: 'Duplicate email' })
+    }
+    
+     //cofirm password
+     if(req.body.password!==req.body.confirmPassword) return res.status(409).json({message:"Password is not matched"})
+
+    //create data based on role
+    var user;
+    if(role==="Admin")
+    {
+         user=await Admin.create(req.body)
+    }
+    else if(role==="Product Owner")
+    {
+          
+         user=await ProductOwner.create(req.body) // need to verify by Admin after status will uptaded
+  
+         //await Processing.create(user.findOne({email:user.email})) // need to verify by Admin after status will uptaded
+    }    
+    else if(role==="Job Seeker")
+    {
+         user=await JobSeeker.create(req.body)  
+    }
+
+    else{
+         user=await User.create(req.body) 
+    }
+    if(!user)
+    {
+        return res.status(400).json({message:"There is no user to create"})
+
+    }
+    else{
+       sendToken(user,201,res)
+    }
+       
+  } catch (error) {
+        if (error.name === 'ValidationError') {
+          // Handle Mongoose validation errors
+          const validationErrors = {};
+          for (const field in error.errors) {
+            validationErrors[field] = error.errors[field].message;
+          }
+          return res.status(400).json({ success: 'Fail', errors: validationErrors });
+        } else {
+          console.error(error);
+          res.status(500).json({ success: 'Error', message: 'Internal Server Error' });
+        }
+      }
+})
+//Login:- SideSupplyCraft/login
+const login=asyncHandler(async(req,res)=>{
+
+       try{
+         const {email,password}=req.body
+        if(!email||!password)return res.status(400).json({success:"fail",message:"Please Enter Email and password"})
+
+        //get data from the database based on the email and password
+        
+            const user= await User.findOne({email}).select('+password') 
+            if(!user || !await user.isValidPassword(password)) return res.status(401).json({success:"fail",message:"Invalid  Email and password"})
+            sendToken(user,200,res)
+        }
+        catch(err)
+        {
+            res.status(400).json({
+                error:err.name,
+                message:err.message
+            })
+        } 
+})
+//Logout:- SideSupplyCraft/logout
+const logout=(req,res,next)=>{
+   try {
+    res.cookie('token',null,{
+        expires:new Date(Date.now()),
+        httpOnly:true
+    }).status(200).json({success:"true",message:"logged out"})
+   } catch (error) {
+     res.status(400).json({success:"fail",message:error.message})
+   }
+} 
+//forgotPassword:- SideSupplyCraft/password/forgot
+const forgotPassword=asyncHandler(async(req,res,next)=>{
+
+    if(req.body.email==='')
+    {
+      return res.status(400).json({message:"Please enter your email "})
+    }
+    const user =  await User.findOne({email: req.body.email});
+    if(!user)
+    {
+        return res.status(400).json({message:"There is no user in this email"})
+
+    }
+    try {
+
+    //get token
+    const token=await user.getResetPasswordToken();
+    //save user to save resetPasswordToken field and resetPasswordExpire field
+    await user.save({validateBeforeSave:false})
+
+    //create URL
+    /* const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/password/reset/${token}` */
+    const resetURL=`${process.env.FROND_END_URL}/password/reset/${token}`
+    const message = `Your password reset url is as follows \n\n 
+                    ${resetURL} \n\n If you have not requested this email, then ignore it.`;
+
+    await sendmail(
+        {
+            email:user.email,
+            subject:"RECOVERY PASSWORD",
+            message
+        }
+    )
+    res.status(200).json({
+        success: true,
+        message: `Email sent to your ${user.email}`
+    })
+
+   } catch (error) {
+    user.resetPasswordToken=undefined
+    user.resetPasswordTokenExpire=undefined
+    await user.save({validateBeforeSave:false})
+     res.status(500).json({success:"fail",message:error.message})
+   }
+} )
+//reset Password /password/reset/:token
+const resetPassword=asyncHandler(async(req,res)=>{
+  try {
+    const hasedToken=crypto.createHash('sha256').update(req.params.token).digest('hex');
+    const user=await User.findOne({
+      resetPasswordToken:hasedToken,
+      resetPasswordTokenExpire:
+        {
+          $gt:new Date()
+        }
+      })
+      if(!user)
+      {
+        return res.status(400).json({message:"'Password reset token is invalid or expired'"})
+      }
+  
+      if(req.body.password!== req.body.confirmPassword)return res.status(400).json({message:"'Password does not match'"})
+  
+      user.password = req.body.password;
+      user.resetPasswordToken=undefined
+      user.resetPasswordTokenExpire=undefined
+      await user.save({validateBeforeSave:false})
+      sendToken(user, 201, res)
+  } catch (err) {
+    res.status(400)
+    .json({
+        success:false,
+        message:err.message
+    })
+  }
+})
+//get logged user profile - /myprofile
+const getProfile=asyncHandler(async(req,res,next)=>{
+  try{
+    const user=await User.findById(req.user.id).lean()
+    res.status(200).json({
+      success:true,
+      user,
+    })
+  }
+  catch(err)
+  {
+    res.status(400).json({
+      success:false,
+      message:err.message,
+    })
+  }
+
+})
+//password change - /myprofile/changepassword
+const changePassword=asyncHandler(async(req,res,next)=>{
+  try{
+    const user=await User.findById(req.user.id).select('+password')
+    if(! await user.isValidPassword(req.body.oldPassword)) 
+    {
+       return res.status(401).json({
+        success:false,
+        message:'old password in incorrect',
+      })
+    } 
+     //cofirm password
+     if(req.body.password!==req.body.confirmPassword) return res.status(409).json({message:"Password is not matched"})
+
+     //assign new password
+     user.password=req.body.password
+     await user.save()
+    res.status(200).json({
+      success:true,
+      user,
+    })
+  }
+  catch(err)
+  {
+    res.status(400).json({
+      success:false,
+      message:err.message,
+    })
+  }
+
+})
+//update profile - /myprofile/edit/
+const updateMyprofile=asyncHandler(async(req,res,next)=>{
+  try{
+    
+    if(req.files){
+      req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${req.files['profile'][0].filename}`
+      req.files['certificate']?req.body.certificate=`${process.env.BACK_END_URL}/uploads/users/${req.files['certificate'][0].filename}`:null
+      req.files['currentBill']?req.body.currentBill=`${process.env.BACK_END_URL}/uploads/users/${req.files['currentBill'][0].filename}`:null
+    }
+    const user=await User.findById(req.user.id).select('+password')
+    const profile=user.profile;
+    //assign new data
+    if(req.body.firstname)user.firstname=req.body.firstname
+    if(req.body.lastname)user.lastname=req.body.lastname
+    if(req.body.email)user.email=req.body.email
+    if(req.body.profile)user.profile=req.body.profile
+    if(req.body.address)user.address=req.body.address
+    if(req.body.phone)user.phone=req.body.phone
+    if(req.body.nic)user.nic=req.body.nic
+    if(req.body.emp_id)user.emp_id=req.body.emp_id
+    if(req.body.title)user.title=req.body.title
+    if(req.body.shopReg_no)user.shopReg_no=req.body.shopReg_no
+    if(req.body.shopName)user.shopName=req.body.shopName
+    if(req.body.certificate)user.certificate=req.body.certificate
+    if(req.body.currentBill)user.currentBill=req.body.currentBill
+    if(req.body.job)user.job=req.body.job
+    if(req.body.price)user.price=req.body.price
+    if(req.body.discription)user.discription=req.body.discription
+   
+    if(user.role==='Product Owner') // need to change if only changes happend we need to change the code
+    {
+      user.status='processing'
+      await user.save()
+      res.status(200).json({
+        success:true,
+        message:'success it is on the processing status',
+      })
+
+    }
+    else
+    {
+      await user.save()
+    } 
+      
+    // delete the stored image if the new image is different
+      if (profile && req.body.profile) {
+        const oldProfileFilename = path.basename(new URL(profile).pathname);
+        console.log(oldProfileFilename)
+        const oldProfileFilePath = path.join(__dirname,'..','uploads', 'users', oldProfileFilename);
+        // Check if the file exists before attempting to delete
+        try {
+          await fs.access(oldProfileFilePath);
+          // Delete the old file
+          await fs.unlink(oldProfileFilePath);
+        } catch (error) {
+          console.error('Error deleting old profile image:', error.message);
+        }
+      }
+
+      res.status(200).json({
+        success:true,
+        message:'successfully updated',
+        user,
+      })
+       
+    
+  }
+  catch(err)
+  {
+    res.status(400).json({
+      success:false,
+      message:err.message,
+    })
+  }
+
+})
+//delete logged user profile - /myprofile/delete
+const deleteMyprofile=asyncHandler(async(req,res)=>{
+  try{
+    const profile=req.user.profile
+    let currentBill;
+    let certificate;
+    if(req.user.role==='Product Owner')
+    {
+      currentBill=req.user.currentBill;
+      certificate=req.user.certificate
+    }
+    const user=await User.deleteOne({_id:req.user.id})
+    deleteUserAllProducts(req)
+    // delete the stored image if the new image is different
+    if (profile) {
+      const oldProfileFilename = path.basename(new URL(profile).pathname);
+      console.log(oldProfileFilename)
+      const oldProfileFilePath = path.join(__dirname,'..','uploads', 'users', oldProfileFilename);
+      // Check if the file exists before attempting to delete
+      try {
+        await fs.access(oldProfileFilePath);
+        // Delete the old file
+        await fs.unlink(oldProfileFilePath);
+      } catch (error) {
+        console.error('Error deleting old profile image:', error.message);
+      }
+    }
+    if (currentBill) {
+      const oldCurrentBillFilename = path.basename(new URL(currentBill).pathname);
+      console.log(oldCurrentBillFilename)
+      const oldCurrentBillFilePath = path.join(__dirname,'..','uploads', 'users', oldCurrentBillFilename);
+      // Check if the file exists before attempting to delete
+      try {
+        await fs.access(oldCurrentBillFilePath);
+        // Delete the old file
+        await fs.unlink(oldCurrentBillFilePath);
+      } catch (error) {
+        console.error('Error deleting old currentBill image:', error.message);
+      }
+    }
+    if (certificate) {
+      const oldcertificateFilename = path.basename(new URL(certificate).pathname);
+      console.log(oldcertificateFilename)
+      const oldcertificateFilePath = path.join(__dirname,'..','uploads', 'users', oldcertificateFilename);
+      // Check if the file exists before attempting to delete
+      try {
+        await fs.access(oldcertificateFilePath);
+        // Delete the old file
+        await fs.unlink(oldcertificateFilePath);
+      } catch (error) {
+        console.error('Error deleting old certificate image:', error.message);
+      }
+    }
+
+    res.status(200).json({
+      success:true,
+      message:'successfully deleted',
+      user,
+    })
+  }
+  catch(err)
+  {
+    res.status(400).json({
+      success:false,
+      message:err.message,
+    })
+  }
+
+})
+
+
+
+
+module.exports={register,login,logout,forgotPassword,resetPassword,getProfile,changePassword,updateMyprofile,deleteMyprofile}
