@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import MetaData from '../Layouts/MetaData'
 import Loader from '../Loader'
 import { toast } from 'react-toastify'
-import {getProducts } from '../../actions/productsActions'
+import {clearProductsError, getProducts } from '../../actions/productsActions'
 import Product from './Product'
 import Pagination from 'react-js-pagination'
 
 
 const ProductList = () => {
-  const {isAuthenticated}=useSelector((state)=>state.authState)
   const dispatch=useDispatch()
   const {products,totalCount,count,error,isLoading,resPerPage}=useSelector((state)=>state.productsState)
   const{price,category,rating,model}=useSelector((state)=>state.productsFilteringState)
@@ -30,7 +29,8 @@ const ProductList = () => {
   useEffect(()=>{
     if(error) {
         return toast.error(error,{
-            position: toast.POSITION.BOTTOM_CENTER
+            position: toast.POSITION.BOTTOM_CENTER,
+            onOpen: ()=> { dispatch(clearProductsError) }
         })
     } 
     dispatch(getProducts(null, price, category, rating,null,null, currentPage,model))

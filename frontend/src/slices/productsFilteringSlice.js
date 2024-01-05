@@ -27,7 +27,7 @@ const productsFilteringSlice=createSlice(
             {
                 return{
                     ...state,
-                    error:action.payload.error
+                    error:action.payload
                 }
             },
             clearFilteringError(state,action)
@@ -40,7 +40,12 @@ const productsFilteringSlice=createSlice(
 
 const{actions,reducer}=productsFilteringSlice
 
-export  const{filteringRequest,filteringSuccess,filteringFail,clearFilteringError}=actions
+export  const{
+    filteringRequest,
+    filteringSuccess,
+    filteringFail,
+    clearFilteringError
+}=actions
 
 
 export default reducer
