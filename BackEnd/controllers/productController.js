@@ -209,7 +209,10 @@ const getOne=asyncHandler(async(req,res)=>{
     {
         return res.status(400).json({message:"There are no product to find"})
     }
-    res.status(200).json(Product)
+    res.status(200).json({
+        success:true,
+        product:Product
+    })
 })
 
 //create review  /product/:id/addreview
