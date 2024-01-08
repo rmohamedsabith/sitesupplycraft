@@ -203,9 +203,9 @@ const deleteProduct=asyncHandler(async(req,res)=>{
 })
 //get one product  -> /product/:id
 const getOne=asyncHandler(async(req,res)=>{
-    const Product=await product.find({_id:req.params.id}).exec()
+    const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email').exec()
 
-    if(!Product?.length)
+    if(!Product)
     {
         return res.status(400).json({message:"There are no product to find"})
     }
@@ -223,7 +223,7 @@ const addReview=asyncHandler(async(req,res,next)=>{
 
     const review={user,rating,comment}
 
-    const Product=await product.findById(productId).exec()
+    const Product=await product.findById(productId).populate('owner','shopName address phone email').exec()
     const isReviewed=Product.reviews.find(review=>{
         return review.user.toString()===user.toString()
     })

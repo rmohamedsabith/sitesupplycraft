@@ -1,15 +1,18 @@
 import React, {useEffect, useState } from 'react'
-import{MDBCol,MDBIcon}from'mdbreact'
+import{MDBIcon}from'mdbreact'
 import {  useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { filter } from '../../actions/productsFilteringActions'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
+import { Row,Col } from 'react-bootstrap'
 
 const Search = ({setIsDistrict,setDistrict,district}) => {
   const {isLoading}=useSelector((state)=>state.productsState)
+  const {model}=useSelector((state)=>state.productsFilteringState)
   const[keyword,setKeyword]=useState(null)
   const [selectedDistrict, setSelectedDistrict] = useState('');
+
   const[Districts,setDistricts]=useState([])
   const navigate=useNavigate();
   const dispatch=useDispatch()
@@ -97,9 +100,9 @@ const handleDistrictSelect = (district) => {
   return (
     <div className='search'>
       
-      <div className="form-check form-check-inline">
+      <div className="form-check form-check-inline p-3">
         
-        <input className="form-check-input" type="radio" name="flexRadioDefault" id="buy" value="Buy"  onChange={(e)=>{
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="buy" value="Buy" checked={model==='products/sell'?true:null}  onChange={(e)=>{
           dispatch(filter(null,null,null,null,'products/sell'))
           }}/>
         <label className="form-check-label" htmlFor="buy">
@@ -107,7 +110,7 @@ const handleDistrictSelect = (district) => {
         </label>
       </div>
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="flexRadioDefault" id="rent" value="Rent" onChange={(e)=>{
+        <input className="form-check-input" type="radio" checked={model==='products/rent'?true:null} name="flexRadioDefault" id="rent" value="Rent" onChange={(e)=>{
           
           dispatch(filter(null,null,null,null,'products/rent'))
           }} />
@@ -116,7 +119,7 @@ const handleDistrictSelect = (district) => {
         </label>
       </div>
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="flexRadioDefault" id="laborers" value="Laborers" onChange={(e)=>{
+        <input className="form-check-input" type="radio" checked={model==='laborers'?true:null} name="flexRadioDefault" id="laborers" value="Laborers" onChange={(e)=>{
       
           dispatch(filter(null,null,null,null,'laborers'))
           }}/>
@@ -128,10 +131,10 @@ const handleDistrictSelect = (district) => {
       {/* search bar */}
 
       <div className='bar'>
-        <div className="row">
-        <form className='d-flex  justify-content-center' onSubmit={handleSubmit}>
-          <MDBCol md="7">
-            <div className="input-group md-form form-sm form-1 pl-0">
+       <Row>
+        <form  onSubmit={handleSubmit}>
+          <Col>
+            <div className="input-group md-form form-sm form-1 pl-0 searchBar">
               <div className="input-group-prepend">
                 <span className="input-group-text" style={{ backgroundColor: '#053B50' }} id="basic-text1">
                   <MDBIcon className="text-white" icon="search" />
@@ -146,8 +149,9 @@ const handleDistrictSelect = (district) => {
                 value={keyword?keyword:''}
               />
             </div>
-          </MDBCol>
-          <MDBCol className="align-self-center">            
+          </Col>
+          
+          <Col className="align-self-center" md='auto'>            
               <Dropdown onSelect={handleDistrictSelect}>
                  <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
                   {selectedDistrict||'Select a District'}
@@ -157,21 +161,21 @@ const handleDistrictSelect = (district) => {
                    <Dropdown.Item eventKey="">Select a District</Dropdown.Item>
                    {Districts.map((District)=>{
                     return(<Dropdown.Item key={District.district} eventKey={District.district}>{District.district}</Dropdown.Item>)
-                   })}
-                   
+                   })}        
                    
                  </Dropdown.Menu>
                </Dropdown>
             
-          </MDBCol>
+          </Col>
           
-          <MDBCol>
+          <Col xs lg="2">
             <button type="submit" className="btn btnstyle" disabled={isLoading}>
               Search
             </button>
-          </MDBCol>
+          </Col>
+          
           </form>
-        </div>
+        </Row>
       </div>
 
   </div>

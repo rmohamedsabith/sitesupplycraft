@@ -1,5 +1,5 @@
 
-import {productFail, productRequest, productSuccess, productsFail, productsRequest, productsSuccess } from "../slices/productsSlice"
+import {clearError, productsFail, productsRequest, productsSuccess } from "../slices/productsSlice"
 import axios from 'axios'
 
 export const getProducts=(keyword, price, category, rating,city,district, currentPage,model)=>async(dispatch)=>{
@@ -24,18 +24,8 @@ export const getProducts=(keyword, price, category, rating,city,district, curren
 
 }
 
-export const getProduct=(id)=>async(dispatch)=>{
-    try {
-        dispatch(productRequest())
-        const {data}=await axios.get(`/SiteSupplyCraft/product/${id}`)
-        dispatch(productSuccess(data))
-    } catch (error) {
-        dispatch(productFail(error.response.data.message))
-    }
-}
-
 export const clearProductsError=(dispatch)=>{
-    dispatch(clearProductsError())
+    dispatch(clearError())
 }
 
 

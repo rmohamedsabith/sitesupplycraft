@@ -1,9 +1,17 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import {Link} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {Link, useNavigate} from 'react-router-dom'
+import { getProduct, reviews } from '../../actions/productActions'
 
 const Product = ({product}) => {
   const{model}=useSelector((state)=>state.productsFilteringState)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+
+  const handleClick=async()=>{
+    dispatch(getProduct(product._id))    
+    navigate(`/${model==='laborers'?'laborer':'product'}/${product._id}`)
+  }
 
 
   return (
@@ -26,8 +34,8 @@ const Product = ({product}) => {
 
       <div className="card-body d-flex flex-column">
       {model!=='laborers'?<span id="no_of_reviews" style={{fontSize:'x-small',marginLeft:'0'}}>{product.owner.shopName}</span>:<span id="no_of_reviews" style={{fontSize:'x-small',marginLeft:'0'}}>{product.job}</span>}
-        <h5 className="card-title">
-        <Link to={`/${model==='laborers'?'laborer':'product'}/${product._id}`}>{model==='laborers'?product.firstname+' '+product.lastname : product.name}</Link>
+        <h5 className="card-title" onClick={handleClick}>
+          {model==='laborers'?product.firstname+' '+product.lastname : product.name}
         </h5>
         <div className="ratings mt-auto">
           <div className="rating-outer">
@@ -38,7 +46,7 @@ const Product = ({product}) => {
         <p className="card-text">Rs.{product.price}{model!=='laborers'?<span style={{color:'red',textDecoration:'line-through',fontSize:'large',paddingLeft:'30px'}}>{product.discount>0?'Rs.'+product.discount:null}</span>:null}
 </p>
           
-         <Link to={`/${model==='laborers'?'laborer':'product'}/${product._id}`}><button id="view_btn" type='submit' className="btn btn-block">View Details</button></Link>
+         <button id="view_btn" type='submit' className="btn btn-block" onClick={handleClick}>View Details</button>
          
       </div>
     </div>

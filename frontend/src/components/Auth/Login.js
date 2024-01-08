@@ -4,7 +4,7 @@ import { clearAuthError, forgetPassword, login } from '../../actions/authActions
 import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import MetaData from '../Layouts/MetaData'
-import { FloatingLabel, Form } from 'react-bootstrap'
+import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import Loader from '../Loader'
 
 const Login = () => {
@@ -52,9 +52,11 @@ const Login = () => {
         <div className='parent'>
         <MetaData title={'Login'}/>
           <div className="frame">
-              <div className='card d-inline-block p-3 login'>
+              <Row>
+              <Col>
+              <div className='card p-3 login mb-5'>
                 <h1 style={{color:'#053B50'}} >Login</h1>  
-                <form onSubmit={handleSubmit}>  
+                <form onSubmit={handleSubmit} style={{textAlign:'right'}}>  
                     <div>  
                     <div className='float'>     
                     <i className="fas fa-envelope prefix fa-lg"></i>
@@ -62,7 +64,7 @@ const Login = () => {
                     <FloatingLabel
                       controlId="floatingInput"
                       label="Email address"
-                      className="mb-3"
+                      className="mb-3 z-0"
                     >
                       <Form.Control type="email" placeholder="name@example.com" value={email} onChange={(e)=>setEmail(e.target.value)} />
                     </FloatingLabel>
@@ -72,7 +74,7 @@ const Login = () => {
                     <div className='float'>                   
                     <i className="fas fa-lock prefix fa-lg"></i>
                     <div style={{ paddingLeft:'10px',width:'400px' }}>
-                    <FloatingLabel controlId="floatingPassword" label="Password">
+                    <FloatingLabel controlId="floatingPassword" label="Password" className='z-0'>
                       <Form.Control type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
                     </FloatingLabel>
                     </div>
@@ -80,20 +82,24 @@ const Login = () => {
                     
                     </div>
                     </div>
-                    <span style={{position:'relative', left:'450px',fontSize:'small',color:'red',cursor:'pointer',display:'inline-block'}} onClick={handleForgetPassword}>forgot password?</span>
+                    <span className='marginOff' style={{fontSize:'small',color:'red',cursor:'pointer'}} onClick={handleForgetPassword}>forgot password?</span>
                     <br/>
-                    <button className='btnstyle' type='submit' style={{position:'relative', left:'450px',marginTop:'20px'}}  disabled={isLoading}>Log in</button>
+                    <button className='btnstyle marginOff' type='submit' style={{marginTop:'20px'}}  disabled={isLoading}>Log in</button>
                 </form> 
                 
               </div> 
-              <div className='card d-inline-block p-3 signup'>
+              </Col>
+              <Col>
+              <div className='card p-3 mx-0 signup'>
                 <div className='signup-content'>
-                  <h1 style={{color:'#053B50'}} >New User</h1>                
-                  <Link to='/register/Customer'><button className='btnstyle' type='submit' style={{position:'relative',left:'160px',top:'70px'}} disabled={isLoading}>Sign Up</button></Link>
+                <h1 style={{color:'#053B50'}} >New User</h1>                
+                  <Link to='/register/Customer'><center><button className='btnstyle' type='submit' style={{}} disabled={isLoading}>Sign Up</button></center></Link>
                 </div>
 
                 
               </div>
+              </Col>
+              </Row>
   
           </div>
       </div>
