@@ -203,10 +203,9 @@ const handleCitySelect = (city) => {
                    {
                     Districts.map((District)=>{
                       if(District.district===district)
-                      { let id=0
-                        return (District.cities.map((city)=>{
-                          id++
-                          return(<Dropdown.Item key={id} eventKey={city}>{city}</Dropdown.Item>)
+                      { 
+                        return (District.cities.map((city,index)=>{
+                          return(<Dropdown.Item key={index} eventKey={city}>{city}</Dropdown.Item>)
                          }))
                       }                  
                    })
@@ -240,10 +239,7 @@ const handleCitySelect = (city) => {
           ) }        
           </ul>              
       </div>
-    </div>      
-   
-    
-    
+    </div>  
   )
 }
 

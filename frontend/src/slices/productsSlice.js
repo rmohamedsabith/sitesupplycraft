@@ -31,7 +31,9 @@ const productsSlice=createSlice({
             }
         },
         clearProducts(state,action){
-            return{isLoading:false,
+            return{
+                ...state,
+                isLoading:false,
                 products:null,
                 count:null,
                 totalCount:null,

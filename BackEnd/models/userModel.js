@@ -39,15 +39,6 @@ const userSchema=new mongoose.Schema({
         enum:['Customer','Admin','Product Owner','Job Seeker']
     }
    ,
-   address:
-   {
-       number:{type:String,required:[true,'Please Enter Your Address no']},
-       street:{type:String,required:[true,'Please Enter Street']},
-       city:{type:String,required:[true,'Please Enter your city']},
-       district:{type:String,required:[true,'Please Enter Your District']},
-       province:{type:String,required:[true,'Please Enter Your Province']},
-       postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
-   },
     resetPasswordToken: String,
     resetPasswordTokenExpire: Date
 },{
@@ -124,7 +115,18 @@ const productOwnerSchema=new mongoose.Schema({
             },
             message: 'Please enter your Shop Name'
         }
-    },
+    }
+    ,
+   address:
+   {
+       number:{type:String,required:[true,'Please Enter Your Address no']},
+       street:{type:String,required:[true,'Please Enter Street']},
+       city:{type:String,required:[true,'Please Enter your city']},
+       district:{type:String,required:[true,'Please Enter Your District']},
+       province:{type:String,required:[true,'Please Enter Your Province']},
+       postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
+   },
+    
     certificate:{
         type:String,
         required:[true,'Upload your shop registered certificate']
@@ -172,7 +174,17 @@ const jobSeekerSchema=new mongoose.Schema({
             ],
             message : "Please select a job"
         }
-    },
+    }
+    ,
+   address:
+   {
+       number:{type:String,required:[true,'Please Enter Your Address no']},
+       street:{type:String,required:[true,'Please Enter Street']},
+       city:{type:String,required:[true,'Please Enter your city']},
+       district:{type:String,required:[true,'Please Enter Your District']},
+       province:{type:String,required:[true,'Please Enter Your Province']},
+       postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
+   } ,
     price:{
         type:Number,
         required:[true,'Please mention your One Day Charge']

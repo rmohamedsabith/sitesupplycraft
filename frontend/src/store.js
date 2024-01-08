@@ -4,13 +4,15 @@ import productsReducers from './slices/productsSlice'
 import productsFilteringReducers from './slices/productsFilteringSlice'
 import usersReducers from './slices/usersSlice'
 import authReducers from './slices/authSlice'
+import productReducers from './slices/productSlice'
 
 
 const reducer = combineReducers({
   productsState:productsReducers,
   usersState:usersReducers,
   productsFilteringState:productsFilteringReducers,
-  authState:authReducers
+  authState:authReducers,
+  productState:productReducers,
 });
 
 const store = configureStore({
