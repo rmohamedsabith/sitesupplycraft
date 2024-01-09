@@ -33,7 +33,7 @@ const getRent=asyncHandler(async(req,res)=>{
     const resultperpage=8;
     const apifeature=new apiFeatures(product.find({status:'Active',type:'rent'}).populate('owner','shopName address phone'),req.query)
       apifeature.search();
-      await apifeature.filter();
+      await apifeature.filter('product');
       apifeature.paginate(resultperpage);   
     const Products=await apifeature.query
     const totalProductCount=await product.countDocuments({status:'Active'});
@@ -56,7 +56,7 @@ const getSell=asyncHandler(async(req,res)=>{
     const resultperpage=8;
     const apifeature=new apiFeatures(product.find({status:'Active',type:'sell'}).populate('owner','shopName address phone'),req.query)
       apifeature.search();
-      await apifeature.filter();
+      await apifeature.filter('product');
       apifeature.paginate(resultperpage);   
     const Products=await apifeature.query
     const totalProductCount=await product.countDocuments({status:'Active'});

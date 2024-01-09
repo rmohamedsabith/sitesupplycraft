@@ -196,3 +196,6 @@
 20240107	14:49:06	9e78bb26-a112-445e-95d7-a8ab3d50f6ba	CastError: Cast to ObjectId failed for value "{ _id: 'undefined' }" (type Object) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/undefined/reviews	undefined
 20240107	14:49:31	f483cb8b-2c40-4f13-a4cf-358b83055a88	CastError: Cast to ObjectId failed for value "{ _id: 'undefined' }" (type Object) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/undefined/reviews	undefined
 20240107	20:33:54	4903cbe6-8376-49a6-8092-0ebe820e75c5	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1&price[gte]=1&price[lte]=100000	undefined
+20240109	08:04:04	f1c223e9-4d3b-402a-b044-301ad334d74d	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/product/65938b80a7dfdc482472a453/reviews	undefined
+20240109	08:04:50	7c5a0fbe-4d25-482b-a900-295721e396fc	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/product/65938b80a7dfdc482472a453/reviews	undefined
+20240109	08:04:53	841c7686-ac21-4da3-89ea-6278f6ce5cb4	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1&price[gte]=1&price[lte]=100000	undefined

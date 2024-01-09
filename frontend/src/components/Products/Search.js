@@ -92,7 +92,6 @@ const handleDistrictSelect = (district) => {
   if (district === '') setIsDistrict(false);
   else setIsDistrict(true);
   setDistrict(district);
-  setSelectedDistrict(district)
 };
 
 
@@ -154,13 +153,12 @@ const handleDistrictSelect = (district) => {
           <Col className="align-self-center" md='auto'>            
               <Dropdown onSelect={handleDistrictSelect}>
                  <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                  {selectedDistrict||'Select a District'}
+                  {district===''?'Select a District':district}
                  </Dropdown.Toggle>              
                  <Dropdown.Menu as={CustomMenu}>
-                  
-                   <Dropdown.Item eventKey="">Select a District</Dropdown.Item>
+                   <Dropdown.Item eventKey="" active={district===''}>Select a District</Dropdown.Item>
                    {Districts.map((District)=>{
-                    return(<Dropdown.Item key={District.district} eventKey={District.district}>{District.district}</Dropdown.Item>)
+                    return(<Dropdown.Item key={District.district} active={district===District.district} eventKey={District.district}>{District.district}</Dropdown.Item>)
                    })}        
                    
                  </Dropdown.Menu>

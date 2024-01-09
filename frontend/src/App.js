@@ -15,6 +15,8 @@ import ResetPassword from './components/Auth/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
 import Registration from './components/Auth/Registration'
 import Home from './components/Home';
+import UserDeail from './components/Users/UserDetail'
+import UpdateUser from './components/Users/UpdateUser';
 import {useMediaQuery} from 'react-responsive'
 
 
@@ -36,12 +38,12 @@ function App() {
   return (    
     <div className='App'>
       <HelmetProvider>
-        <Header hide={hide} setIsHumClicked={setIsHumClicked} isHumClicked={isHumClicked}/>         
+        <Header hide={hide} setIsHumClicked={setIsHumClicked} isHumClicked={isHumClicked} setDistrict={setDistrict} setIsDistrict={setIsDistrict}/>         
         <ToastContainer theme='dark'/>               
         <Routes>
-          {/*Products Route*/} 
+          {/*Products Routes*/} 
           <Route path='/' element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
-          <Route path="/search/:keyword" element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
+          <Route path="search/:keyword" element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
           <Route path="product/:id" element={<ProtectedRoute><ProductDetails/></ProtectedRoute>}/>                        
                                  
 
@@ -49,6 +51,14 @@ function App() {
           <Route path="login" element={<Login/>}/>
           <Route path="password/reset/:token" element={<ResetPassword/>}/>
           <Route path="register/:role" element={<Registration/>}/>
+
+          {/* Users Routes */}
+          <Route path="myprofile/">
+            <Route index element={<ProtectedRoute><UserDeail/></ProtectedRoute>}/>
+            <Route path='edit' element={<ProtectedRoute><UpdateUser/></ProtectedRoute>}/>
+          </Route> 
+
+          {/* Missing Routes */}
           <Route path="*" element={<Missing/>}/>              
         </Routes>
         <Footer/>

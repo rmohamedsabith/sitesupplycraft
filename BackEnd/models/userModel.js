@@ -189,7 +189,16 @@ const jobSeekerSchema=new mongoose.Schema({
         type:Number,
         required:[true,'Please mention your One Day Charge']
     },
-    discription:{
+    priceType:{
+        type:String,
+        default:'/perDay',
+        enum:{
+            values:['/perDay','/perMonth','/PerHour']
+        }
+        
+
+    },
+    description:{
         type:String,
     },
     ratings:{

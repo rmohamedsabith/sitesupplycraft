@@ -16,7 +16,7 @@ const Product = ({product}) => {
 
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3 ">    
-    <div className="card p-3 rounded">
+    <div className="card p-3 rounded" style={{minWidth:'220px'}}>
     {model!=='laborers'?<span id="no_of_reviews" style={{fontSize:'small',marginLeft:'0',color:'#ff9933',textAlign:'right'}}>{"To "+product.type.replace(/\b\w/g, (char) => char.toUpperCase())}</span>:null}
 
       {(model==='laborers'?product.profile&&
