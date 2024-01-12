@@ -1,11 +1,12 @@
 import React from 'react'
-import DetailsOfMessage from './DetailsOfMessage'
+import Message from './Message'
 
 const Messages = () => {
   return (
-    <div>Message
-        <DetailsOfMessage/>
+    <div>Messages
+       <Message/>
     </div>
+
   )
 }
 

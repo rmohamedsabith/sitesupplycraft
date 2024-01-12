@@ -1,10 +1,10 @@
 import React from 'react'
-import DetailsOfverification from './DetailsOfverification'
+import Verification from './Verification'
 
 const Verifications = () => {
   return (
     <div>Verification
-        <DetailsOfverification/>
+        <Verification/>
     </div>
   )
 }

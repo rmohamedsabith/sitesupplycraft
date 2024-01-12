@@ -23,12 +23,12 @@ import AddProduct from './components/Product Owner/AddProduct'
 import PreviewProduct from './components/Product Owner/PreviewProduct';
 import Messages from './components/Product Owner/Messages'
 import BecomeJobSeeker from './components/Product Owner/BecomeJobSeeker';
-import {AdminDashboard} from './components/Admin/DashBoard';
-import{AdminMessages} from './components/Admin/Messages'
-import DetailsOfverification from './components/Admin/DetailsOfverification';
-import DetailsOfMessage from './components/Admin/DetailsOfMessage';
-import Verifications from './components/Admin/Verifications';
+/* import AdminDashboard from './components/Admin/DashBoard'; */
+import AdminMessages from './components/Admin/Messages'
+import Verifications from './components/Admin/Verifications'; 
 import Payment from './components/Product Owner/Payment';
+import Verification from './components/Admin/Verification';
+import Message from './components/Admin/Message';
 
 
 
@@ -85,11 +85,11 @@ function App() {
               {/* Navodi */}
           {/* <Route path='Admin/DashBoard' element={<AdminDashboard/>}/> */}
           <Route path='Admin/Messages' element={<AdminMessages/>}/>
-          <Route path='Admin/Messages/:id' element={<DetailsOfMessage/>}/>
+          <Route path='Admin/Messages/:id' element={<Message/>}/>
             
               {/* Hiran */}
-          <Route path='Admin/Verification' element={<Verifications/>}/>
-          <Route path='Admin/Verification/:id' element={<DetailsOfverification/>}/>
+         <Route path='Admin/Verification' element={<Verifications/>}/>
+          <Route path='Admin/Verification/:id' element={<Verification/>}/>
           
 
 
