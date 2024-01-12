@@ -1,7 +1,7 @@
 import React from 'react'
 import DetailsOfMessage from './DetailsOfMessage'
 
-const Message = () => {
+const Messages = () => {
   return (
     <div>Message
         <DetailsOfMessage/>
@@ -9,4 +9,4 @@ const Message = () => {
   )
 }
 
-export default Message
+export default Messages

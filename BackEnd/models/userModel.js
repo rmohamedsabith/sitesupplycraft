@@ -123,7 +123,6 @@ const productOwnerSchema=new mongoose.Schema({
        street:{type:String,required:[true,'Please Enter Street']},
        city:{type:String,required:[true,'Please Enter your city']},
        district:{type:String,required:[true,'Please Enter Your District']},
-       province:{type:String,required:[true,'Please Enter Your Province']},
        postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
    },
     
@@ -182,7 +181,6 @@ const jobSeekerSchema=new mongoose.Schema({
        street:{type:String,required:[true,'Please Enter Street']},
        city:{type:String,required:[true,'Please Enter your city']},
        district:{type:String,required:[true,'Please Enter Your District']},
-       province:{type:String,required:[true,'Please Enter Your Province']},
        postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
    } ,
     price:{

@@ -18,6 +18,17 @@ import Home from './components/Home';
 import UserDeail from './components/Users/UserDetail'
 import UpdateUser from './components/Users/UpdateUser';
 import {useMediaQuery} from 'react-responsive'
+import DashBoard from './components/Product Owner/DashBoard'
+import AddProduct from './components/Product Owner/AddProduct'
+import PreviewProduct from './components/Product Owner/PreviewProduct';
+import Messages from './components/Product Owner/Messages'
+import BecomeJobSeeker from './components/Product Owner/BecomeJobSeeker';
+import {AdminDashboard} from './components/Admin/DashBoard';
+import{AdminMessages} from './components/Admin/Messages'
+import DetailsOfverification from './components/Admin/DetailsOfverification';
+import DetailsOfMessage from './components/Admin/DetailsOfMessage';
+import Verifications from './components/Admin/Verifications';
+import Payment from './components/Product Owner/Payment';
 
 
 
@@ -50,13 +61,37 @@ function App() {
           {/*Auth Routes*/}
           <Route path="login" element={<Login/>}/>
           <Route path="password/reset/:token" element={<ResetPassword/>}/>
+            {/* Poorni */}
           <Route path="register/:role" element={<Registration/>}/>
 
           {/* Users Routes */}
           <Route path="myprofile/">
             <Route index element={<ProtectedRoute><UserDeail/></ProtectedRoute>}/>
             <Route path='edit' element={<ProtectedRoute><UpdateUser/></ProtectedRoute>}/>
-          </Route> 
+          </Route>
+
+          {/* ProductOwner */}
+              {/* Tharushi */}
+          <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
+          <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+              {/* Sandeepa */}
+          <Route path='ProductOwner/addProduct' element={<AddProduct/>}/>
+          <Route path='ProductOwner/addProduct/Payment' element={<Payment/>}/>   
+          <Route path='ProductOwner/addProduct/Preview' element={<PreviewProduct/>}/>          
+           
+          {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
+
+          {/* Admin */}
+              {/* Navodi */}
+          {/* <Route path='Admin/DashBoard' element={<AdminDashboard/>}/> */}
+          <Route path='Admin/Messages' element={<AdminMessages/>}/>
+          <Route path='Admin/Messages/:id' element={<DetailsOfMessage/>}/>
+            
+              {/* Hiran */}
+          <Route path='Admin/Verification' element={<Verifications/>}/>
+          <Route path='Admin/Verification/:id' element={<DetailsOfverification/>}/>
+          
+
 
           {/* Missing Routes */}
           <Route path="*" element={<Missing/>}/>              

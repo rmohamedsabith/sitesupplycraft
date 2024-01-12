@@ -1,7 +1,7 @@
 import React from 'react'
 import DetailsOfverification from './DetailsOfverification'
 
-const Verification = () => {
+const Verifications = () => {
   return (
     <div>Verification
         <DetailsOfverification/>
@@ -9,4 +9,4 @@ const Verification = () => {
   )
 }
 
-export default Verification
+export default Verifications

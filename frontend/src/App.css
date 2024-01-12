@@ -402,6 +402,14 @@ p a{
 }
 
 /* product details */
+.productFrame{
+  height:100%;
+  width:70%;
+  margin:20px 80px;
+  border-radius:20px;
+  color: #053B50;
+  min-width: 200px;
+}
 .smallImage
 {
   margin:20px;
@@ -522,7 +530,7 @@ width: 70%;
    }
 
    /* login */
-   .marginOff{
+   .marginOff{ 
     margin-right:0px;
    }
   
