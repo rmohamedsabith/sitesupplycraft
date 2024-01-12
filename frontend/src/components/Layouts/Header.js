@@ -5,13 +5,22 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Dropdown,Image} from 'react-bootstrap'
 import { logout } from '../../actions/authActions'
 import{filter} from '../../actions/productsFilteringActions'
+import { getProducts } from '../../actions/productsActions'
 
-const Header = ({hide,setIsHumClicked,isHumClicked}) => {
+
+const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) => {
   const {isAuthenticated,user}=useSelector((state)=>state.authState)
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const logoutHandler=()=>{
+    navigate('/')
     dispatch(logout)
+  }
+  const handleReferesh=()=>{
+    setDistrict('')  
+    setIsDistrict(false) 
+    dispatch(filter(null,null,null,null,'products'))
+    dispatch(getProducts(null,null,null,null,null,null,1,'products'))    
   }
 
   return (
@@ -20,7 +29,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked}) => {
       <div className="headRow">
         
         <div className="logo">
-          <Link to='/'><img id="siteimg" src={logo} alt="Logo" /* onClick={dispatch(filter(null,null,null,null,'products'))} */ /></Link>
+          <Link to='/'><img id="siteimg" src={logo} alt="Logo" onClick={handleReferesh}/></Link>
           <span id="sitesupplycraft">Site Supply Craft</span>
         </div>
         {hide?
@@ -46,8 +55,8 @@ const Header = ({hide,setIsHumClicked,isHumClicked}) => {
               </Dropdown>        
         </div>:
         <div className="headRight">
-          <p id='owner'>Become a Product Owner</p>
-          <p id='job'>Become a Job Seeker</p>
+          <Link to={'register/Product Owner'} id='owner'>Become a Product Owner</Link>
+          <Link to={'/register/Job Seeker'} id='job'>Become a Job Seeker</Link>
           <Link to={'/login'} style={{paddingTop:'17px'}}className='btn btnstyle'>Log in</Link>
         </div>
         }

@@ -15,7 +15,20 @@ import ResetPassword from './components/Auth/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
 import Registration from './components/Auth/Registration'
 import Home from './components/Home';
+import UserDeail from './components/Users/UserDetail'
+import UpdateUser from './components/Users/UpdateUser';
 import {useMediaQuery} from 'react-responsive'
+import DashBoard from './components/Product Owner/DashBoard'
+import AddProduct from './components/Product Owner/AddProduct'
+import PreviewProduct from './components/Product Owner/PreviewProduct';
+import Messages from './components/Product Owner/Messages'
+import BecomeJobSeeker from './components/Product Owner/BecomeJobSeeker';
+/* import AdminDashboard from './components/Admin/DashBoard'; */
+import AdminMessages from './components/Admin/Messages'
+import Verifications from './components/Admin/Verifications'; 
+import Payment from './components/Product Owner/Payment';
+import Verification from './components/Admin/Verification';
+import Message from './components/Admin/Message';
 
 
 
@@ -36,19 +49,51 @@ function App() {
   return (    
     <div className='App'>
       <HelmetProvider>
-        <Header hide={hide} setIsHumClicked={setIsHumClicked} isHumClicked={isHumClicked}/>         
+        <Header hide={hide} setIsHumClicked={setIsHumClicked} isHumClicked={isHumClicked} setDistrict={setDistrict} setIsDistrict={setIsDistrict}/>         
         <ToastContainer theme='dark'/>               
         <Routes>
-          {/*Products Route*/} 
+          {/*Products Routes*/} 
           <Route path='/' element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
-          <Route path="/search/:keyword" element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
+          <Route path="search/:keyword" element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
           <Route path="product/:id" element={<ProtectedRoute><ProductDetails/></ProtectedRoute>}/>                        
                                  
 
           {/*Auth Routes*/}
           <Route path="login" element={<Login/>}/>
           <Route path="password/reset/:token" element={<ResetPassword/>}/>
+            {/* Poorni */}
           <Route path="register/:role" element={<Registration/>}/>
+
+          {/* Users Routes */}
+          <Route path="myprofile/">
+            <Route index element={<ProtectedRoute><UserDeail/></ProtectedRoute>}/>
+            <Route path='edit' element={<ProtectedRoute><UpdateUser/></ProtectedRoute>}/>
+          </Route>
+
+          {/* ProductOwner */}
+              {/* Tharushi */}
+          <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
+          <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+              {/* Sandeepa */}
+          <Route path='ProductOwner/addProduct' element={<AddProduct/>}/>
+          <Route path='ProductOwner/addProduct/Payment' element={<Payment/>}/>   
+          <Route path='ProductOwner/addProduct/Preview' element={<PreviewProduct/>}/>          
+           
+          {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
+
+          {/* Admin */}
+              {/* Navodi */}
+          {/* <Route path='Admin/DashBoard' element={<AdminDashboard/>}/> */}
+          <Route path='Admin/Messages' element={<AdminMessages/>}/>
+          <Route path='Admin/Messages/:id' element={<Message/>}/>
+            
+              {/* Hiran */}
+         <Route path='Admin/Verification' element={<Verifications/>}/>
+          <Route path='Admin/Verification/:id' element={<Verification/>}/>
+          
+
+
+          {/* Missing Routes */}
           <Route path="*" element={<Missing/>}/>              
         </Routes>
         <Footer/>

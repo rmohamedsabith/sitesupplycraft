@@ -8,8 +8,7 @@ import { useLocation } from 'react-router-dom'
 import { Offcanvas } from 'react-bootstrap'
 
 const Home = ({isDistrict,district,setDistrict,setIsDistrict,hide,isHumClicked,setIsHumClicked}) => {
-    const location=useLocation()
-    
+    const location=useLocation()    
 
   const handleClose = () => setIsHumClicked(false);
   return (

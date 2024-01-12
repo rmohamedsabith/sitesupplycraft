@@ -123,7 +123,6 @@ const productOwnerSchema=new mongoose.Schema({
        street:{type:String,required:[true,'Please Enter Street']},
        city:{type:String,required:[true,'Please Enter your city']},
        district:{type:String,required:[true,'Please Enter Your District']},
-       province:{type:String,required:[true,'Please Enter Your Province']},
        postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
    },
     
@@ -182,14 +181,22 @@ const jobSeekerSchema=new mongoose.Schema({
        street:{type:String,required:[true,'Please Enter Street']},
        city:{type:String,required:[true,'Please Enter your city']},
        district:{type:String,required:[true,'Please Enter Your District']},
-       province:{type:String,required:[true,'Please Enter Your Province']},
        postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
    } ,
     price:{
         type:Number,
         required:[true,'Please mention your One Day Charge']
     },
-    discription:{
+    priceType:{
+        type:String,
+        default:'/perDay',
+        enum:{
+            values:['/perDay','/perMonth','/PerHour']
+        }
+        
+
+    },
+    description:{
         type:String,
     },
     ratings:{

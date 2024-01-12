@@ -11,7 +11,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 
 const Side = ({isDistrict,district}) => {
-  const{model}=useSelector((state)=>state.productsFilteringState)
+  const {model}=useSelector((state)=>state.productsFilteringState)
 
   const dispatch=useDispatch()
   const{isLoading}=useSelector((state)=>state.productsState)
@@ -139,19 +139,21 @@ const handleCitySelect = (city) => {
       <div>
           {/* Categories */}
           <h4>Categories</h4>        
-              <span className="d-block" style={{cursor:'pointer', paddingBottom:'5px'}}  disabled={isLoading} onClick={()=>{
+              <span
+               className={`d-block ${category===null?'selectedCategory':''}`} 
+               style={{cursor:'pointer', paddingBottom:'5px'}}  disabled={isLoading} onClick={()=>{
                     setCategory(null)
                   }}>All</span>
             {model!=='laborers'? Categories.map(
               cat=>(            
-                  <span className="d-block" key={cat} style={{cursor:'pointer', paddingBottom:'5px'}} id={cat} disabled={isLoading} onClick={()=>{
+                  <span className={`d-block ${category===cat?'selectedCategory':''}`} key={cat} style={{cursor:'pointer', paddingBottom:'5px'}} id={cat} disabled={isLoading} onClick={()=>{
                     setCategory(cat)
                   }}>{cat}</span>
           
               ))
               : jobs.map(
               job=>(
-                <span className="d-block" key={job} style={{cursor:'pointer', paddingBottom:'5px'}} id={job} disabled={isLoading} onClick={()=>{
+                <span className={`d-block ${category===job?'selectedCategory':''}`} key={job} style={{cursor:'pointer', paddingBottom:'5px'}} id={job} disabled={isLoading} onClick={()=>{
                   setCategory(job)
                 }}>{job}</span>
               )
@@ -232,7 +234,7 @@ const handleCitySelect = (city) => {
             >             
               {star===0?<FontAwesomeIcon icon={faStar}/>
                 :Array.from({ length: star }).map((_, index) => (
-               <FontAwesomeIcon style={{color:'#f8ce0b'}} icon={faStar} key={index} />
+               <FontAwesomeIcon style={{color:'#f8ce0b'}} icon={faStar} key={index} className={`${rating===star?'selectedRating':null}`} />
               ))
               }                         
             </li>

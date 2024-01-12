@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AddReview from '../Reviews/AddReview'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProduct, reviews } from '../../actions/productActions'
 import { toast } from 'react-toastify'
 import Carousel from 'react-bootstrap/Carousel'
 import Figure from 'react-bootstrap/Figure'
@@ -13,6 +12,7 @@ import ProductReviews from './ProductReviews'
 import { clearError, clearProduct, clearReviewSubmitted } from '../../slices/productSlice'
 import { useParams } from 'react-router-dom'
 import MetaData from '../Layouts/MetaData'
+import { reviews } from '../../actions/productActions'
 
 
 const ProductDetails = () => {
@@ -63,7 +63,7 @@ const ProductDetails = () => {
     <div className='d-flex justify-content-center align-item-center'>
       <MetaData title={'Product'}/>
       {isLoading?<Loader/>:    
-        <div className='card productFrame' onDoubleClick={()=>setIsClicked(false)} >
+      <div className='card productFrame' onDoubleClick={()=>setIsClicked(false)} >
           <Container fluid={true}>
             <Row>
               <Col>               
@@ -115,8 +115,10 @@ const ProductDetails = () => {
                   <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
                 </div>  
                 <h3 style={{color:'red',display:'inline'}}>Rs.{product.price}</h3> 
-                <h5 style={{textDecoration:'line-through',display:'inline-block',margin:'30px'}}>Rs.{product.discount}</h5><br/> 
-                <h6 style={{color:'#1A9406'}}>{product.owner.shopName}</h6>
+                <h5 style={{textDecoration:'line-through',display:'inline',margin:'30px'}}>Rs.{product.discount}</h5>
+                {product.type==='rent'?<p style={{paddingLeft:'5px',color:'grey',display:'inline'}}>per Day</p>:null}
+
+                <br/><h6 style={{color:'#1A9406'}}>{product.owner.shopName}</h6>
                 <span style={{paddingLeft:'10px'}}>{product.owner.address.number}, {product.owner.address.street}, {product.owner.address.city}</span><br/>
                 <span style={{paddingLeft:'12px'}}>{product.owner.address.district}-{product.owner.address.postalCode}</span><br/>                
                 <span><a href={`mailto:${product.owner.email}`} style={{paddingLeft:'10px'}}>{product.owner.email}</a></span>
@@ -132,7 +134,7 @@ const ProductDetails = () => {
                 <AddReview/>
                 </Col>
                 
-                </Row>
+                </Row> 
                 <Row>
                   <div className='location'>
                         Find Location
