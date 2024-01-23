@@ -15,7 +15,7 @@ const productSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
-                products:{},
+                product:{},
                 }
         },
         productRequest(state,action)
