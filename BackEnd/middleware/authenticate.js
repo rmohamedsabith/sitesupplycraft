@@ -5,7 +5,7 @@ const AsyncHandler = require("express-async-handler")
 const isAuthenticatedUser=AsyncHandler(async(req,res,next)=>{
     const{token}=req.cookies 
 
-    if(!token)return res.status(401).json({success:"fail",message:"Before access that page you have to login first"})
+    if(!token)return res.status(401).json({success:false,message:"Before access that page you have to login first"})
 
     const decode=jwt.verify(token,process.env.JWT_SECRET_KEY)
     try {

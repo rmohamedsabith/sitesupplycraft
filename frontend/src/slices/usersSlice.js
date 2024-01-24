@@ -1,27 +1,56 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const usersSlice=createSlice({
-    name:"userss",
+    name:"users",
     initialState:{
-        isLoading:false
+        isLoading:false,
+        success:false,
+        isDeleted:false
     },
     reducers:{
-        laborersRequest(state,action){
+        addFavouriteRequest(state,action){
             return {isLoading:true}
         },
-        laborersSuccess(state,action){
+        addFavouriteSuccess(state,action){
             return{
                 isLoading:false,
-                laborers:action.payload.laborers,
-                count:action.payload.count,
-                totalCount:action.payload.Total_count,
-                resPerPage:action.payload.resPerPage
+                success:true                
             }
         },
-        laborersFail(state,action){
+        addFavouriteFail(state,action){
             return {
                 isLoading:false,
-                error:action.payload.error
+                error:action.payload
+            }
+        },
+        deleteOneRequest(state,action){
+            return {isLoading:true}
+        },
+        deleteOneSuccess(state,action){
+            return{
+                isLoading:false,
+                isDeleted:true                
+            }
+        },
+        deleteOneFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        deleteAllRequest(state,action){
+            return {isLoading:true}
+        },
+        deleteAllSuccess(state,action){
+            return{
+                isLoading:false,
+                isDeleted:true                
+            }
+        },
+        deleteAllFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
             }
         },
         clearError(state, action){
@@ -29,17 +58,31 @@ const usersSlice=createSlice({
                 ...state,
                 error:  null
             }
-        }
+        },
+        clearData(state,action){
+            return{
+                ...state,
+                success:false,
+                isDeleted:false,
+            }
+        } 
     }
 });
 
 const {actions,reducer}=usersSlice;
 
 export const{
-    laborersRequest,
-    laborersSuccess,
-    laborersFail,
-    clearError
+    deleteAllRequest,
+    deleteAllSuccess,
+    deleteAllFail,
+    deleteOneRequest,
+    deleteOneSuccess,
+    deleteOneFail,
+    addFavouriteRequest,
+    addFavouriteSuccess,
+    addFavouriteFail,
+    clearError,
+    clearData
 }=actions
 
 export default reducer

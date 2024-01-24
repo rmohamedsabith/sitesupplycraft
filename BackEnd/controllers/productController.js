@@ -7,7 +7,7 @@ const path=require('path')
 //fetch all Data -> /product
 const getAll=asyncHandler(async(req,res)=>{
     const resultperpage=8;
-    const apifeature=new apiFeatures(product.find({status:'Active'}).populate('owner','shopName address phone'),req.query)
+    const apifeature=new apiFeatures(product.find({status:'Active'}).populate('owner','shopName address phone location'),req.query)
       apifeature.search();
       await apifeature.filter('product');
       apifeature.paginate(resultperpage);   
@@ -31,7 +31,7 @@ const getAll=asyncHandler(async(req,res)=>{
 //get all renting product /products/rent
 const getRent=asyncHandler(async(req,res)=>{
     const resultperpage=8;
-    const apifeature=new apiFeatures(product.find({status:'Active',type:'rent'}).populate('owner','shopName address phone'),req.query)
+    const apifeature=new apiFeatures(product.find({status:'Active',type:'rent'}).populate('owner','shopName address phone location'),req.query)
       apifeature.search();
       await apifeature.filter('product');
       apifeature.paginate(resultperpage);   
@@ -54,7 +54,7 @@ const getRent=asyncHandler(async(req,res)=>{
 //get all selling product /products/sell
 const getSell=asyncHandler(async(req,res)=>{
     const resultperpage=8;
-    const apifeature=new apiFeatures(product.find({status:'Active',type:'sell'}).populate('owner','shopName address phone'),req.query)
+    const apifeature=new apiFeatures(product.find({status:'Active',type:'sell'}).populate('owner','shopName address phone location'),req.query)
       apifeature.search();
       await apifeature.filter('product');
       apifeature.paginate(resultperpage);   
@@ -77,8 +77,7 @@ const getSell=asyncHandler(async(req,res)=>{
 
 
 //create a new product  -> /product/new
-const createProduct=asyncHandler(async(req,res)=>{  
-    
+const createProduct=asyncHandler(async(req,res)=>{      
     // Check for duplicate username
     const duplicate = await product.findOne({name:req.body.name,owner:req.user._id}).lean().exec()
     if (duplicate) {
@@ -103,7 +102,10 @@ const createProduct=asyncHandler(async(req,res)=>{
 
     }
     else{
-        res.status(201).json(Product)
+        res.status(201).json({
+            success:true,
+            Product
+        })
     } 
 
     
@@ -113,7 +115,7 @@ const updateProduct=asyncHandler(async(req,res)=>{
 
     try {
         //find data
-        const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone').exec()
+        const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone location').exec()
         if(!Product)
         {
             return res.status(400).json({message:"There are no product to update"})
@@ -203,7 +205,7 @@ const deleteProduct=asyncHandler(async(req,res)=>{
 })
 //get one product  -> /product/:id
 const getOne=asyncHandler(async(req,res)=>{
-    const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email').exec()
+    const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email location').exec()
 
     if(!Product)
     {
@@ -223,7 +225,8 @@ const addReview=asyncHandler(async(req,res,next)=>{
 
     const review={user,rating,comment}
 
-    const Product=await product.findById(productId).populate('owner','shopName address phone email').exec()
+    const Product=await product.findById(productId).populate('owner','shopName address phone email location').exec()
+    if(user===Product.owner.id)return res.status(400).json({message:"you can't review your product yourself"})
     const isReviewed=Product.reviews.find(review=>{
         return review.user.toString()===user.toString()
     })
@@ -294,25 +297,33 @@ const deleteReview=asyncHandler(async(req,res,next)=>{
         ratings
     })
     res.status(200).json({
-        success: true
-       
+        success: true       
     })
 })
 
 //get all items which are posted by one product owner  /myProducts
 const getUserproducts=asyncHandler(async(req,res)=>{
-    const apifeature=new apiFeatures(product.find({owner:req.user.id}).populate('owner','shopName address phone'),req.query).search().filter()
+    const resultperpage=8;
+    const apifeature=new apiFeatures(product.find({owner:req.user._id}).populate('owner','shopName address phone location'),req.query)
+      apifeature.search();
+      await apifeature.filter('product');
+      apifeature.paginate(resultperpage);   
     const Products=await apifeature.query
+   
 
-    if(!Products)
+    if(!Products || Products.length === 0)
     {
         return res.status(400).json({message:"There are no Products"})
     }
+    // Filter active products from the retrieved Products
+    const activeProducts = Products.filter(product => product.status === 'Active');
 
     res.status(200).json(
         {
             Success:true,
             count:Products.length,
+            ActiveProducts:activeProducts.length,
+            DeactiveProducts:(Products.length-activeProducts.length),
             Products
         })
 })
@@ -326,6 +337,10 @@ const deleteUserAllProducts=asyncHandler(async(req,res)=>{
     }
     
     const deletedData=await product.deleteMany({owner:req.user.id})
+    return res.status(200).json({
+        success:true,
+        deletedCount:deletedData.result.deletedCount
+    })
     
     
 })
