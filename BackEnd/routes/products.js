@@ -1,5 +1,5 @@
 const express =require('express')
-const { getAll, createProduct, updateProduct, deleteProduct, getOne, addReview, getAllReviews, deleteReview, getUserproducts, getSell, getRent } = require('../controllers/productController')
+const { getAll, createProduct, updateProduct, deleteProduct, getOne, addReview, getAllReviews, deleteReview, getUserproducts, getSell, getRent, deleteUserAllProducts } = require('../controllers/productController')
 const router=express.Router()
 const {isAuthenticatedUser,authorizedUser}=require('../middleware/authenticate')
 
@@ -27,6 +27,7 @@ router.route('/Myproducts').get(isAuthenticatedUser,authorizedUser("Product Owne
 router.route('/product/new').post(isAuthenticatedUser,authorizedUser("Product Owner"),upload.array('images'),createProduct)
 router.route('/product/:id/edit').put(isAuthenticatedUser,authorizedUser("Product Owner"),upload.array('images'),updateProduct)
 router.route('/product/:id/delete').delete(isAuthenticatedUser,authorizedUser("Product Owner"),deleteProduct)
+router.route('/products/deleteAll').delete(isAuthenticatedUser,authorizedUser("Product Owner"),deleteUserAllProducts)
 router.route('/product/:id').get(isAuthenticatedUser,getOne)
 router.route('/product/:id/addreview').put(isAuthenticatedUser,addReview)
 router.route('/product/:id/reviews').get(getAllReviews)

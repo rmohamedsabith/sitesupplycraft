@@ -77,8 +77,7 @@ const getSell=asyncHandler(async(req,res)=>{
 
 
 //create a new product  -> /product/new
-const createProduct=asyncHandler(async(req,res)=>{  
-    
+const createProduct=asyncHandler(async(req,res)=>{      
     // Check for duplicate username
     const duplicate = await product.findOne({name:req.body.name,owner:req.user._id}).lean().exec()
     if (duplicate) {
@@ -103,7 +102,10 @@ const createProduct=asyncHandler(async(req,res)=>{
 
     }
     else{
-        res.status(201).json(Product)
+        res.status(201).json({
+            success:true,
+            Product
+        })
     } 
 
     
@@ -295,8 +297,7 @@ const deleteReview=asyncHandler(async(req,res,next)=>{
         ratings
     })
     res.status(200).json({
-        success: true
-       
+        success: true       
     })
 })
 
@@ -322,6 +323,7 @@ const getUserproducts=asyncHandler(async(req,res)=>{
             Success:true,
             count:Products.length,
             ActiveProducts:activeProducts.length,
+            DeactiveProducts:(Products.length-activeProducts.length),
             Products
         })
 })
@@ -335,6 +337,10 @@ const deleteUserAllProducts=asyncHandler(async(req,res)=>{
     }
     
     const deletedData=await product.deleteMany({owner:req.user.id})
+    return res.status(200).json({
+        success:true,
+        deletedCount:deletedData.result.deletedCount
+    })
     
     
 })

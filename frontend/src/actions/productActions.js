@@ -1,7 +1,7 @@
 
 
 import axios from 'axios'
-import { addReviewFail, addReviewRequest, addReviewSuccess,productFail, productRequest, productSuccess, reviewsFail, reviewsRequest, reviewsSuccess } from '../slices/productSlice'
+import { addProductFail, addProductRequest, addProductSuccess, addReviewFail, addReviewRequest, addReviewSuccess,deleteProductFail,deleteProductRequest,deleteProductSuccess,productFail, productRequest, productSuccess, reviewsFail, reviewsRequest, reviewsSuccess } from '../slices/productSlice'
 
 export const getProduct=(id,model)=>async(dispatch)=>{
     try {
@@ -38,6 +38,31 @@ export const addReview=(id,rating,comment,model)=>async(dispatch)=>{
         dispatch(addReviewFail(error.response.data.message))
     }
 }
+
+export const addProduct=productData=>async(dispatch)=>{
+    try {
+        dispatch(addProductRequest())
+        const {data}=await axios.post(`/SiteSupplyCraft/product/new`,productData)
+        dispatch(addProductSuccess(data))        
+    } catch (error) {
+        dispatch(addProductFail(error.response.data.message))
+
+    }
+}
+export const deleteProduct=id=>async(dispatch)=>{
+    try {
+        dispatch(deleteProductRequest())
+        const {data}=await axios.delete(`/SiteSupplyCraft/product/${id}/delete`)
+        dispatch(deleteProductSuccess(data))        
+    } catch (error) {
+        dispatch(deleteProductFail(error.response.data.message))
+
+    }
+}
+
+
+
+
 
 
 
