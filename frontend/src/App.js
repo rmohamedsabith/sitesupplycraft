@@ -23,12 +23,13 @@ import AddProduct from './components/Product Owner/AddProduct'
 import PreviewProduct from './components/Product Owner/PreviewProduct';
 import Messages from './components/Product Owner/Messages'
 import BecomeJobSeeker from './components/Product Owner/BecomeJobSeeker';
-/* import AdminDashboard from './components/Admin/DashBoard'; */
+import AdminDashboard from './components/Admin/Dashboard';
 import AdminMessages from './components/Admin/Messages'
 import Verifications from './components/Admin/Verifications'; 
 import Payment from './components/Product Owner/Payment';
 import Verification from './components/Admin/Verification';
 import Message from './components/Admin/Message';
+import AdminLayout from './components/Layouts/AdminLayout';
 
 
 
@@ -82,10 +83,13 @@ function App() {
           {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
 
           {/* Admin */}
-              {/* Navodi */}
-          {/* <Route path='Admin/DashBoard' element={<AdminDashboard/>}/> */}
-          <Route path='Admin/Messages' element={<AdminMessages/>}/>
-          <Route path='Admin/Messages/:id' element={<Message/>}/>
+          {/* Navodi */}
+          <Route path="/admin/*" element={<AdminLayout />}>
+            <Route index element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
+            <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
+          </Route>
             
               {/* Hiran */}
          <Route path='Admin/Verification' element={<Verifications/>}/>
