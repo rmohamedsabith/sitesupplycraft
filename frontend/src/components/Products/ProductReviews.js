@@ -10,11 +10,11 @@ const ProductReviews = () => {
     {
         reviews.map((review,index)=>(
             <div key={index} className="d-flex">
-            <Container key={review.user._id} className="review" fluid={true}>
+            <Container key={review._id} className="review" fluid={true}>
                 <Row>
                     <Col>
-                        <img src={review.user.profile??'../../images/default_avatar.png'} style={{width:'30px',height:'30px',objectFit: 'cover'}} className='rounded-circle' alt='profile'/>
-                        <span style={{fontSize:'12px',paddingLeft:'20px'}}>{review.user.firstname} {review.user.lastname}</span>
+                        <img src={(review.user?.normal?.profile || review.user?.googleUser?.profile)??'../../images/default_avatar.png'} style={{width:'30px',height:'30px',objectFit: 'cover'}} className='rounded-circle' alt='profile'/>
+                        <span style={{fontSize:'12px',paddingLeft:'20px'}}>{review.user?.normal?review.user.normal.firstname+" "+review.user.normal.lastname:review.googleUser?.name}</span>
                     </Col>
                     <Col style={{textAlign:'right'}}>
                         <span style={{fontSize:'12px',paddingLeft:'20px'}}>{review.date.slice(0,10)}</span>

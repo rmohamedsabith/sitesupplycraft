@@ -97,7 +97,7 @@ const ProductDetails = () => {
               <Col>               
                   <Carousel data-bs-theme="dark" style={{width:'90%',height:'50vh',zIndex:'0'}}onSelect={handleCarouselSelect}>
                     {!isClicked?
-                      (product.images&&product.images.map((image)=>(
+                      (product.images&&product.images?.map((image)=>(
                         <Carousel.Item interval={2000} key={image.image}>
                         <img
                           width={300}

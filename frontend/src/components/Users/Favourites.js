@@ -74,12 +74,12 @@ const Favourites = () => {
                     <div className='bookmarkProduct' key={index} onClick={()=>handleClick('products',cart._id)}>
                     <Row>
                         <Col xs={3}>
-                             <img src={cart.images[0].image} alt='pic'/>
+                             <img src={cart.images?.[0]?.image} alt='pic'/>
                         </Col>
                         <Col>
                             <Row>
                                 <Col>
-                                <span style={{color:'green',fontSize:'10px'}}>{cart.owner.shopName}</span>
+                                <span style={{color:'green',fontSize:'10px'}}>{cart.owner?.shopName}</span>
                                 </Col>
                                 <Col xs={3}>
                                 <span style={{color:'#FF8B04',fontSize:'10px'}}>{cart.type}</span>
@@ -101,8 +101,8 @@ const Favourites = () => {
                     </Row>
                     </div>
                 ))}
-                {user.carts.laborers.length>0?<h3>Laborers</h3>:null}          
-                {user.carts.laborers.length>0&&user.carts.laborers.map((cart,index)=>(
+                {user.carts.laborers?.length>0?<h3>Laborers</h3>:null}          
+                {user.carts.laborers?.length>0&&user.carts.laborers?.map((cart,index)=>(
                     <div className='bookmarkProduct' key={index} onClick={()=>handleClick('laborers',cart._id)}>
                     <Row>
                         <Col xs={3}>

@@ -32,6 +32,7 @@ import Message from './components/Admin/Message';
 import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
+import PinLocation from './components/Google maps/PinLocation';
 
 
 
@@ -105,6 +106,7 @@ function App() {
           <Route path="*" element={<Missing/>}/>              
         </Routes>
         <Footer/>
+        <PinLocation/>
           
          
       </HelmetProvider>

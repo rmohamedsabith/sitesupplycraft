@@ -3,8 +3,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button,Dropdown, Modal, Row} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import haversine from 'haversine';
-import geolib from 'geolib'
 import { useNavigate } from 'react-router-dom';
 import { getProduct } from '../../actions/productActions';
 
@@ -202,57 +200,6 @@ const FilterMap = () => {
     return currentLocation
   },[currentLocation])
 
-/*  const directionsOptions =useMemo(()=>{
-  
-    return {
-      origin: center,
-      destination: {
-        lat: 7.42081,        
-        lng: 81.82297
-      },
-      travelMode: transportMode, // Default travel mode
-      optimizeWaypoints: true, // Optimize the order of waypoints for the shortest path
-    };
-  }, [center, transportMode]); */
-/*  const fetchDistance = useCallback(() => {
-    if (!window.google || !window.google.maps) {
-     toast.error('Google Maps script not loaded.',{
-      position:'bottom-center'
-     });
-      return;
-    }
-  
-    const service = new window.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix({
-      origins: [currentLocation],
-      destinations: [directionsOptions.destination],
-      travelMode: transportMode,
-    }, (response, status) => {
-      if (status === 'OK') {
-        const distanceText = response.rows[0].elements[0].distance.text;
-        const durationText = response.rows[0].elements[0].duration.text;
-
-        setDistance(distanceText);
-        setDuration(durationText);
-      } else {
-        console.error(`Distance matrix request failed: ${status}`);
-      }
-    });
-  },[currentLocation,directionsOptions,transportMode]) */
-
-  /* const directionsCallback = useCallback((result, status) => {
-    if (status === 'OK') {
-      setDirections(result);
-      fetchDistance()
-      toast.success(`Directions request success: ${status}`,{
-        position:'bottom-center'
-      })
-    } else {
-      toast.error(`Directions request failed: ${status}`,{
-        position:'bottom-center'
-      })
-    }
-  }, [fetchDistance]); */
  
   return (
     <> 

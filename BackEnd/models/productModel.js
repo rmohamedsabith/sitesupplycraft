@@ -81,10 +81,17 @@ const productSchema= new mongoose.Schema({
     },
  reviews: [
     {
-            user:{
+           /*  user:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref: 'User'
-            },
+            }, */
+           user: {
+                normal:{type: mongoose.Schema.ObjectId,ref:'User'
+                },
+                googleUser:{
+                    type: mongoose.Schema.ObjectId,ref:'GoogleUser'
+                }
+              }, 
             rating: {
                 type: Number,
                 required: true
@@ -97,7 +104,7 @@ const productSchema= new mongoose.Schema({
                 type:Date,
                 default:Date.now
             }
-        }
+    }
     ],
     status:{
         type:String,
