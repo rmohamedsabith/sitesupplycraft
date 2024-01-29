@@ -316,7 +316,7 @@ const getUserproducts=asyncHandler(async(req,res)=>{
         return res.status(400).json({message:"There are no Products"})
     }
     // Filter active products from the retrieved Products
-    const activeProducts = Products.filter(product => product.status === 'Active');
+    //const activeProducts = Products.filter(product => product.status === 'Active');
 
     res.status(200).json(
         {
