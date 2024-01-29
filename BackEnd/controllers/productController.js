@@ -3,6 +3,7 @@ const asyncHandler=require('express-async-handler')
 const apiFeatures = require('../util/apiFeatures')
 const fs=require('fs').promises
 const path=require('path')
+const mongoose= require('mongoose')
 
 //fetch all Data -> /product
 const getAll=asyncHandler(async(req,res)=>{
@@ -217,25 +218,39 @@ const getOne=asyncHandler(async(req,res)=>{
     })
 })
 
+//change status /product/:id/changeStatus
+const changeStatus=asyncHandler(async(req,res)=>{
+    const Product=await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
+    res.status(200).json({
+        Product
+    })
+})
 //create review  /product/:id/addreview
 const addReview=asyncHandler(async(req,res,next)=>{
     const productId=req.params.id
     const user=req.user.id
     const {rating,comment}=req.body
 
-    const review={user,rating,comment}
+    let review;
+    if(req.user.role==='Google User')review={user:{googleUser:user},rating,comment}
+    else review={user:{normal:user},rating,comment}
 
     const Product=await product.findById(productId).populate('owner','shopName address phone email location').exec()
     if(user===Product.owner.id)return res.status(400).json({message:"you can't review your product yourself"})
     const isReviewed=Product.reviews.find(review=>{
-        return review.user.toString()===user.toString()
+        return review.user.normal?.toString()===user.toString()||review.user.googleUser?.toString()===user.toString()
     })
     console.log(isReviewed)
 
     if(isReviewed){
         //updating the  review
         Product.reviews.forEach(review => {
-            if(review.user.toString() === user.toString()){
+            if(review.user.normal?.toString() === user.toString()){
+review.comment = comment
+                review.rating = rating
+                review.date=Date.now()
+            }
+            else if(review.user.googleUser?.toString()===user.toString()){
                 review.comment = comment
                 review.rating = rating
                 review.date=Date.now()
@@ -258,13 +273,21 @@ const addReview=asyncHandler(async(req,res,next)=>{
 
     res.status(200).json({
         success: true,
-        Product
+        Product,
+        count:Product.numOfReviews
+        
     })
 })
 
 //get all Reviews /product/:id/reviews
 const getAllReviews=asyncHandler(async(req,res,next)=>{
-    const Product=await product.findById({_id:req.params.id}).populate('reviews.user','firstname lastname profile');
+    const Product=await product.findById({_id:req.params.id}).populate({
+        path:'reviews.user.normal',
+        select:'firstname lastname profile role'
+    }).populate({
+        path:'reviews.user.googleUser',
+        select:'name profile role'
+    });
     res.status(200).json(
         {
             success:true,
@@ -276,28 +299,37 @@ const getAllReviews=asyncHandler(async(req,res,next)=>{
 
 //delete review /product/:id/deletereview
 const deleteReview=asyncHandler(async(req,res,next)=>{
-    const Product =await product.findById(req.params.id)
+    let Product =await product.findById(req.params.id)
 
-    const reviews=Product.reviews.filter(review=>{
-        return review.user.toString()!==req.user.id.toString()
-    })
+    
+    const reviews = Product.reviews?.filter((review) => {
+        const normalUserId = review.user.normal?.toString();
+        const googleUserId = review.user.googleUser?.toString();
+        const reqUserId = req.user.id?.toString();
+      
+        return normalUserId !== reqUserId && googleUserId !== reqUserId;
+      });
     //number of reviews
-    const numOfReviews=reviews.length
+    const numOfReviews=reviews?.length
 
      //finding the average with the filtered reviews
-     let ratings = reviews.reduce((acc, review) => {
+     let ratings = reviews?.reduce((acc, review) => {
         return review.rating + acc;
-    }, 0) / reviews.length;
+    }, 0) / reviews?.length;
     ratings = isNaN(ratings)?0:ratings;
 
     //save the product document
-    await product.findByIdAndUpdate(req.params.id, {
+    Product=await product.findByIdAndUpdate(req.params.id, {
         reviews,
         numOfReviews,
         ratings
     })
+
+    Product=await product.findById(req.params.id)
+
     res.status(200).json({
-        success: true       
+        success: true ,
+        Product       
     })
 })
 
@@ -316,7 +348,7 @@ const getUserproducts=asyncHandler(async(req,res)=>{
         return res.status(400).json({message:"There are no Products"})
     }
     // Filter active products from the retrieved Products
-    //const activeProducts = Products.filter(product => product.status === 'Active');
+    const activeProducts = Products.filter(product => product.status === 'Active');
 
     res.status(200).json(
         {
@@ -357,5 +389,6 @@ module.exports={
     getAllReviews,
     deleteReview,
     getUserproducts,
-    deleteUserAllProducts
+    deleteUserAllProducts,
+    changeStatus
 }

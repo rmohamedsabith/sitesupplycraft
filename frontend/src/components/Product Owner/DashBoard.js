@@ -11,6 +11,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { getOwnerProducts } from '../../actions/productsActions'
 import Loader from '../Loader'
 import './DashBoard.css'
+import { changeStatus } from '../../actions/productActions';
 
 ChartJS.register(
   Title, Tooltip, LineElement, Legend,
@@ -23,12 +24,15 @@ const DashBoard = () => {
   const{isLoading,products,ActiveProducts,DeactiveProducts} = useSelector((state)=> state.productsState)
   const dispatch=useDispatch()
   const [keyword,setKeyword]=useState('')
+  const [status, setStatus] = useState('');
+  
 
   useEffect(()=>{
        
     dispatch(getOwnerProducts(keyword))
 
-  },[])
+
+  },[dispatch,status])
 
 
 
@@ -124,22 +128,17 @@ const DashBoard = () => {
     setKeyword(event.target.value);
   };
 
-  const [status, setStatus] = useState('');
-    const [isEyeOpen, setIsEyeOpen] = useState('');
+  
 
-    const toggleEye = () => {
-      setIsEyeOpen(!isEyeOpen);
-      setStatus();
+    const toggleEyeOpen = (id) => {
+    setStatus('Deacticve');
+    dispatch(changeStatus(id,'Deacticve'))
     
     };
-
-
-    const toggleeye2 = (isEyeOpen) => {
-      if (isEyeOpen) {
-        return <p className='statusde'>Active</p>;
-      } else {
-        return <p className='statusde'>Deactive</p>;
-      }
+    const toggleEyeClose= (id) => {
+    setStatus('Acticve');
+    dispatch(changeStatus(id,'Acticve'))
+    
     };
     const handleClick=()=>{
       dispatch(getOwnerProducts(keyword))
@@ -218,7 +217,11 @@ const DashBoard = () => {
           <Link to = '..\..\ProductOwner/addProduct/Preview'><button className='btn'>Preview</button></Link>
         <button className='btn'>Delete</button>
         {/* <img src = {image1} className='im2'></img> */}
-        <button onClick={toggleEye} className='btnicon' ><FontAwesomeIcon icon={isEyeOpen ? faEye : faEyeSlash} className='iconeye' /></button>
+        {item.status!=='Active' ?
+          <button onClick={()=>toggleEyeOpen(item._id)} className='btnicon' ><FontAwesomeIcon icon= {faEye} className='iconeye' /></button>
+          :
+          <button onClick={()=>toggleEyeClose(item._id)} className='btnicon' ><FontAwesomeIcon icon={faEyeSlash} className='iconeye' /></button>
+        }
       </td>
         </tr>))
       

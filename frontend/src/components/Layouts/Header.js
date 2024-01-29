@@ -51,12 +51,12 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
                     <figure className='avatar avatar-nav'>
                       <Image src={user.profile??'../../images/default_avatar.png'} className='rounded-circle' />
                     </figure>
-                    <span>{user.firstname+' '+user.lastname}</span>
+                    <span>{user.role!=='Google User'?user.firstname+' '+user.lastname:user.name}</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu >
                       { user.role === 'Admin' && <Dropdown.Item onClick={() => {navigate('Admin/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
                       { user.role === 'Product Owner' && <Dropdown.Item onClick={() => {navigate('ProductOwner/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
-                      <Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>
+                      {user.role!=='Google User'&&user.role!=='Admin'?<Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>:<Dropdown.Item className='text-dark'>Change Password</Dropdown.Item>}
                       <Dropdown.Item onClick={logoutHandler} className='text-danger'>Logout</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>        

@@ -16,7 +16,7 @@ const Map=({center, directions, directionsOptions,directionsCallback})=>{
 
   return(
     <LoadScript googleMapsApiKey={process.env.REACT_APP_MAP_API_KEY}> 
-    <GoogleMap mapContainerStyle={containerStyle} center={center}>
+    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
       {directions && <DirectionsRenderer directions={directions} />}
         <InfoWindow
           position={{lat:directionsOptions.destination.lat+0.0007,

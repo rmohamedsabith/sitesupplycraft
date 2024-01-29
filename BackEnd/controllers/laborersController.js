@@ -43,7 +43,7 @@ const getLaborer=asyncHandler(async(req,res)=>{
 })
 //create review  /laborer/:id/addreview
 const addReview=asyncHandler(async(req,res,next)=>{
-    const productId=req.params.id
+   /*  const productId=req.params.id
     const user=req.user.id
     const {rating,comment}=req.body
 
@@ -81,11 +81,70 @@ const addReview=asyncHandler(async(req,res,next)=>{
     res.status(200).json({
         success: true,
         Product
+    }) */
+
+    const productId=req.params.id
+    const user=req.user.id
+    const {rating,comment}=req.body
+
+    let review;
+    if(req.user.role==='Google User')review={user:{googleUser:user},rating,comment}
+    else review={user:{normal:user},rating,comment}
+
+    if(user===productId)return res.status(400).json({message:"you can't review yourself"})
+
+    
+    const Product=await JobSeeker.findById(productId).exec()
+    const isReviewed=Product.reviews.find(review=>{
+        return review.user.normal?.toString()===user.toString()||review.user.googleUser?.toString()===user.toString()
+    })
+    console.log(isReviewed)
+
+    if(isReviewed){
+        //updating the  review
+        Product.reviews.forEach(review => {
+            if(review.user.normal?.toString() === user.toString()){
+                review.comment = comment
+                review.rating = rating
+                review.date=Date.now()
+            }
+            else if(review.user.googleUser?.toString()===user.toString()){
+                review.comment = comment
+                review.rating = rating
+                review.date=Date.now()
+            }
+
+        })
+
+    }else{
+        //creating the review
+        Product.reviews.push(review)
+        Product.numOfReviews = Product.reviews.length;
+    }
+//find the average of the product reviews
+    Product.ratings = Product.reviews.reduce((acc, review) => {
+        return review.rating + acc;
+    }, 0) / Product.reviews.length;
+    Product.ratings = isNaN(Product.ratings)?0:Product.ratings;
+    
+    await Product.save({validateBeforeSave: false});
+
+    res.status(200).json({
+        success: true,
+        Product,
+        count:Product.numOfReviews
+        
     })
 })
 //get all Reviews /laborer/:id/reviews
 const getAllReviews=asyncHandler(async(req,res,next)=>{
-    const Product=await JobSeeker.findById({_id:req.params.id}).populate('reviews.user','firstname lastname profile');
+    const Product=await JobSeeker.findById({_id:req.params.id}).populate({
+        path:'reviews.user.normal',
+        select:'firstname lastname profile role'
+    }).populate({
+        path:'reviews.user.googleUser',
+        select:'name profile role'
+    });
     res.status(200).json(
         {
             success:true,
@@ -99,11 +158,17 @@ const getAllReviews=asyncHandler(async(req,res,next)=>{
 const deleteReview=asyncHandler(async(req,res,next)=>{
     const Product =await JobSeeker.findById(req.params.id)
 
-    const reviews=Product.reviews.filter(review=>{
+    /* const reviews=Product.reviews.filter(review=>{
         return review.user.toString()!==req.user.id.toString()
-    })
+    }) */
 
-    console.log(reviews)
+    const reviews = Product.reviews?.filter((review) => {
+        const normalUserId = review.user.normal?.toString();
+        const googleUserId = review.user.googleUser?.toString();
+        const reqUserId = req.user.id?.toString();
+      
+        return normalUserId !== reqUserId && googleUserId !== reqUserId;
+      });
 
     //number of reviews
     const numOfReviews=reviews.length
