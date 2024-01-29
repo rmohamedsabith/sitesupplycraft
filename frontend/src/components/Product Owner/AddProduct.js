@@ -1,11 +1,12 @@
 import React from 'react'
 import PreviewProduct from './PreviewProduct'
 import Payment from './Payment'
+import './AddProduct.css'
 
 const AddProduct = () => {
   return (
     <div>
-        AddProduct
+          <h1 className='styled-heading'>Product Adverticement</h1>
         <Payment/>
     </div>
   )
