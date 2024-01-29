@@ -153,6 +153,27 @@ const productSlice=createSlice({
                 error:  action.payload
             }
         },
+        //Change Status
+        changeStatusRequest(state, action){
+            return {
+                ...state,
+                isLoading: true
+            }
+        },
+        changeStatusSuccess(state, action){
+            return {
+                ...state,
+                isLoading: false,
+                product:action.payload.Product
+            }
+        },
+        changeStatusFail(state, action){
+            return {
+                ...state,
+                isLoading: false,
+                error:  action.payload
+            }
+        },
 
 
         clearReviewSubmitted(state, action) {
@@ -198,6 +219,9 @@ export const{
     deleteProductRequest,
     deleteProductSuccess,
     deleteProductFail,
+    changeStatusRequest,
+    changeStatusSuccess,
+    changeStatusFail,
 }=actions
 
 export default reducer

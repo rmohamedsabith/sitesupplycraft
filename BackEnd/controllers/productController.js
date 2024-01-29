@@ -218,6 +218,13 @@ const getOne=asyncHandler(async(req,res)=>{
     })
 })
 
+//change status /product/:id/changeStatus
+const changeStatus=asyncHandler(async(req,res)=>{
+    const Product=await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
+    res.status(200).json({
+        Product
+    })
+})
 //create review  /product/:id/addreview
 const addReview=asyncHandler(async(req,res,next)=>{
     const productId=req.params.id
@@ -382,5 +389,6 @@ module.exports={
     getAllReviews,
     deleteReview,
     getUserproducts,
-    deleteUserAllProducts
+    deleteUserAllProducts,
+    changeStatus
 }

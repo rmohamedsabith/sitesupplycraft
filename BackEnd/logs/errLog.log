@@ -66,3 +66,7 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240128	14:51:41	a9945aba-8092-4ee2-86fe-5408f7770f2b	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
 20240128	15:41:55	45a9ad69-1355-4086-a411-f1b139dd8709	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
 20240128	23:02:27	063445e8-63be-481f-a897-0ff8ed131d2c	CastError: Cast to ObjectId failed for value "{ status: 'processing' }" (type Object) at path "_id" for model "Product Owner"	GET	/SiteSupplyCraft/processing	undefined
+20240129	13:36:44	1d35b437-8ca1-4f8f-9502-ed6c73d4f4c6	TypeError: Cannot set properties of null (setting 'status')	PUT	/SiteSupplyCraft/product/659278c74af76a11efa9e18b/changeStatus	undefined
+20240129	13:39:48	abbcbcd6-91f9-4ad0-9c15-3f1457482667	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
+20240129	13:42:01	03d895de-92ae-44b4-8fe1-5729ab34ea47	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
+20240129	13:42:03	71aef46a-3d95-4635-99e5-a0ce20afb00f	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
