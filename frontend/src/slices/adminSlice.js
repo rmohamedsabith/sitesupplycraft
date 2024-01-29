@@ -114,7 +114,7 @@ const adminSlice=createSlice({
     }
 })
 
-const{actions,reducer}=authSlice;
+const{actions,reducer}=adminSlice;
 export const{
     viewProcessingOwnerRequest,
     viewProcessingOwnerSuccess,
