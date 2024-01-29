@@ -1,5 +1,5 @@
 const express =require('express')
-const { getAll, createProduct, updateProduct, deleteProduct, getOne, addReview, getAllReviews, deleteReview, getUserproducts, getSell, getRent } = require('../controllers/productController')
+const { getAll, createProduct, updateProduct, deleteProduct, getOne, addReview, getAllReviews, deleteReview, getUserproducts, getSell, getRent, deleteUserAllProducts, changeStatus } = require('../controllers/productController')
 const router=express.Router()
 const {isAuthenticatedUser,authorizedUser}=require('../middleware/authenticate')
 
@@ -14,7 +14,7 @@ const upload = multer({
       filename: function (req, file, cb) {
         const dateSuffix = Date.now(); // Get current timestamp
         const originalName = file.originalname; // Get the original name of the file
-        const newName = `${dateSuffix}-${originalName}`; // Combine timestamp and original name
+        const newName = `${dateSuffix}-${originalName.replace(/\s/g, '_')}`; // Combine timestamp and original name
         cb(null, newName);
       },
     }),
@@ -26,8 +26,10 @@ router.route('/products/rent').get(getRent)
 router.route('/Myproducts').get(isAuthenticatedUser,authorizedUser("Product Owner"),getUserproducts)
 router.route('/product/new').post(isAuthenticatedUser,authorizedUser("Product Owner"),upload.array('images'),createProduct)
 router.route('/product/:id/edit').put(isAuthenticatedUser,authorizedUser("Product Owner"),upload.array('images'),updateProduct)
+router.route('/product/:id/changeStatus').put(isAuthenticatedUser,authorizedUser("Product Owner"),changeStatus)
 router.route('/product/:id/delete').delete(isAuthenticatedUser,authorizedUser("Product Owner"),deleteProduct)
-router.route('/product/:id').get(getOne)
+router.route('/products/deleteAll').delete(isAuthenticatedUser,authorizedUser("Product Owner"),deleteUserAllProducts)
+router.route('/product/:id').get(isAuthenticatedUser,getOne)
 router.route('/product/:id/addreview').put(isAuthenticatedUser,addReview)
 router.route('/product/:id/reviews').get(getAllReviews)
 router.route('/product/:id/deletereview').delete(isAuthenticatedUser,deleteReview)

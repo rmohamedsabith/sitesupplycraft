@@ -1,5 +1,4 @@
 import React from 'react'
-import PreviewProduct from './PreviewProduct'
 import Payment from './Payment'
 
 const AddProduct = () => {

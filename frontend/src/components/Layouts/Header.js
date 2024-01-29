@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import logo from '../../images/logo.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Dropdown,Image} from 'react-bootstrap'
 import { logout } from '../../actions/authActions'
 import{filter} from '../../actions/productsFilteringActions'
-import { getProducts } from '../../actions/productsActions'
+import { clearProducts } from '../../slices/productsSlice'
+import Favourites from '../Users/Favourites'
+
 
 
 const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) => {
+  
   const {isAuthenticated,user}=useSelector((state)=>state.authState)
   const navigate=useNavigate()
   const dispatch=useDispatch()
@@ -16,12 +19,13 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     navigate('/')
     dispatch(logout)
   }
-  const handleReferesh=()=>{
+  const handleReferesh=useCallback(async()=>{
     setDistrict('')  
-    setIsDistrict(false) 
-    dispatch(filter(null,null,null,null,'products'))
-    dispatch(getProducts(null,null,null,null,null,null,1,'products'))    
-  }
+    setIsDistrict(false)
+    await dispatch(clearProducts())
+    dispatch(filter(null,null,null,null,'products'))  
+    navigate('/')    
+  },[setDistrict,setIsDistrict,dispatch,navigate])
 
   return (
     
@@ -29,7 +33,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
       <div className="headRow">
         
         <div className="logo">
-          <Link to='/'><img id="siteimg" src={logo} alt="Logo" onClick={handleReferesh}/></Link>
+          <img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/>
           <span id="sitesupplycraft">Site Supply Craft</span>
         </div>
         {hide?
@@ -38,18 +42,21 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
           </div>
           :null}
         
-        {isAuthenticated?
-        <div className="headRight">          
-              <Dropdown className='d-inline' >
+        {isAuthenticated? 
+        <div className="headRight">
+            <Favourites/>
+                       
+              <Dropdown>
                   <Dropdown.Toggle variant='text-white pr-5'  className='no-hover-dropdown' style={{boxShadow:'none',fontWeight:'800'}}>
                     <figure className='avatar avatar-nav'>
                       <Image src={user.profile??'../../images/default_avatar.png'} className='rounded-circle' />
                     </figure>
-                    <span>{user.firstname+' '+user.lastname}</span>
+                    <span>{user.role!=='Google User'?user.firstname+' '+user.lastname:user.name}</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu >
-                      { user.role === 'admin' && <Dropdown.Item onClick={() => {navigate('admin/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
-                      <Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>
+                      { user.role === 'Admin' && <Dropdown.Item onClick={() => {navigate('Admin/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
+                      { user.role === 'Product Owner' && <Dropdown.Item onClick={() => {navigate('ProductOwner/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
+                      {user.role!=='Google User'&&user.role!=='Admin'?<Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>:<Dropdown.Item className='text-dark'>Change Password</Dropdown.Item>}
                       <Dropdown.Item onClick={logoutHandler} className='text-danger'>Logout</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>        
