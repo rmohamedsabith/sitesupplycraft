@@ -61,7 +61,7 @@ const Favourites = () => {
     <>
         <div className='bookmark' onClick={handleShow}>
             <FontAwesomeIcon icon={faBookmark} style={{fontSize: '25px', marginTop:'25px' }} /> 
-            <span style={{backgroundColor:'red',borderRadius:'100%',padding:'5px',fontSize:'12px'}}>{user.numOfCarts}</span>
+            <span style={{backgroundColor:'red',borderRadius:'100%',padding:'5px',fontSize:'12px'}}>{user.numOfCarts?user.numOfCarts:0}</span>
         </div>
 
             <Offcanvas show={show} onHide={handleClose} placement="end" >
@@ -69,8 +69,8 @@ const Favourites = () => {
                 <Offcanvas.Title>My Favourites</Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body> 
-                {user.carts.products?.length>0?<h3>Products</h3>:null}          
-                {user.carts.products?.length>0&&user.carts.products?.map((cart,index)=>(
+                {user.carts?.products?.length>0?<h3>Products</h3>:null}          
+                {user.carts?.products?.length>0&&user.carts?.products?.map((cart,index)=>(
                     <div className='bookmarkProduct' key={index} onClick={()=>handleClick('products',cart._id)}>
                     <Row>
                         <Col xs={3}>
@@ -101,8 +101,8 @@ const Favourites = () => {
                     </Row>
                     </div>
                 ))}
-                {user.carts.laborers?.length>0?<h3>Laborers</h3>:null}          
-                {user.carts.laborers?.length>0&&user.carts.laborers?.map((cart,index)=>(
+                {user.carts?.laborers?.length>0?<h3>Laborers</h3>:null}          
+                {user.carts?.laborers?.length>0&&user.carts?.laborers?.map((cart,index)=>(
                     <div className='bookmarkProduct' key={index} onClick={()=>handleClick('laborers',cart._id)}>
                     <Row>
                         <Col xs={3}>
@@ -130,7 +130,7 @@ const Favourites = () => {
                     </div>
                 ))}
 
-                {(user.carts.products?.length>0||user.carts.laborers?.length>0)?
+                {(user.carts?.products?.length>0||user.carts?.laborers?.length>0)?
                 <div className='location d-block' onClick={()=>handleDeleteAll()}> Delete All</div>
                 :
                 <center style={{color:'red',position:'relative',top:'50%'}}>There is no product in the favourite</center>
