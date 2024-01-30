@@ -23,7 +23,7 @@ const Messages = () => {
   return (
     <section className="container mt-2">
       <h1>Messages</h1>
-      <table className="table">
+      <table className="table table-sm mt-2">
         <thead>
           <tr>
             <th scope="col">Date</th>

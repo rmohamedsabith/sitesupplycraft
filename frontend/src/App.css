@@ -123,6 +123,15 @@ body {
 }
 
 /* Admin Sidebar */
+.adminSide{
+  display: inline-block;
+    background: #176B87;
+    color: #ffff;
+    padding: 20PX;   
+    width: 100%; 
+    height: 100vh;        
+}
+
 .sidebarLink{
   font-size: 20px;
   text-decoration: none;
