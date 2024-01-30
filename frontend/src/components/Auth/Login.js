@@ -9,7 +9,7 @@ import Loader from '../Loader'
 
 const Login = () => {
 
-  const {isLoading,isAuthenticated,error,message}=useSelector((state)=>state.authState)
+  const {isLoading,isAuthenticated,user,error,message}=useSelector((state)=>state.authState)
 
 
   const [email,setEmail]=useState('')
@@ -27,7 +27,8 @@ const Login = () => {
   useEffect(()=>{
     if(isAuthenticated)
     {
-      return navigate('/')
+      if(user && user.role ==='Admin') return navigate('/admin')
+      else return navigate('/')
     }
     if(error)
     {
