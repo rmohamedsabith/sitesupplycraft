@@ -25,6 +25,15 @@ const productSchema= new mongoose.Schema({
         type:Number,
         required:[true,"Please Enter price"]
     },
+    priceType:{
+        type:String,
+        default:'/perDay',
+        enum:{
+            values:['/perDay','/perMonth','/PerHour']
+        }
+        
+
+    },
     discount:{
         type:Number,
         default:0
@@ -37,8 +46,7 @@ const productSchema= new mongoose.Schema({
         type:String,
         default:"sell",
         enum: 
-            ["sell","rent"]
-        
+            ["sell","rent"]        
     },
     category: {
         type: String,
@@ -103,7 +111,7 @@ const productSchema= new mongoose.Schema({
 })
 
 productSchema.pre('save',function(next){
-     this.name=this.name.toLowerCase();
+     this.name=this.name.toUpperCase();
      next();
 })
 

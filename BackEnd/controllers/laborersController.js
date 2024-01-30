@@ -27,6 +27,20 @@ const getLaborers=asyncHandler(async(req,res)=>{
 
         })
 })
+
+//getone laborer /laborer/:id
+const getLaborer=asyncHandler(async(req,res)=>{
+    const Product=await JobSeeker.findOne({_id:req.params.id}).exec()
+
+    if(!Product)
+    {
+        return res.status(400).json({message:"There are no product to find"})
+    }
+    res.status(200).json({
+        success:true,
+        product:Product
+    })
+})
 //create review  /laborer/:id/addreview
 const addReview=asyncHandler(async(req,res,next)=>{
     const productId=req.params.id
@@ -34,6 +48,7 @@ const addReview=asyncHandler(async(req,res,next)=>{
     const {rating,comment}=req.body
 
     const review={user,rating,comment}
+    if(user===productId)return res.status(400).json({message:"you can't review yourself"})
 
     const Product=await JobSeeker.findById(productId).exec()
     const isReviewed=Product.reviews.find(review=>{
@@ -115,5 +130,6 @@ module.exports={
     getLaborers,
     getAllReviews,
     addReview,
-    deleteReview
+    deleteReview,
+    getLaborer
 }

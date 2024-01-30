@@ -37,16 +37,29 @@ const userSchema=new mongoose.Schema({
         type:String,
         default:'Customer',
         enum:['Customer','Admin','Product Owner','Job Seeker']
+    },
+    carts:{
+        products:[{type:mongoose.Types.ObjectId,ref:'product'}],
+        laborers:[{type:mongoose.Types.ObjectId,ref:'Job Seeker'}],
     }
-   ,
+    ,
+    numOfCarts:{
+        type:Number,
+        default:0
+    },
     resetPasswordToken: String,
-    resetPasswordTokenExpire: Date
+    resetPasswordTokenExpire: Date,
+    isvalidEmail:{
+        type:Boolean,
+        default:false
+    },
+    emailValidationToken:String, 
+    emailValidationTokenExpire:Date
 },{
     timestamps:true
 })
 
 //create seperate models for each role
-
 const adminSchema=new mongoose.Schema({
     emp_id: {
         type: String,
@@ -134,6 +147,17 @@ const productOwnerSchema=new mongoose.Schema({
         type:String,
         required:[true,'Upload your shop current bill Whic is within one month']
     },
+    location:{
+        lat:{
+            type:Number,
+            required:[true,'select Your location']
+        },
+        long:{
+            type:Number,
+            required:[true,'select Your location']
+        },
+    }
+    ,
     status:{
         type:String,
         default:'processing',
@@ -183,6 +207,16 @@ const jobSeekerSchema=new mongoose.Schema({
        district:{type:String,required:[true,'Please Enter Your District']},
        postalCode:{type:Number,required:[true,'Please Enter Your Postal Code']}
    } ,
+   location:{
+    lat:{
+        type:Number,
+        required:[true,'select Your location']
+    },
+    long:{
+        type:Number,
+        required:[true,'select Your location']
+    },
+    },
     price:{
         type:Number,
         required:[true,'Please mention your One Day Charge']
@@ -241,6 +275,8 @@ const jobSeekerSchema=new mongoose.Schema({
 
 userSchema.pre('save',async function (next){
     try {
+        this.firstname=this.firstname.toUpperCase();
+        this.lastname=this.lastname.toUpperCase();
         if(!this.isModified('password')) return next()
         this.password=await bcrypt.hash(this.password,10)//to hash the password
        return next()
@@ -269,6 +305,18 @@ userSchema.methods.getResetPasswordToken=function(){
     // to make hashed toke and set resetPasswordToken and resetPasswordExpire
     this.resetPasswordToken=crypto.createHash('sha256').update(token).digest('hex')
     this.resetPasswordTokenExpire=new Date(Date.now()+ 30*60*60*1000)
+
+    return token;
+
+}
+userSchema.methods.getEmailValidationToken=function(){
+    
+    //generate token
+    const token=crypto.randomBytes(20).toString('hex')
+
+    // to make hashed toke and set resetPasswordToken and resetPasswordExpire
+    this.emailValidationToken=crypto.createHash('sha256').update(token).digest('hex')
+    this.emailValidationTokenExpire=new Date(Date.now()+ 3*24*60*60*1000)
 
     return token;
 

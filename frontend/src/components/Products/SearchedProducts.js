@@ -7,6 +7,8 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../../actions/productsActions'
 import { useParams } from 'react-router-dom'
+import FilterMap from '../Google maps/FilterMap'
+
 
 const SearchedProducts = ({district}) => {
     const dispatch=useDispatch()
@@ -17,8 +19,7 @@ const SearchedProducts = ({district}) => {
     const [currentPage,setCurrentPage]=useState(1)
     const{keyword}=useParams();
     
-
-
+   
   const setCurrentPageNo=(pageNo)=>{
     setCurrentPage(pageNo)
   }
@@ -30,7 +31,7 @@ const SearchedProducts = ({district}) => {
         })
     }  
       
-    dispatch(getProducts(keyword!=='null'?keyword:null, price, category, rating,city,district, currentPage,model)) 
+  dispatch(getProducts(keyword!=='null'?keyword:null, price, category, rating,city,district, currentPage,model)) 
   }, [error,dispatch,currentPage,keyword,price,category,rating,city,district,model])
 
   return (
@@ -41,6 +42,7 @@ const SearchedProducts = ({district}) => {
         <div className='productlist'>
         <MetaData title={'Search'}/>
         <h1>Searched {model==='products/sell'?'Buying Products':model==='products/rent'?'Hiring Products':model==='laborers'?'Laborers':'Products'}</h1>
+        <FilterMap/>
         <div className='frames'>
        <section id="products" className="container mt-2">
          <div className="row">

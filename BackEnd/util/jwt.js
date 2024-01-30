@@ -1,7 +1,7 @@
 const { findOne } = require("../models/processingModel")
 const { User } = require("../models/userModel")
 
-const sendToken=async(user,statusCode,res)=>{
+const sendToken=async(user,statusCode,res,additional=null)=>{
 
     try{
         //create token
@@ -18,7 +18,8 @@ const sendToken=async(user,statusCode,res)=>{
     .json({
         success:true,
         USER,
-        token
+        token,
+        message:additional
     })
     }
     catch(err)

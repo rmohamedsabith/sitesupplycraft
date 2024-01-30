@@ -29,11 +29,17 @@ import Verifications from './components/Admin/Verifications';
 import Payment from './components/Product Owner/Payment';
 import Verification from './components/Admin/Verification';
 import Message from './components/Admin/Message';
+import VerifyingEmail from './components/Auth/VerifyingEmail';
+import SendVerification from './components/Auth/SendVerification';
+import FindLocation from './components/Google maps/FindLocation';
+import React from "react"
 
 
 
 
 function App() {
+  
+
   const[isDistrict,setIsDistrict]=useState(false)
   const[district,setDistrict]=useState('')
   const[hide,setHide]=useState(false)
@@ -46,16 +52,21 @@ function App() {
     setHide(isMobile)
   },[dispatch,isMobile])
 
+
+  
   return (    
     <div className='App'>
       <HelmetProvider>
         <Header hide={hide} setIsHumClicked={setIsHumClicked} isHumClicked={isHumClicked} setDistrict={setDistrict} setIsDistrict={setIsDistrict}/>         
-        <ToastContainer theme='dark'/>               
+        <ToastContainer theme='dark'/>    
+                   
         <Routes>
           {/*Products Routes*/} 
           <Route path='/' element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
           <Route path="search/:keyword" element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>
-          <Route path="product/:id" element={<ProtectedRoute><ProductDetails/></ProtectedRoute>}/>                        
+          <Route path="product/:id" element={<ProtectedRoute><ProductDetails/></ProtectedRoute>}/>
+          <Route path="product/:id/location" element={<ProtectedRoute><FindLocation/></ProtectedRoute>}/>
+
                                  
 
           {/*Auth Routes*/}
@@ -63,6 +74,8 @@ function App() {
           <Route path="password/reset/:token" element={<ResetPassword/>}/>
             {/* Poorni */}
           <Route path="register/:role" element={<Registration/>}/>
+          <Route path="register/verify/email" element={<SendVerification/>}/>
+          <Route path="register/verify/:token" element={<VerifyingEmail/>}/>
 
           {/* Users Routes */}
           <Route path="myprofile/">
@@ -74,6 +87,8 @@ function App() {
               {/* Tharushi */}
           <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
           <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+          
+          
               {/* Sandeepa */}
           <Route path='ProductOwner/addProduct' element={<AddProduct/>}/>
           <Route path='ProductOwner/addProduct/Payment' element={<Payment/>}/>   

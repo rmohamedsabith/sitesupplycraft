@@ -1,5 +1,5 @@
 
-import {clearError, productsFail, productsRequest, productsSuccess } from "../slices/productsSlice"
+import {clearError, deleteAllProductsFail, deleteAllProductsRequest, deleteAllProductsSuccess, myProductsFail, myProductsRequest, myProductsSuccess, productsFail, productsRequest, productsSuccess } from "../slices/productsSlice"
 import axios from 'axios'
 
 export const getProducts=(keyword, price, category, rating,city,district, currentPage,model)=>async(dispatch)=>{
@@ -27,6 +27,41 @@ export const getProducts=(keyword, price, category, rating,city,district, curren
 export const clearProductsError=(dispatch)=>{
     dispatch(clearError())
 }
+
+export const getOwnerProducts=(keyword)=>async(dispatch)=>{
+    
+    try {
+        dispatch(myProductsRequest())
+        let link=`/SiteSupplyCraft/myProducts?`
+
+        if(keyword)link+=`keyword=${keyword}`
+
+        /* if(category)link+=`&${model==='products'||model==='products/sell'||model==='products/rent'?'category':'job'}=${category}`
+        if(rating)link+=`&ratings[gte]=${rating}`
+        if(district)link+=`&district=${district}`
+        if(city)link+=`&city=${city}`
+        if(price)link += `&price[gte]=${price[0]}&price[lte]=${price[1]}` */
+
+        const {data} = await axios.get(link)
+        dispatch(myProductsSuccess(data))
+        
+    } catch (error) {
+        dispatch(myProductsFail(error.response.data.message))
+    }
+
+}
+
+export const deleteAllMyProduct=async(dispatch)=>{
+    try {
+        dispatch(deleteAllProductsRequest())
+        const {data}=await axios.delete(`/SiteSupplyCraft/product/deleteAll`)
+        dispatch(deleteAllProductsSuccess(data))        
+    } catch (error) {
+        dispatch(deleteAllProductsFail(error.response.data.message))
+
+    }
+}
+
 
 
 

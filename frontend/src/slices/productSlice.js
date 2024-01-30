@@ -6,7 +6,10 @@ const productSlice=createSlice({
         isLoading:false,
         product: {},
         reviews: [],
-        isReviewSubmitted:false
+        isReviewSubmitted:false,
+        isProductAdded:false,
+        isReviewDeleted:false,
+        isProductDeleted:false
     },
     reducers:{
        
@@ -15,9 +18,11 @@ const productSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
-                products:{},
+                product:{},
                 }
         },
+
+        //One product
         productRequest(state,action)
         {
             return{
@@ -37,6 +42,51 @@ const productSlice=createSlice({
                 error:action.payload
             }
         },
+
+        //Add product
+        addProductRequest(state,action)
+        {
+            return{
+                ...state,
+                isLoading:true
+            }
+        },
+        addProductSuccess(state,action){
+            return{
+                isLoading:false,
+                isProductAdded:true,
+                product:action.payload.Product,
+            }
+        },
+        addProductFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        
+        //Delete product
+        deleteProductRequest(state,action)
+        {
+            return{
+                ...state,
+                isLoading:true
+            }
+        },
+        deleteProductSuccess(state,action){
+            return{
+                isLoading:false,
+                isProductDeleted:true,
+            }
+        },
+        deleteProductFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+
+        //One Product Reviews
         reviewsRequest(state, action){
             return {
                 ...state,
@@ -57,6 +107,8 @@ const productSlice=createSlice({
                 error:  action.payload
             }
         },
+
+        //Add Review
         addReviewRequest(state, action){
             return {
                 ...state,
@@ -78,12 +130,38 @@ const productSlice=createSlice({
                 error:  action.payload
             }
         },
+
+        //Delete Review
+        deleteReviewRequest(state, action){
+            return {
+                ...state,
+                isLoading: true
+            }
+        },
+        deleteReviewSuccess(state, action){
+            return {
+                ...state,
+                isLoading: false,
+                isReviewDeleted:true,
+                product:action.payload.Product
+            }
+        },
+        deleteReviewFail(state, action){
+            return {
+                ...state,
+                isLoading: false,
+                error:  action.payload
+            }
+        },
+
+
         clearReviewSubmitted(state, action) {
             return {
                 ...state,
                 isReviewSubmitted: false
             }
         },
+
          clearError(state, action){
             return {
                 ...state,
@@ -106,11 +184,20 @@ export const{
     reviewsRequest,
     reviewsSuccess,
     reviewsFail,
+    deleteReviewRequest,
+    deleteReviewSuccess,
+    deleteReviewFail,
     addReviewRequest,
     addReviewSuccess,
     addReviewFail,
     clearReviewSubmitted,
-    clearProduct
+    clearProduct,
+    addProductRequest,
+    addProductSuccess,
+    addProductFail,
+    deleteProductRequest,
+    deleteProductSuccess,
+    deleteProductFail,
 }=actions
 
 export default reducer

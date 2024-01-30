@@ -16,6 +16,6 @@ const sendmail=async(options)=>{
         text: options.message
     }
 
-      await transport.sendMail(message)
+      await transport.sendMail(message) 
 }
 module.exports=sendmail

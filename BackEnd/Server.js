@@ -35,6 +35,7 @@ app.use('/SiteSupplyCraft',require('./routes/products'))
 app.use('/SiteSupplyCraft',require('./routes/auth'))
 app.use('/SiteSupplyCraft',require('./routes/processing'))
 app.use('/SiteSupplyCraft',require('./routes/laborers'))
+app.use('/SiteSupplyCraft',require('./routes/messages'))
 
 
 app.all('/*', (req, res) => {
