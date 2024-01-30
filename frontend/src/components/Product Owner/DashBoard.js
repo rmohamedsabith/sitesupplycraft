@@ -10,6 +10,8 @@ import {Pie} from 'react-chartjs-2';
 import {Chart as ChartJS, Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler,ArcElement} from 'chart.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import MetaData from '../Layouts/MetaData'
+import { Col, Row } from 'react-bootstrap'
 ChartJS.register(
   Title, Tooltip, LineElement, Legend,
   CategoryScale, LinearScale, PointElement, Filler,ArcElement
@@ -52,15 +54,18 @@ const DashBoard = () => {
   
   return (
     <>
-    
+    <MetaData title={'DashBoard'}/>
     <div className='page'>
-      <div className='sideb'>
-        <button className='btn1'>DashBoard</button>
-        <button className='btn1'>Add Product</button>
-        <Link to='../../ProductOwner/Messages'><button className='btn1'>Message</button></Link>
-
+      <Row>
+        <Col xs={2} className='sideb'>
+        <div className='p-3' >
+        <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
+        <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
+        <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
       </div>
-      <div className='con'> <h1>Summary Of My Products</h1>
+        </Col>
+        <Col>
+        <div className='con'> <h1>Summary Of My Products</h1>
       
       <div className="linechart">
       <Line data={data}/>
@@ -86,7 +91,7 @@ const DashBoard = () => {
         Search Name: <input type='text'></input></div>
 
 
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+<table id="dtBasicExample" className="table table-striped table-bordered table-sm" cellSpacing="0" width="100%">
   <thead>
     <tr>
     <th className ='th-sm'>Photos
@@ -193,6 +198,10 @@ const DashBoard = () => {
   </div>   
       
       </div>
+        </Col>
+      </Row>
+      
+      
       
     </div>
     </>

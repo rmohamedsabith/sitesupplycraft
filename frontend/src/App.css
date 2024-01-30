@@ -288,7 +288,7 @@ p a{
 }
 .search form select,.search button{  
   margin-top: 20px;
-  border: 2px #053B50 solid;
+  border: 2px solid #053B50 ;
   color: #053B50;
 }
 

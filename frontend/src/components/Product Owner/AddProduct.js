@@ -6,9 +6,9 @@ import { Col, Form, Row } from 'react-bootstrap'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react'
+import MetaData from '../Layouts/MetaData'
 
 const AddProduct = () => {
-
 
   /* USESTATE HOOKS */
 
@@ -18,9 +18,24 @@ const AddProduct = () => {
   const [discript,setDiscript] = useState('');
   const [catagory,setCatagory] = useState('');
   const [images,setImages] =useState([]);
+  const [previewImages,setPreviewImages]=useState([])
   const [selectedOption,setSelectedOption] =useState('sell');
   const[isRent,setIsRent]=useState(false);
   const[priceType,setPriceType] =useState('');
+
+  const Categories=[
+    'Masonry',
+    'Metal',
+    'Wood',
+    'Plastics',
+    'Glass',
+    'Electrical',
+    'Paints',
+    'Tiles',
+    'Machines',
+    'Tools',
+    'Plumbing'
+  ]
 
 
   /* ONCHANGE FUNCTIONS */
@@ -50,9 +65,22 @@ const AddProduct = () => {
     /* console.log(event.target.value); */
   };
 
-  const handleImageChange = (event) =>{
-    setImages(event.target.files[0]);
-    console.log(event.target.value);
+  const handleImageChange = (e) =>{
+  
+    const files = Array.from(e.target.files);
+    files.forEach(file => {
+        
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            if(reader.readyState == 2 ) {
+                setPreviewImages(oldArray => [...oldArray, reader.result])
+                setImages(oldArray => [...oldArray, file])
+            }
+        }
+
+        reader.readAsDataURL(file)
+      })
   };
 
   const handlePriceTypeonChange = (event) =>{
@@ -74,13 +102,14 @@ const AddProduct = () => {
 }    
   
   return (
-
-    <Row>
+    <>
+    <MetaData title={'Add Product'}/>
+      <Row>
       <Col xs={2} className='sideb'>
       <div className='p-3'>
-        <button className='btn1'>DashBoard</button>
-        <button className='btn1'>Add Product</button>
-        <Link to='../../ProductOwner/Messages'><button className='btn1'>Message</button></Link>
+        <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
+        <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
+        <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
       </div>
       </Col>
       <Col className="addProduct">
@@ -131,9 +160,9 @@ const AddProduct = () => {
               <label>Price Type:</label>
                <Form.Select aria-label="Default select example" value={priceType} onChange={handlePriceTypeonChange} >
                   <option></option>
-                  <option value="one">One</option>
-                  <option value="two">Two</option>
-                  <option value="three">Three</option>
+                  <option value='/perDay'>perDay</option>
+                  <option value='/perMonth'>perMonth</option>
+                  <option value='/perHour'>perHour</option>
                 </Form.Select>
               </div>
                 </Col>
@@ -172,11 +201,15 @@ const AddProduct = () => {
 
               <div>
               <label>Catagory:</label>
+              
                <Form.Select aria-label="Default select example" value={catagory} onChange={handleCatagoryChange} >
                   <option></option>
-                  <option value="one">One</option>
-                  <option value="two">Two</option>
-                  <option value="three">Three</option>
+                {                 
+                  Categories.map(
+                    (cat,index)=>(            
+                      <option key={index} value={cat}>{cat}</option>                
+                    ))
+                }
                 </Form.Select>
               </div>
 
@@ -187,24 +220,33 @@ const AddProduct = () => {
 
                 <Form.Group controlId="formFileLg" className="mb-3">
                  {/* <Form.Label>Large file input example</Form.Label> */}
-                 <Form.Control type="file" size="lg"   accept="image/*"  value={images} onChange={handleImageChange} />
+                 <Form.Control type="file" size="lg" multiple={true}   accept="image/*" onChange={handleImageChange} />
                 </Form.Group>
                 </div>
-
-                <br/>
+                  {previewImages.map(image=>(
+                    <img
+                    className=" mb-3 mr-2 previewImg"
+                    key={image}
+                    src={image}
+                    alt={`Image Preview`}
+                    width="55"
+                    height="52"
+                  
+                    />
+                  ))}
               
                 <div className="mb-2">
               <Row >
                   <Col>
                  <Button variant="primary" size="lg" onClick={handlePrivewButton}>
                     Priview
-                 </Button>{' '}
+                 </Button>
                  </Col>
 
                 <Col className = "d-flex justify-content-end">
                  <Button variant="primary" size="lg" onClick ={handlePublishButton}>
                     Publish
-                 </Button>{' '}
+                 </Button>
                 </Col>
               </Row>
                 </div>
@@ -218,6 +260,7 @@ const AddProduct = () => {
       </Col>
         
     </Row>
+    </>
   )
 }
 

@@ -161,7 +161,6 @@ const FindLocation = () => {
                   <Dropdown.Toggle variant="success" id="dropdown-basic" size='sm'>
                     {transportMode}
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={()=>{setTransportMode('DRIVING')}}>DRIVING</Dropdown.Item>
                     <Dropdown.Item onClick={()=>{setTransportMode('WALKING')}}>WALKING</Dropdown.Item>
