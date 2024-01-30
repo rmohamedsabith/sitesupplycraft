@@ -69,8 +69,8 @@ const Favourites = () => {
                 <Offcanvas.Title>My Favourites</Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body> 
-                {user.carts.products.length>0?<h3>Products</h3>:null}          
-                {user.carts.products.length>0&&user.carts.products.map((cart,index)=>(
+                {user.carts.products?.length>0?<h3>Products</h3>:null}          
+                {user.carts.products?.length>0&&user.carts.products?.map((cart,index)=>(
                     <div className='bookmarkProduct' key={index} onClick={()=>handleClick('products',cart._id)}>
                     <Row>
                         <Col xs={3}>
@@ -130,7 +130,7 @@ const Favourites = () => {
                     </div>
                 ))}
 
-                {(user.carts.products.length>0||user.carts.laborers.length>0)?
+                {(user.carts.products?.length>0||user.carts.laborers?.length>0)?
                 <div className='location d-block' onClick={()=>handleDeleteAll()}> Delete All</div>
                 :
                 <center style={{color:'red',position:'relative',top:'50%'}}>There is no product in the favourite</center>

@@ -56,8 +56,8 @@ const Login = () => {
     axios
       .post('https://oauth2.googleapis.com/token', {
         code: code,
-        client_id: '80050429848-q3g9m08m6b7haih8qqdj12318bo618ek.apps.googleusercontent.com',
-        client_secret: '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',
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECRET,
         redirect_uri: 'http://localhost:3000',
         grant_type: 'authorization_code',
       })
