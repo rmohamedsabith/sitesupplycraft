@@ -364,6 +364,112 @@ p a{
   align-items: center;
     
 }
+
+/*Registration*/
+.profilePic:hover{
+  background-color: #3e8e41;
+}
+
+.profilePic-before{
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.profilePic-after{
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.register{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.register .frame{
+  width: 50%;
+  padding: 20px;
+  margin: 30px;
+  border: 2px solid #c7b8a13b;
+  box-shadow: 5px 5px 10px #053B50;
+  background-color: #c7b8a13b;
+  border-radius: 10px;  
+}
+
+.register .card::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d7c6ad3b;
+  background-position: center;
+  background-size: cover;
+  filter: blur(2px); 
+}
+  
+.register .error{
+  text-align: right;
+  color: #B0000B;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.btnstyle{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+  background-color: #FFF;
+  color: #053B50;
+  text-align: center;
+  font-size: 14px;
+  font-weight:800;
+  margin: 2px;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+}
+.register .btnstyle:hover{
+  color: #ffff;
+  font-weight:800;
+  background-color: #053B50;
+  border: 3px solid #fff;
+}
+
+/*Verify email*/
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .frame{
+  width: 50%;
+  padding: 20px;
+  margin: 80px;
+  border: 2px solid #c7b8a13b;
+  box-shadow: 5px 5px 10px #053B50;
+  background-color: #c7b8a13b;
+  border-radius: 10px; 
+}
+
+.container p,h1{
+  text-align: center;
+}
+
+.round-image{
+  align-items: center;
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 150px;
+  margin-bottom: 10px;
+}
+
 /* Avatar */
 .avatar {
   display: inline-block;
