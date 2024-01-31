@@ -1,5 +1,5 @@
 
-import {clearError, deleteAllProductsFail, deleteAllProductsRequest, deleteAllProductsSuccess, myProductsFail, myProductsRequest, myProductsSuccess, productsFail, productsRequest, productsSuccess } from "../slices/productsSlice"
+import {clearError, deleteAllProductsFail, deleteAllProductsRequest, deleteAllProductsSuccess, getTotal_per_monthFail, getTotal_per_monthRequest, getTotal_per_monthSuccess, myProductsFail, myProductsRequest, myProductsSuccess, productsFail, productsRequest, productsSuccess } from "../slices/productsSlice"
 import axios from 'axios'
 
 export const getProducts=(keyword, price, category, rating,city,district, currentPage,model)=>async(dispatch)=>{
@@ -58,6 +58,16 @@ export const deleteAllMyProduct=async(dispatch)=>{
         dispatch(deleteAllProductsSuccess(data))        
     } catch (error) {
         dispatch(deleteAllProductsFail(error.response.data.message))
+
+    }
+}
+export const getTotal_per_month=async(dispatch)=>{
+    try {
+        dispatch(getTotal_per_monthRequest())
+        const {data}=await axios.get(`/SiteSupplyCraft/myProducts/count`)
+        dispatch(getTotal_per_monthSuccess(data))        
+    } catch (error) {
+        dispatch(getTotal_per_monthFail(error.response.data.message))
 
     }
 }

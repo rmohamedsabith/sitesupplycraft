@@ -23,7 +23,7 @@ import AddProduct from './components/Product Owner/AddProduct'
 import PreviewProduct from './components/Product Owner/PreviewProduct';
 import Messages from './components/Product Owner/Messages'
 import BecomeJobSeeker from './components/Product Owner/BecomeJobSeeker';
-/* import AdminDashboard from './components/Admin/DashBoard'; */
+import AdminDashboard from './components/Admin/Dashboard';
 import AdminMessages from './components/Admin/Messages'
 import Verifications from './components/Admin/Verifications'; 
 import Payment from './components/Product Owner/Payment';
@@ -32,11 +32,15 @@ import Message from './components/Admin/Message';
 import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
+import AdminLayout from './components/Layouts/AdminLayout';
+
 
 
 
 
 function App() {
+  
+
   const[isDistrict,setIsDistrict]=useState(false)
   const[district,setDistrict]=useState('')
   const[hide,setHide]=useState(false)
@@ -49,6 +53,8 @@ function App() {
     setHide(isMobile)
   },[dispatch,isMobile])
 
+
+  
   return (    
     <div className='App'>
       <HelmetProvider>
@@ -82,6 +88,8 @@ function App() {
               {/* Tharushi */}
           <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
           <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+          
+          
               {/* Sandeepa */}
           <Route path='ProductOwner/addProduct' element={<AddProduct/>}/>
           <Route path='ProductOwner/addProduct/Payment' element={<Payment/>}/>   
@@ -90,14 +98,19 @@ function App() {
           {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
 
           {/* Admin */}
-              {/* Navodi */}
-          {/* <Route path='Admin/DashBoard' element={<AdminDashboard/>}/> */}
-          <Route path='Admin/Messages' element={<AdminMessages/>}/>
-          <Route path='Admin/Messages/:id' element={<Message/>}/>
+          {/* Navodi */}
+          <Route path="/admin/*" element={<AdminLayout />}>
+            <Route index element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
+            <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
+          
+            {/* Hiran */}
+            <Route path='Verification' element={<Verifications/>}/>
+            <Route path='Verification/:id' element={<Verification/>}/>
+          </Route>
             
-              {/* Hiran */}
-         <Route path='Admin/Verification' element={<Verifications/>}/>
-          <Route path='Admin/Verification/:id' element={<Verification/>}/>
+              
           
 
 
@@ -105,7 +118,7 @@ function App() {
           <Route path="*" element={<Missing/>}/>              
         </Routes>
         <Footer/>
-        
+        <PinLocation/>
           
          
       </HelmetProvider>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { cancelOwnerFail, cancelOwnerRequest, cancelOwnerSuccess, getProcessingOwnersFail, getProcessingOwnersRequest, getProcessingOwnersSuccess, verifyOwnerFail, verifyOwnerRequest, verifyOwnerSuccess, viewProcessingOwnerFail, viewProcessingOwnerRequest, viewProcessingOwnerSuccess } from '../slices/adminSlice'
+import { cancelOwnerFail, cancelOwnerRequest, cancelOwnerSuccess, getProcessingOwnersFail, getProcessingOwnersRequest, getProcessingOwnersSuccess, getTotals_per_monthRequest, getTotals_per_monthSuccess, verifyOwnerFail, verifyOwnerRequest, verifyOwnerSuccess, viewProcessingOwnerFail, viewProcessingOwnerRequest, viewProcessingOwnerSuccess } from '../slices/adminSlice'
 
 export const getProcessingOwners=async(dispatch)=>{
     try {
@@ -40,9 +40,18 @@ export const  cancelOwner=(id)=>async(dispatch)=>{
 export const getTotals=async(dispatch)=>{
     try {
         dispatch(getTotalsRequest())
-        const{data}=await axios.get(`/SiteSupplyCraft/totals`)
+        const{data}=await axios.get(`/SiteSupplyCraft/admin/totals`)
         dispatch(getTotalsSuccess(data))
     } catch (error) {
         dispatch(getTotalsFail(error.response.data.message))
+    }
+}
+export const getTotals_per_month=async(dispatch)=>{
+    try {
+        dispatch(getTotals_per_monthRequest())
+        const{data}=await axios.get(`/SiteSupplyCraft/admin/counts`)
+        dispatch(getTotals_per_monthSuccess(data))
+    } catch (error) {
+        dispatch(getTotals_per_monthFail(error.response.data.message))
     }
 }

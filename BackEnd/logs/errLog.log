@@ -71,3 +71,7 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240129	13:42:01	03d895de-92ae-44b4-8fe1-5729ab34ea47	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
 20240129	13:42:03	71aef46a-3d95-4635-99e5-a0ce20afb00f	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
 20240129	15:53:51	24f0c7d4-6501-4a51-94d8-d16f6c51bc03	ReferenceError: Cannot access 'product' before initialization	PUT	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/changeStatus	undefined
+20240130	10:07:50	09e44dd4-b1df-43ae-82c4-193bd0160138	MongoServerSelectionError: connect ETIMEDOUT 3.7.243.165:27017	GET	/SiteSupplyCraft/laborers?page=1	undefined
+20240130	10:08:21	468d521a-e124-4d37-8f0d-6f0398ea5da0	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/laborers?page=1	undefined
+20240130	10:08:25	98cd751b-684c-452f-acd3-b333c57a527b	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
+20240130	11:24:49	64e467f7-9734-404f-abf8-180a1f16c7c4	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined

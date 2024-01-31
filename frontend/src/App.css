@@ -131,11 +131,29 @@ body {
   transition: 0.2s;
 }
 
+/* Admin Sidebar */
+.adminSide{
+  display: inline-block;
+    background: #176B87;
+    color: #ffff;
+    padding: 20PX;   
+    width: 100%; 
+    height: 1050px;        
+}
+
+.sidebarLink{
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
+
 /* footer */
 .footer{
   background-color: #6DB2C9;
   color: #ffff;
   padding: 20px;
+  
 }
 p a{
   color: #ffff;
@@ -222,6 +240,7 @@ p a{
 }
 
 /* ProductList */
+
 .productlist{
   padding: 20px;
 }
@@ -287,7 +306,7 @@ p a{
 }
 .search form select,.search button{  
   margin-top: 20px;
-  border: 2px #053B50 solid;
+  border: 2px solid #053B50 ;
   color: #053B50;
 }
 
@@ -683,10 +702,118 @@ width: 70%;
     color: #053B50;
     min-width: 200px;
   }
- 
+
+  /*  product owner  DashBoard  */
    
 }
+.sideb{
+  display: inline-block;
+  background: #176B87;
+  color: #ffff;   
+  width: 12.5%; 
+  height: 1200px;
+  padding: 0px;
+  
+}
+.main{
+  float: right;
+}
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  width: 100%;
+  height: auto;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  color: #053B50;
+}
+.con{
+  width: 87.5%;
+  float: right;
+  text-align: center;
+}
 
+
+.linechart{
+  width: 500px;
+  height: 300px;
+  float: left;
+}
+
+.phara1{
+  padding-left: 60px;
+  
+}
+.piechart{
+  width: 250px;
+  height: 200px;
+  float: right;
+  margin-right: 150px;
+  
+  
+}
+.img{
+  width: 400px;
+}
+.phara2{
+  
+  float: right;
+  margin-right: 60px;
+  
+}
+.table{
+  float: right;
+  height: 100%;
+  color: #053B50;
+}
+.page{
+  width: 100%;
+}
+
+.im1{
+  height: 50px;
+}
+.tearea{
+  background-color:aliceblue;
+}
+.im2{
+  padding-left: 50px;
+  height: 40px;
+}
+.btn1{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+  background-color: #edf1f4;
+  color: #053B50;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight:800;
+  padding: 10px 30px;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+}
+.btn1:hover{
+  color: #ffff;
+  font-weight:800;
+ background-color: #053B50;
+ border: 3px solid #fff;
+}
+.btn{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+}
+.btn:hover{
+  background-color: #176B87;
+  color: #fff;
+  border: 3px solid #e4e5e6;
+}
+.textsearch{
+  float: left;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  font-size: 20px;
+}
 
 
 
