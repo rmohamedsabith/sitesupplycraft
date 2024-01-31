@@ -21,8 +21,8 @@ const messageDummyData = [
 ];
 const Messages = () => {
   return (
-    <section className="container mt-2">
-      <h1>Messages</h1>
+    <section className="mt-2 m-4">
+      <center><h1>Messages</h1></center>
       <table className="table table-sm mt-2">
         <thead>
           <tr>

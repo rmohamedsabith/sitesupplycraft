@@ -2,8 +2,7 @@ import React from 'react'
 import Payment from './Payment'
 import './AddProduct.css'
 import { Link } from 'react-router-dom'
-import { Col, Form, Row } from 'react-bootstrap'
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { Col, Form, Image, Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react'
 import MetaData from '../Layouts/MetaData'
@@ -73,7 +72,7 @@ const AddProduct = () => {
         const reader = new FileReader();
 
         reader.onload = () => {
-            if(reader.readyState == 2 ) {
+            if(reader.readyState === 2 ) {
                 setPreviewImages(oldArray => [...oldArray, reader.result])
                 setImages(oldArray => [...oldArray, file])
             }
@@ -105,7 +104,7 @@ const AddProduct = () => {
     <>
     <MetaData title={'Add Product'}/>
       <Row>
-      <Col xs={2} className='sideb'>
+      <Col xs={2} style={{backgroundColor:'#176B87'}}>
       <div className='p-3'>
         <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
         <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
@@ -220,11 +219,11 @@ const AddProduct = () => {
 
                 <Form.Group controlId="formFileLg" className="mb-3">
                  {/* <Form.Label>Large file input example</Form.Label> */}
-                 <Form.Control type="file" size="lg" multiple={true}   accept="image/*" onChange={handleImageChange} />
+                 <Form.Control type="file" size="lg" multiple={true} accept="image/*" onChange={handleImageChange} />
                 </Form.Group>
                 </div>
                   {previewImages.map(image=>(
-                    <img
+                    <Image
                     className=" mb-3 mr-2 previewImg"
                     key={image}
                     src={image}

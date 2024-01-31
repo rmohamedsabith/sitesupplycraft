@@ -138,7 +138,8 @@ body {
     color: #ffff;
     padding: 20PX;   
     width: 100%; 
-    height: 1050px;        
+    height: 100%;  
+    min-height: 100vh;      
 }
 
 .sidebarLink{
@@ -254,7 +255,7 @@ p a{
   color: #053B50;
 }
 .card {
-  height: 100%;
+  height: 80%;
 }
 
 .card-title{
@@ -272,7 +273,7 @@ p a{
 }
 
 .card-text {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-family: 'Times New Roman', Times, serif;
 }
 .card-img-top {
@@ -476,7 +477,7 @@ p a{
   border-radius: 10px; 
 }
 
-.container p,h1{
+.container p{
   text-align: center;
 }
 
@@ -701,11 +702,11 @@ width: 70%;
     border-radius:20px;
     color: #053B50;
     min-width: 200px;
-  }
-
-  /*  product owner  DashBoard  */
-   
+  }  
 }
+
+ /*  product owner  DashBoard  */
+/* 
 .sideb{
   display: inline-block;
   background: #176B87;
@@ -814,7 +815,7 @@ body {
   margin-left: 20px;
   font-size: 20px;
 }
-
+ */
 
 
 
