@@ -9,7 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import Login from './components/Auth/Login';
 import Missing from './components/Missing';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './actions/authActions';
 import ResetPassword from './components/Auth/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -44,6 +44,7 @@ function App() {
 
   const[isDistrict,setIsDistrict]=useState(false)
   const[district,setDistrict]=useState('')
+  const {count,products,ActiveProducts,DeactiveProducts}=useSelector((state)=>state.productsState)
   const[hide,setHide]=useState(false)
   const[isHumClicked,setIsHumClicked]=useState(false)
   const dispatch=useDispatch()
