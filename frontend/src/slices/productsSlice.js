@@ -24,6 +24,57 @@ const productsSlice=createSlice({
                 error:action.payload
             }
         },
+        myProductsRequest(state,action){
+            return {isLoading:true}
+        },
+        myProductsSuccess(state,action){
+            return{
+                isLoading:false,
+                products:action.payload.Products,
+                count:action.payload.count,
+                ActiveProducts:action.payload.ActiveProducts,
+                DeactiveProducts:action.payload.DeactiveProducts
+            }
+        },
+        myProductsFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+
+        //Delete all my products
+        deleteAllMyProductsRequest(state,action){
+            return {isLoading:true}
+        },
+        deleteAllMyProductsSuccess(state,action){
+            return{
+                isLoading:false,
+                deletedCount:action.payload.deletedCount
+            }
+        },
+        deleteAllMyProductsFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        //get total of  my products based on month
+        getTotal_per_monthRequest(state,action){
+            return {isLoading:true}
+        },
+        getTotal_per_monthSuccess(state,action){
+            return{
+                isLoading:false,
+                data:action.payload.data
+            }
+        },
+        getTotal_per_monthFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
         clearError(state, action){
             return {
                 ...state,
@@ -39,25 +90,7 @@ const productsSlice=createSlice({
                 totalCount:null,
                 resPerPage:null}
         },
-        productRequest(state,action)
-        {
-            return{
-                ...state,
-                isLoading:true
-            }
-        },
-        productSuccess(state,action){
-            return{
-                isLoading:false,
-                product:action.payload.product,
-            }
-        },
-        productFail(state,action){
-            return {
-                isLoading:false,
-                error:action.payload
-            }
-        }
+       
 
     }
 });
@@ -68,11 +101,17 @@ export const{
     productsRequest,
     productsSuccess,
     productsFail,
+    myProductsRequest,
+    myProductsSuccess,
+    myProductsFail,
+    deleteAllProductsRequest,
+    deleteAllProductsSuccess,
+    deleteAllProductsFail,
+    getTotal_per_monthRequest,
+    getTotal_per_monthSuccess,
+    getTotal_per_monthFail,
     clearError,
     clearProducts,
-    productRequest,
-    productSuccess,
-    productFail
 }=actions
 
 export default reducer

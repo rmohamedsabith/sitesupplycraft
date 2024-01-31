@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/* const mongoose = require("mongoose");
 const validator=require("validator")
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
@@ -111,4 +111,4 @@ processingSchema.methods.getJwtToken= function(){
     })
 }
 
-module.exports= mongoose.model('Processing',processingSchema)
+module.exports= mongoose.model('Processing',processingSchema) */

@@ -1,7 +1,31 @@
 
-import{loginFail, loginRequest, loginSuccess,clearError, loadUserRequest, loadUserSuccess, loadUserFail, logoutSuccess, logoutFail, forgetPasswordRequest, forgetPasswordSuccess, forgetPasswordFail, resetPasswordRequest, resetPasswordSuccess, resetPasswordFail} from '../slices/authSlice'
+import{loginFail, loginRequest, loginSuccess,clearError, loadUserRequest, loadUserSuccess, loadUserFail, logoutSuccess, logoutFail, forgetPasswordRequest, forgetPasswordSuccess, forgetPasswordFail, resetPasswordRequest, resetPasswordSuccess, resetPasswordFail, registerRequest, registerSuccess, registerFail} from '../slices/authSlice'
 import axios from 'axios'
 
+export const register=(userData)=>async(dispatch)=>{
+    
+    try {
+        dispatch(registerRequest())
+        
+        if(userData.role!=='Google User'){
+        const config = {
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        }
+
+        const { data }  = await axios.post(`/SiteSupplyCraft/registration`,userData, config);
+        dispatch(registerSuccess(data))
+    }
+    else{
+        const { data }  = await axios.post(`/SiteSupplyCraft/registration`,userData);
+        dispatch(registerSuccess(data))
+    }
+        
+    } catch (error) {
+        dispatch(registerFail(error.response.data.message))
+    }
+}
 export const login=(email,password)=>async(dispatch)=>{
     try{
         dispatch(loginRequest())
@@ -22,8 +46,10 @@ export const loadUser=async(dispatch)=>{
         dispatch(loadUserRequest())
         const {data}=await axios.get('/SiteSupplyCraft/myprofile')
         dispatch(loadUserSuccess(data))
+
     } catch (error) {
         dispatch(loadUserFail(error.response.data.message))
+        dispatch(clearError())
     }
 }
 
