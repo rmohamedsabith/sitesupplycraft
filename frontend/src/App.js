@@ -32,7 +32,6 @@ import Message from './components/Admin/Message';
 import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
-import PinLocation from './components/Google maps/PinLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
 
 
@@ -76,8 +75,8 @@ function App() {
           <Route path="password/reset/:token" element={<ResetPassword/>}/>
             {/* Poorni */}
           <Route path="register/:role" element={<Registration/>}/>
-          <Route path="register/verify/email" element={<SendVerification/>}/>
-          <Route path="register/verify/:token" element={<VerifyingEmail/>}/>
+          <Route path="register/:role/verify/email" element={<SendVerification/>}/>
+          <Route path="register/:role/verify/:token" element={<VerifyingEmail/>}/>
 
           {/* Users Routes */}
           <Route path="myprofile/">
@@ -119,6 +118,7 @@ function App() {
           <Route path="*" element={<Missing/>}/>              
         </Routes>
         <Footer/>
+        <PinLocation/>
           
          
       </HelmetProvider>
