@@ -6,6 +6,8 @@ function Verifications() {
   return (
 <center>
     <hr/>
+    <h2><u>Processing Account Details</u></h2>
+    <hr/>
     <div className="tableDetails">
     <table className="table">
     <thead>

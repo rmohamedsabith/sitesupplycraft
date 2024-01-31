@@ -12,6 +12,11 @@ td{
   color: black;
 }
 
+th{
+  text-align: center;
+  color: black;
+}
+
 .thead{
   background-color: rgb(13, 52, 73);
   color: white;
