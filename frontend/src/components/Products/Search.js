@@ -1,17 +1,19 @@
 import React, {useEffect, useState } from 'react'
 import{MDBIcon}from'mdbreact'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { filter } from '../../actions/productsFilteringActions'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import { Row,Col } from 'react-bootstrap'
+import { clearProducts } from '../../slices/productsSlice'
 
-const Search = ({setIsDistrict,setDistrict,district}) => {
+
+const Search =React.memo( ({setIsDistrict,setDistrict,district,setRefreshSide,refreshSide}) => {
   const {isLoading}=useSelector((state)=>state.productsState)
   const {model}=useSelector((state)=>state.productsFilteringState)
   const[keyword,setKeyword]=useState(null)
-  const [selectedDistrict, setSelectedDistrict] = useState('');
+  
 
   const[Districts,setDistricts]=useState([])
   const navigate=useNavigate();
@@ -27,17 +29,18 @@ const Search = ({setIsDistrict,setDistrict,district}) => {
       } catch (error) {
         console.error('Error fetching the file:', error);
       }
-    };
 
-    fetchData();
-  },[])
+    };
+ 
+    if(Districts.length===0)fetchData();
+  },[Districts])
 
  const handleChanges=(e)=>{
   setKeyword(e.target.value)
  }
  const handleSubmit=(e)=>{
   e.preventDefault();
-  if((!keyword||keyword==='')&&(district===''||!district)) return navigate('/') 
+  if((keyword===null||keyword==='')&&(district===''||!district)) return navigate('/') 
   navigate(`/search/${keyword}`) 
   
  }
@@ -62,7 +65,6 @@ const Search = ({setIsDistrict,setDistrict,district}) => {
 const CustomMenu = React.forwardRef(
   ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
     const [value, setValue] = useState('');
-
     return (
       <div
         ref={ref}
@@ -94,38 +96,37 @@ const handleDistrictSelect = (district) => {
   setDistrict(district);
 };
 
-
-
+const handleType=async (model)=>{
+  setRefreshSide(!refreshSide);
+  await dispatch(clearProducts())
+  dispatch(filter(null,null,null,null,model))
+  setDistrict('')  
+  setIsDistrict(false) 
+  navigate('/') 
+   
+}
   return (
     <div className='search'>
-      
+     
       <div className="form-check form-check-inline p-3">
         
-        <input className="form-check-input" type="radio" name="flexRadioDefault" id="buy" value="Buy" checked={model==='products/sell'?true:null}  onChange={(e)=>{
-          dispatch(filter(null,null,null,null,'products/sell'))
-          }}/>
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="buy" value="Buy" checked={model==='products/sell'?true:false}  onChange={(e)=>{handleType('products/sell')}}/>
         <label className="form-check-label" htmlFor="buy">
           Buy
         </label>
       </div>
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" checked={model==='products/rent'?true:null} name="flexRadioDefault" id="rent" value="Rent" onChange={(e)=>{
-          
-          dispatch(filter(null,null,null,null,'products/rent'))
-          }} />
+        <input className="form-check-input" type="radio" checked={model==='products/rent'?true:false} name="flexRadioDefault" id="rent" value="Rent" onChange={(e)=>{handleType('products/rent')}} />
         <label className="form-check-label" htmlFor="rent">
           Rent
         </label>
       </div>
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" checked={model==='laborers'?true:null} name="flexRadioDefault" id="laborers" value="Laborers" onChange={(e)=>{
-      
-          dispatch(filter(null,null,null,null,'laborers'))
-          }}/>
+        <input className="form-check-input" type="radio" checked={model==='laborers'?true:false} name="flexRadioDefault" id="laborers" value="Laborers" onChange={(e)=>{ handleType('laborers')}}/>
         <label className="form-check-label" htmlFor="laborers">
           Laborers
         </label>
-      </div>
+      </div>    
       
       {/* search bar */}
 
@@ -179,5 +180,5 @@ const handleDistrictSelect = (district) => {
   </div>
   )
 }
-
+)
 export default Search

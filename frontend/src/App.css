@@ -68,7 +68,16 @@ body {
 .headRight{
   display: flex;
   flex-wrap: wrap; 
-  padding-right: 30px;
+  padding-right: 0px;
+}
+.bookmark span{
+  position: relative;
+  bottom:20px;
+  right: 10px;
+ 
+}
+.bookmark{
+  cursor: pointer;
 }
 
 #sitesupplycraft{
@@ -230,6 +239,7 @@ p a{
 }
 
 /* ProductList */
+
 .productlist{
   padding: 20px;
 }
@@ -244,7 +254,6 @@ p a{
 }
 .card {
   height: 100%;
-  
 }
 
 .card-title{
@@ -267,7 +276,7 @@ p a{
 }
 .card-img-top {
   width: 100%;
-  height: 50%;
+  height: 40%;
 }
 
 .ratings {
@@ -280,7 +289,7 @@ p a{
   color: grey;
   margin-left: 0.5rem;
 }
-
+ 
 /* Search */
 .search{
   padding-right: 20px;
@@ -324,7 +333,7 @@ p a{
 }
 .login{
   width: 100%;
-  height: 60vh; 
+  height: 70vh; 
   border-top: 10px solid #053B50; 
   border-radius: 20px;
 }
@@ -333,7 +342,7 @@ p a{
 }
 .signup{
   width: 100%;
-  height: 60vh;
+  height: 70vh;
   margin-left: 20px;
   border-radius: 20px;
   position: relative;
@@ -347,7 +356,7 @@ p a{
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../src/images/signup.jpeg');
+  background-image: url('./images/signup.jpeg');
   background-position: center;
   background-size: cover;
   filter: blur(2px); 
@@ -355,6 +364,11 @@ p a{
 .signup-content {
   z-index: 1;
   padding: 20px;
+}
+.signup-content center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .login h1,.signup h1{
   text-align: center;
@@ -425,7 +439,7 @@ p a{
   margin:20px 80px;
   border-radius:20px;
   color: #053B50;
-  min-width: 200px;
+  min-width: 300px;
 }
 .smallImage
 {
@@ -530,6 +544,19 @@ width: 70%;
   min-width: 200px;
 }
 
+/* myCarts */
+.bookmarkProduct{
+  margin: 10px 0;
+  border: 1.5px solid black;
+  color: #053B50;
+  cursor: pointer;
+}
+.bookmarkProduct img{
+  width: 80px;
+  height: 80px;
+  border: 1px solid #053B50;
+}
+
 @media only screen and (max-width: 800px){
   /* Searchbar */
     .bar form{
@@ -550,6 +577,8 @@ width: 70%;
    .marginOff{ 
     margin-right:0px;
    }
+
+
   
   /*  resetpassword */
   .frame-reset{
