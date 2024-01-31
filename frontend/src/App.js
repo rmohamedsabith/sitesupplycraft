@@ -105,11 +105,13 @@ function App() {
             <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
             <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
+          
+            {/* Hiran */}
+            <Route path='Verification' element={<Verifications/>}/>
+            <Route path='Verification/:id' element={<Verification/>}/>
           </Route>
             
-              {/* Hiran */}
-         <Route path='Admin/Verification' element={<Verifications/>}/>
-          <Route path='Admin/Verification/:id' element={<Verification/>}/>
+              
           
 
 

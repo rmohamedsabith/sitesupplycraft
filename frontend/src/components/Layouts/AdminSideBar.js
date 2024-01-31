@@ -19,6 +19,13 @@ const AdminSideBar = () => {
       >
         Messages
       </Link>
+      <Link
+        to="/admin/verification"
+        className={`d-block sidebarLink`}
+        style={{ color: "white", cursor: "pointer", paddingBottom: "5px" }}
+      >
+        Verifications
+      </Link>
     </div>
   );
 };
