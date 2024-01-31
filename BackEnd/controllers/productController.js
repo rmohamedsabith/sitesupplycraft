@@ -207,7 +207,8 @@ const deleteProduct=asyncHandler(async(req,res)=>{
 //get one product  -> /product/:id
 const getOne=asyncHandler(async(req,res)=>{
     const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email location').exec()
-
+    console.log(Product.createdAt.getMonth())
+    console.log(Product.createdAt)
     if(!Product)
     {
         return res.status(400).json({message:"There are no product to find"})
@@ -362,6 +363,93 @@ const getUserproducts=asyncHandler(async(req,res)=>{
 })
 
 //get product owner's products count according to month /myProducts/count
+const getTotal_per_month=asyncHandler(async(req,res)=>{
+    try {
+        const Products=await product.find({owner:req.user._id}).populate('owner','shopName address phone email location').exec()
+    let data={
+        "January": 0,
+        "February": 0,
+        "March": 0,
+        "April": 0,
+        "May": 0,
+        "June": 0,
+        "July": 0,
+        "August": 0,
+        "September": 0,
+        "October": 0,
+        "November": 0,
+        "December": 0
+      }
+    Products.map((item)=>{
+        switch(item.createdAt.getMonth())
+        {
+            case 0:{
+                data['January']++;
+                break;
+            }
+            case 1:{
+                data['February']++;
+                break;
+            }
+            case 2:{
+                data['March']++;
+                break;
+            }
+            case 3:{
+                data['April']++;
+                break;
+            }
+            case 4:{
+                data['May']++;
+                break;
+            }
+            case 5:{
+                data['June']++;
+                break;
+            }
+            case 6:{
+                data['July']++;
+                break;
+            }
+            case 7:{
+                data['August']++;
+                break;
+            }
+            case 8:{
+                data['September']++;
+                break;
+            }
+            case 9:{
+                data['October']++;
+                break;
+            }
+            case 10:{
+                data['November']++;
+                break;
+            }
+            case 11:{
+                data['December']++;
+                break;
+            }
+        }
+        
+    })
+
+    return res.status(200).json({
+        success:true,
+        data
+
+    })
+    } catch (error) {
+        return res.status(409).json({
+            success:false,
+            error:error.message
+    
+        })
+    }
+    
+
+})
 
 //Delete user's all products
 const deleteUserAllProducts=asyncHandler(async(req,res)=>{
@@ -393,5 +481,6 @@ module.exports={
     deleteReview,
     getUserproducts,
     deleteUserAllProducts,
-    changeStatus
+    changeStatus,
+    getTotal_per_month
 }

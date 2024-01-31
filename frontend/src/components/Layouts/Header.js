@@ -24,7 +24,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     setIsDistrict(false)
     await dispatch(clearProducts())
     dispatch(filter(null,null,null,null,'products'))  
-    navigate('/')    
+    navigate('/')     
   },[setDistrict,setIsDistrict,dispatch,navigate])
 
   return (
@@ -33,7 +33,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
       <div className="headRow">
         
         <div className="logo">
-          <img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/>
+          <Link to={'./Side.js'}><img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/></Link>
           <span id="sitesupplycraft">Site Supply Craft</span>
         </div>
         {hide?

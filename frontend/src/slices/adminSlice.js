@@ -101,6 +101,25 @@ const adminSlice=createSlice({
                 error:action.payload
             }
         },
+        getTotals_per_monthRequest(state,action){
+            return{
+                ...state,
+                isLoading:true
+            }
+        },
+        getTotals_per_monthSuccess(state,action){
+            return{
+                isLoading:false,
+                datas:action.payload.data
+            }
+        },
+        getTotals_per_monthFail(state,action){
+            return{
+                ...state,
+                isLoading:false,
+                error:action.payload
+            }
+        },
        
         clearError(state,action){
             return{
@@ -131,6 +150,9 @@ export const{
     getTotalsRequest,
     getTotalsSuccess,
     getTotalsFail,
+    getTotals_per_monthRequest,
+    getTotals_per_monthSuccess,
+    getTotals_per_monthFail,
     clearError,
 }=actions
 export default reducer
