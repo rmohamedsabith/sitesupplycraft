@@ -1,40 +1,46 @@
-.sidebar {
-    width: 200px;
-    height: 100%;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    left: -200px;
-    transition: left 0.3s ease;
-  }
-  
-  .sidebar.open {
-    left: 0;
-  }
-  
-  .toggle-btn {
-    position: absolute;
-    top: 10px;
-    left: 170px;
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 50px 0 0 0;
-  }
-  
-  li {
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  li:hover {
-    background-color: #555;
-  }
-  
+.tableDetails {
+  border:3px solid rgb(3, 0, 0);
+  margin-right: 80px;
+  border-color: black;
+  border-radius: 10px;
+  height: 100%;
+  width: 800px;
+}
+
+td{
+  text-align: center;
+  color: black;
+}
+
+.thead{
+  background-color: rgb(13, 52, 73);
+  color: white;
+  text-align: center;
+}
+
+.buttonDark {
+  text-align: center;
+  margin: auto;
+  border:2px solid rgb(3, 0, 0);
+  background-color:white;
+  margin-left: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  border-radius: 12px;
+  width: 100px;
+  height: 30px;
+  color: black;
+}
+
+.buttonDark:hover {
+  background-color: rgb(13, 52, 73);
+  border-color: rgb(240, 240, 240);
+  color: white;
+}
+
+.widthCenter{
+  width: 80%;
+}

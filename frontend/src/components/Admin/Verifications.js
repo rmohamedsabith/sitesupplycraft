@@ -1,45 +1,77 @@
-import React from 'react'
-import Verification from './Verification'
-import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import React from 'react'; // Import React
+import { Link } from 'react-router-dom'; // Import Link if you're using it
+import './Verifications.css'
 
-
-const Verifications = () => {
+function Verifications() {
   return (
-<div>
-<div class="w3-sidebar w3-bar-block" style={{width:'25%'}}>
-  <a href="#" class="w3-bar-item w3-button">DashBoard</a>
-  <a href="#" class="w3-bar-item w3-button">Add Product</a>
-  <a href="#" class="w3-bar-item w3-button">Message</a>
-</div>
-
-
-<div style={{marginLeft:'25%'}}>
-
-
-    <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Name</th>
-      <th scope="col">Status</th>
-      <th scope="col">Option</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">2023/12/20</th>
-      <td>jayantha</td>
-      <td>Processing</td>
-      <td><button type="button" class="btn btn-outline-dark">Dark</button></td>
-    </tr>
-  </tbody>
-</table>
-
-</div>
-</div>
-  )
+<center>
+    <hr/>
+    <div className="tableDetails">
+    <table className="table">
+    <thead>
+      <tr>
+        <th scope="col"><b>Date</b></th>
+        <th scope="col"><b>Name</b></th>
+        <th scope="col"><b>Status</b></th>
+        <th scope="col"><b>Option</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row">2023/08/23</td>
+        <td>Mark</td>
+        <td>Process</td>
+        <td><button><Link to={'1'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/08/23</td>
+        <td>Jacob</td>
+        <td>Engineer</td>
+        <td><button><Link to={'2'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/06/23</td>
+        <td>Sahan</td>
+        <td>Engineer</td>
+        <td><button><Link to={'3'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/09/23</td>
+        <td>Supun</td>
+        <td>Engineer</td>
+        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/12/23</td>
+        <td>Milan</td>
+        <td>Engineer</td>
+        <td><button><Link to={'5'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/09/23</td>
+        <td>Supun</td>
+        <td>Engineer</td>
+        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/09/23</td>
+        <td>Supun</td>
+        <td>Engineer</td>
+        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+      </tr>
+      <tr>
+        <td scope="row">2023/09/23</td>
+        <td>Supun</td>
+        <td>Engineer</td>
+        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <hr/>
+  </center>
+ 
+  );
 }
 
-export default Verifications
-
-
+export default Verifications;
