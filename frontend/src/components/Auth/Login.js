@@ -11,7 +11,7 @@ import {LoginSocialGoogle} from 'reactjs-social-login'
 import axios from 'axios'
 const Login = () => {
 
-  const {isLoading,isAuthenticated,error,message,user}=useSelector((state)=>state.authState)
+  const {isLoading,isAuthenticated,user,error,message}=useSelector((state)=>state.authState)
 
 
   const [email,setEmail]=useState('')
