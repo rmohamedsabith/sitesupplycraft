@@ -5515,4 +5515,17 @@
 20240131	11:46:48	202e514c-0492-424a-986d-67391213857c	GET	/SiteSupplyCraft/logout	undefined
 20240131	11:46:48	de90f071-3888-4cb4-aa87-d7197d0c4017	GET	/SiteSupplyCraft/products?page=1	undefined
 20240131	11:47:02	97ec2bcc-7bca-422e-9771-f9dc3aeea780	POST	/SiteSupplyCraft/login	http://localhost:4500/
+20240131	12:41:54	a7879195-6d2f-40f6-a5db-73e83bb04aca	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:41:54	e5befcf5-8f23-49c0-a4d4-73ea1a507493	GET	/SiteSupplyCraft/myprofile	undefined
+20240131	12:42:00	b3639520-b3a4-4d3e-98be-2c2b555a62ed	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:42:00	0590fb73-4622-4e8c-bedc-a978ac3ad237	GET	/SiteSupplyCraft/myprofile	undefined
+20240131	12:42:11	8f516688-b644-486d-8e20-2a61d5f952c8	GET	/SiteSupplyCraft/myprofile	undefined
+20240131	12:48:00	e8888f4e-d35b-40db-91be-10e9055719f4	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:48:01	b0484689-5299-4606-a6a1-558d5248d7b9	GET	/SiteSupplyCraft/myprofile	undefined
+20240131	12:48:09	47a2564c-af7f-4e5b-b868-ab628ea96fa2	GET	/SiteSupplyCraft/logout	undefined
+20240131	12:48:10	87a18c52-d36e-412c-b363-ed0b88b3fec2	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:56:13	4d8a1221-2865-449a-80e0-258bbed2fd08	POST	/SiteSupplyCraft/login	http://localhost:4500/
+20240131	12:56:14	c48d446a-bba3-49a2-b429-f2a8981d748a	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:58:09	0d3fb28e-d65b-4a07-b6ce-e618415a1884	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:58:09	68c2b943-9ee1-4dc5-8428-b41bf5c9a94a	GET	/SiteSupplyCraft/myprofile	undefined
 >>>>>>> origin/poorni
