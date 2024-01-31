@@ -118,7 +118,6 @@ function App() {
           <Route path="*" element={<Missing/>}/>              
         </Routes>
         <Footer/>
-        <PinLocation/>
           
          
       </HelmetProvider>
