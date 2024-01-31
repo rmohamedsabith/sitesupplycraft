@@ -11,6 +11,7 @@ import Loader from '../Loader'
 import {sendMessage} from '../../actions/messagesAction'
 import {getMessages} from '../../actions/messagesAction'
 import {getMessagesFromAdmin} from '../../actions/messagesAction'
+import{Col, Row} from 'react-bootstrap'
 
 
 
@@ -23,7 +24,7 @@ const Messages = () => {
   const [content,setcontent] = useState([])
   const[currentchat,setcurrentchat] = useState([])
   const [newMessage, setNewMessage] = useState("");
-  const [_id,set_id] =useState('')
+  const [id,setid] =useState('')
   
   const handleChange = (newMessage)=> {
     setNewMessage(newMessage)
@@ -35,8 +36,17 @@ const Messages = () => {
   },[dispatch])
 
   useEffect(()=>{
-    dispatch(sendMessage(content))},[dispatch,_id]
+    dispatch(sendMessage(null,content))},[dispatch]
   )
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newMessage !== '') {
+      dispatch(sendMessage(id,newMessage));
+      setNewMessage('');
+      setid('')
+    }
+  };
 
   
   const getTimeFromTimestamp = (timestamp) => {
@@ -51,11 +61,16 @@ const Messages = () => {
   
   
   return (
+    <>
+    {
+      isLoading ? <Loader/>
+      :
       <div className='_main'>
         <h1>Contact Admin</h1> 
      <Link to = '../../ProductOwner/DashBoard'><img src = {back} className='im3'></img></Link>
 
     <div className='Mbox'>
+      <table>
       <tbody>
         <tr>
             <div className='chat1'>
@@ -67,10 +82,36 @@ const Messages = () => {
             <div className='cbox'>
             <div className="chat-body" >
               {messages && messages.map((message) => (
-
+              
+              message.receiver === null ? (
+                <Row key={message._id}>
+                    <Col>
+                    <p className='msg'>
+                      {message.content}<br/>
+                      {getTimeFromTimestamp(message.date)}
+                    </p>
+                    </Col>
+                    <Col>
+                    </Col>
+                    </Row>
                     
-                    <p className='msg'>{message.content}<br/>
-                   {getTimeFromTimestamp(message.date)}</p>
+                      ) : (
+
+                        <Row>
+                        <Col>
+                    </Col>
+                    <Col>
+                      <p className='msg1'>
+                      {message.content}<br/>
+                      {getTimeFromTimestamp(message.date)}
+                   </p>
+                    </Col>
+                    </Row>
+                  
+)
+
+
+             
               ))}
             </div>
       </div>
@@ -79,15 +120,19 @@ const Messages = () => {
 
       <tr>
         <div className='submit'>
-              Message : <input type='text' className='text1'></input>
-                        <button className='btnicon' ><FontAwesomeIcon icon={faPaperPlane} className='tt'/></button>
+              Message : <input type='text' value={newMessage}   onChange={handleChange} className='text1'></input>
+                        <button className='btnicon'  onClick={handleSubmit}><FontAwesomeIcon icon={faPaperPlane} className='tt'/></button>
         </div>
       </tr>
     </tbody>
+    </table>
 
       </div>
 
     </div>
+    }
+      
+      </>
   )
 }
 

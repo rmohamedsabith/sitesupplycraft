@@ -1,6 +1,6 @@
 
 .Mbox{
-    max-width: 100%;
+    max-width: 80%;
     margin: 100px  50px  100px 240px;
     background-color: hsl(180, 63%, 88%);
     min-height: 80vh;
@@ -29,12 +29,14 @@ body{
 .submit{
     font-size: 30px;
     margin-bottom: 40px;
-    width: 200%;
+    width: 150%;
+    
 }
 .text1{
     width: 40%;
     height: 10%;
     font-size: 25px;
+    margin-right: 30px;
     
 }
 .Chat {
@@ -44,44 +46,6 @@ body{
     gap: 1rem;
   }
   
-  
-  
-  .Chat-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background: var(--cardColor);
-    border-radius: 1rem;
-    padding: 1rem;
-    height: auto;
-    min-height: 80vh;
-    overflow: scroll;
-  }
-  
-  .Chat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .Right-side-chat {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .conversation:hover {
-    background: #80808038;
-    cursor: pointer;
-  }
-  
-  .conversation {
-    border-radius: 0.5rem;
-    padding: 10px;
-  }
-  
-  .conversation > div {
-    position: relative;
-  }
   
   .online-dot {
     background-color: greenyellow;
@@ -100,9 +64,9 @@ body{
     font-size: 20px;
   }
   .cbox{
-    width: 180%;
+    width: 80%;
     margin-top: 20px;
-    margin-left: 60px;
+    margin-left: 200px;
     margin-bottom: 30px;
     background-color: hsl(180, 5%, 75%);
     min-height: 60vh;
@@ -119,9 +83,11 @@ body{
     background-color: rgb(213, 250, 237);
     border-radius: 20px;
     padding: 10px;
+    margin-left: 40px;
+    width: 200px;
   }
   .chat1{
-    width: 200%;
+    width: 130%;
     height: 50px;
     font-size: 30px;
     text-align: center;
@@ -131,12 +97,26 @@ body{
    
   }
   .tt{
-    margin-left: 30px;
+    
     font-size: 30px;
+    margin-right: 100px;
   }
   .btnicon{
     background-color: none;
+    
   }
+  .msg1{
+    text-align: left;
+    width: 150px;
+    background-color: rgb(213, 250, 237);
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: 200px;
+    
+
+  }
+
+  
   
   
   
