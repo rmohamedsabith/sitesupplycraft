@@ -24,7 +24,7 @@ const DashBoard = () => {
   const{isLoading,products,ActiveProducts,DeactiveProducts} = useSelector((state)=> state.productsState)
   const dispatch=useDispatch()
   const [keyword,setKeyword]=useState('')
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState(false);
   
 
   useEffect(()=>{
@@ -64,7 +64,7 @@ const DashBoard = () => {
             "#12AD2B",
             "#E41B17",
           ],
-          borderColor: '#053B50',
+          
           borderWidth: 2,
           fill: true,
         },
@@ -75,7 +75,6 @@ const DashBoard = () => {
 
 
     
-      
       const monthdata = (timestamp) => {
         const dateObject = new Date(timestamp);
         const month = dateObject.getMonth() + 1;
@@ -106,23 +105,6 @@ const DashBoard = () => {
 
       
 
-      const searchPro = (name) => {
-        if (products) {
-          return products.map((item) => {
-            if (item.name === name) {
-              return (
-                <div key={item.id}>
-                  {item.name}
-                </div>
-              );
-            } else {
-              return null;
-            }
-          });
-        } else {
-          return null;
-        }
-      };
 
       const handleSearchInputChange = (event) => {
     setKeyword(event.target.value);
@@ -131,13 +113,13 @@ const DashBoard = () => {
   
 
     const toggleEyeOpen = (id) => {
-    setStatus('Deacticve');
-    dispatch(changeStatus(id,'Deacticve'))
+    setStatus(!status);
+    dispatch(changeStatus(id,'Active'))
     
     };
     const toggleEyeClose= (id) => {
-    setStatus('Acticve');
-    dispatch(changeStatus(id,'Acticve'))
+    setStatus(!status);
+    dispatch(changeStatus(id,'Deactive'))
     
     };
     const handleClick=()=>{
@@ -147,7 +129,7 @@ const DashBoard = () => {
   
   return (
     <>
-    {isLoading? <Loader/>: 
+    
     <div className='page'>
       <div className='sideb'>
         <button className='btn1'>DashBoard</button>
@@ -155,6 +137,7 @@ const DashBoard = () => {
         <Link to='../../ProductOwner/Messages'><button className='btn1'>Message</button></Link>
 
       </div>
+      {isLoading? <Loader/>: 
       <div className='con'> <h1>Summary of My Products</h1>
       
       <div className="linechart">
@@ -216,11 +199,11 @@ const DashBoard = () => {
           <td>
           <Link to = '..\..\ProductOwner/addProduct/Preview'><button className='btn'>Preview</button></Link>
         <button className='btn'>Delete</button>
-        {/* <img src = {image1} className='im2'></img> */}
-        {item.status!=='Active' ?
-          <button onClick={()=>toggleEyeOpen(item._id)} className='btnicon' ><FontAwesomeIcon icon= {faEye} className='iconeye' /></button>
+        
+        {item.status==='Active' ?
+          <button onClick={()=>toggleEyeClose(item._id)} className='btnicon' ><FontAwesomeIcon icon= {faEye} className='iconeye' /></button>
           :
-          <button onClick={()=>toggleEyeClose(item._id)} className='btnicon' ><FontAwesomeIcon icon={faEyeSlash} className='iconeye' /></button>
+          <button onClick={()=>toggleEyeOpen(item._id)} className='btnicon' ><FontAwesomeIcon icon={faEyeSlash} className='iconeye' /></button>
         }
       </td>
         </tr>))
@@ -251,9 +234,9 @@ const DashBoard = () => {
   </div>   
       
       </div>
-      
-    </div>
 }
+    </div>
+
     </>
     
   )

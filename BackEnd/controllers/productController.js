@@ -220,7 +220,8 @@ const getOne=asyncHandler(async(req,res)=>{
 
 //change status /product/:id/changeStatus
 const changeStatus=asyncHandler(async(req,res)=>{
-    const Product=await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
+    const p=await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
+    const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email location').exec()
     res.status(200).json({
         Product
     })
