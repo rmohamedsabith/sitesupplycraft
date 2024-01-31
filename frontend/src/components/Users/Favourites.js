@@ -74,6 +74,7 @@ const Favourites = () => {
                     <div className='bookmarkProduct' key={index} onClick={()=>handleClick('products',cart._id)}>
                     <Row>
                         <Col xs={3}>
+                            
                              <img src={cart.images?.[0]?.image} alt='pic'/>
                         </Col>
                         <Col>
