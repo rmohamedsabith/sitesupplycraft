@@ -29,7 +29,7 @@ const productSchema= new mongoose.Schema({
         type:String,
         default:'/perDay',
         enum:{
-            values:['/perDay','/perMonth','/PerHour']
+            values:['/perDay','/perMonth','/perHour']
         }
         
 
