@@ -142,7 +142,7 @@ const ProductDetails = () => {
                   <Col xs={3}>
                     <Row>
                       <Col>
-                        {user.carts.products.length>0&&user.carts.products.some((cart)=>{return cart._id===id})?
+                        {user.carts?.products.length>0&&user.carts?.products.some((cart)=>{return cart._id===id})?
                         <FontAwesomeIcon icon={heart} style={{fontSize:'25px',color:'red',cursor:'pointer'}} onClick={handleDeleteOne}/>:
                         <FontAwesomeIcon icon={faHeart} style={{fontSize:'25px',cursor:'pointer'}} onClick={handleCart}/>
                         }
@@ -223,7 +223,7 @@ const ProductDetails = () => {
                   <Col xs={3}>
                     <Row>
                       <Col>
-                        {user.carts.laborers.length>0&&user.carts.laborers.some((cart)=>{return cart._id===id})?
+                        {user.carts?.laborers.length>0&&user.carts?.laborers.some((cart)=>{return cart._id===id})?
                         <FontAwesomeIcon icon={heart} style={{fontSize:'25px',color:'red',cursor:'pointer'}} onClick={handleDeleteOne}/>:
                         <FontAwesomeIcon icon={faHeart} style={{fontSize:'25px',cursor:'pointer'}} onClick={handleCart}/>
                         }

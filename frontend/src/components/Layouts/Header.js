@@ -24,7 +24,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     setIsDistrict(false)
     await dispatch(clearProducts())
     dispatch(filter(null,null,null,null,'products'))  
-    navigate('/')    
+    navigate('/')     
   },[setDistrict,setIsDistrict,dispatch,navigate])
 
   return (
@@ -33,7 +33,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
       <div className="headRow">
         
         <div className="logo">
-          <img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/>
+          <Link to={'./Side.js'}><img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/></Link>
           <span id="sitesupplycraft">Site Supply Craft</span>
         </div>
         {hide?
@@ -47,16 +47,16 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
             <Favourites/>
                        
               <Dropdown>
-                  <Dropdown.Toggle variant='text-white pr-5'  className='no-hover-dropdown' style={{boxShadow:'none',fontWeight:'800'}}>
+                  <Dropdown.Toggle variant='text-white pr-5'  className='no-hover-dropdown' style={{boxShadow:'none',fontWeight:'800', border:'none'}}>
                     <figure className='avatar avatar-nav'>
-                      <Image src={user.profile??'../../images/default_avatar.png'} className='rounded-circle' />
+                      <Image src={user.profile?user.profile:'../../images/default_avatar.png'} className='rounded-circle' />
                     </figure>
                     <span>{user.role!=='Google User'?user.firstname+' '+user.lastname:user.name}</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu >
                       { user.role === 'Admin' && <Dropdown.Item onClick={() => {navigate('Admin/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
                       { user.role === 'Product Owner' && <Dropdown.Item onClick={() => {navigate('ProductOwner/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
-                      {user.role!=='Google User'&&user.role!=='Admin'?<Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>:<Dropdown.Item className='text-dark'>Change Password</Dropdown.Item>}
+                      {user.role!=='Google User'&&user.role!=='Admin'?<Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>:user.role==='Google User'?null:<Dropdown.Item className='text-dark'>Change Password</Dropdown.Item>}
                       <Dropdown.Item onClick={logoutHandler} className='text-danger'>Logout</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>        

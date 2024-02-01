@@ -78,3 +78,8 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240129	15:00:22	8538cbd8-1bcf-4595-9f54-0a3aa5c24ed1	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
 20240129	15:01:37	ba9b29f2-42af-41bc-a9e0-f7084d95e496	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
 20240129	15:05:31	7795576b-5857-44ca-adcf-b8823485c389	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:53:51	24f0c7d4-6501-4a51-94d8-d16f6c51bc03	ReferenceError: Cannot access 'product' before initialization	PUT	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/changeStatus	undefined
+20240130	10:07:50	09e44dd4-b1df-43ae-82c4-193bd0160138	MongoServerSelectionError: connect ETIMEDOUT 3.7.243.165:27017	GET	/SiteSupplyCraft/laborers?page=1	undefined
+20240130	10:08:21	468d521a-e124-4d37-8f0d-6f0398ea5da0	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/laborers?page=1	undefined
+20240130	10:08:25	98cd751b-684c-452f-acd3-b333c57a527b	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
+20240130	11:24:49	64e467f7-9734-404f-abf8-180a1f16c7c4	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined

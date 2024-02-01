@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import images1 from '../../images/images1.jpg'
 import {Link} from 'react-router-dom'
 import {useState} from 'react';
 import{useDispatch, useSelector} from 'react-redux'
@@ -13,6 +12,8 @@ import Loader from '../Loader'
 import './DashBoard.css'
 import { changeStatus } from '../../actions/productActions';
 
+import MetaData from '../Layouts/MetaData'
+import { Col, Image, Row } from 'react-bootstrap'
 ChartJS.register(
   Title, Tooltip, LineElement, Legend,
   CategoryScale, LinearScale, PointElement, Filler,ArcElement
@@ -32,7 +33,7 @@ const DashBoard = () => {
     dispatch(getOwnerProducts(keyword))
 
 
-  },[dispatch,status])
+  },[dispatch,status,keyword])
 
 
 
@@ -75,12 +76,12 @@ const DashBoard = () => {
 
 
     
-      const monthdata = (timestamp) => {
+     /*  const monthdata = (timestamp) => {
         const dateObject = new Date(timestamp);
         const month = dateObject.getMonth() + 1;
       
         return `${month}`;
-      };
+      }; */
   
     const formatDate = (timestamp) => {
       const dateObject = new Date(timestamp);
@@ -99,16 +100,13 @@ const DashBoard = () => {
       return <p className='statusa'>Active</p>
     }};
 
-      const imagesize = (image)=>{
+      /* const imagesize = (image)=>{
         return <img src = 'image' className='imp'/>
-      };
+      }; */
 
-      
-
-
-      const handleSearchInputChange = (event) => {
+  /*     const handleSearchInputChange = (event) => {
     setKeyword(event.target.value);
-  };
+  }; */
 
   
 
@@ -129,25 +127,26 @@ const DashBoard = () => {
   
   return (
     <>
-    
+    <MetaData title={'DashBoard'}/>
     <div className='page'>
-      <div className='sideb'>
-        <button className='btn1'>DashBoard</button>
-       <Link to = '../../ProductOwner/addProduct'> <button className='btn1'>Add Product</button></Link>
-        <Link to='../../ProductOwner/Messages'><button className='btn1'>Message</button></Link>
-
+    <Row>
+      <Col xs={2}  style={{backgroundColor:'#176B87'}}>
+      <div className='p-3'>
+        <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
+        <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
+        <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
       </div>
-      {isLoading? <Loader/>: 
-      <div className='con'> <h1>Summary of My Products</h1>
-      
+      </Col>
+      <Col className='con' >
+      <div className='bodyDashboard'> 
+      <h1>Summary Of My Products</h1>      
       <div className="linechart">
       <Line data={data}/>
       <div className='phara1'>
           <h2>Posted Product</h2>
       </div>
 
-    </div>
-
+      </div>
       <div className='piechart'>
         <Pie data={data1}/>
         <div className='phara2'>
@@ -170,10 +169,11 @@ const DashBoard = () => {
         
 
 
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  {isLoading?<Loader/>:
+      <table id="dtBasicExample" className="table table-striped table-bordered table-sm" cellSpacing="0" width="100%">
   <thead>
     <tr>
-    <th className ='th-sm'>Photos
+      <th className ='th-sm'>Photos
       </th>
       <th className ='th-sm'>Product Id
       </th>
@@ -191,11 +191,11 @@ const DashBoard = () => {
   <tbody>
       {products && products.map((item) => (
         <tr key={item._id}>
-          <td><img src={item.images[0].image}alter='pic' className='imp'/></td>
+          <td><Image src={item.images[0].image}alter='pic' className='imp'/></td>
           <td>{item._id}</td>
           <td >{item.name}</td>
           <td>{formatDate(item.createdAt)}</td>
-          <td>{statuscolor(item.status)}</td>
+          <td style={{color:'green'}}>{statuscolor(item.status)}</td>
           <td>
           <Link to = '..\..\ProductOwner/addProduct/Preview'><button className='btn'>Preview</button></Link>
         <button className='btn'>Delete</button>
@@ -230,11 +230,13 @@ const DashBoard = () => {
       
     </tr>
   </tfoot>
-</table>
-  </div>   
+      </table>}
+      </div>   
       
-      </div>
-}
+      </div>      
+   
+      </Col>
+    </Row>
     </div>
 
     </>

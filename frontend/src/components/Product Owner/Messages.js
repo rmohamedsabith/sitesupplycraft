@@ -10,9 +10,7 @@ import{useDispatch, useSelector} from 'react-redux'
 import Loader from '../Loader'
 import {sendMessage} from '../../actions/messagesAction'
 import {getMessages} from '../../actions/messagesAction'
-import {getMessagesFromAdmin} from '../../actions/messagesAction'
-import{Col, Row} from 'react-bootstrap'
-
+import MetaData from '../Layouts/MetaData'
 
 
 
@@ -35,10 +33,10 @@ const Messages = () => {
     dispatch(getMessages)
   },[dispatch])
 
-  useEffect(()=>{
+  /* useEffect(()=>{
     dispatch(sendMessage(null,content))},[dispatch]
   )
-
+ */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newMessage !== '') {
@@ -61,13 +59,14 @@ const Messages = () => {
   
   
   return (
-    <>
-    {
-      isLoading ? <Loader/>
-      :
-      <div className='_main'>
+      <>
+      {
+        isLoading?<Loader/>:
+        <>
+        <MetaData title={'Message'}/>
+          <div className='_main'>
         <h1>Contact Admin</h1> 
-     <Link to = '../../ProductOwner/DashBoard'><img src = {back} className='im3'></img></Link>
+     <Link to = '/ProductOwner/DashBoard'><img src = {back} className='im3'></img></Link>
 
     <div className='Mbox'>
       <table>
@@ -81,40 +80,20 @@ const Messages = () => {
         <tr>
             <div className='cbox'>
             <div className="chat-body" >
-              {messages && messages.map((message) => (
-              
+              {messages && messages.map((message) => (             
               message.receiver === null ? (
-                <Row key={message._id}>
-                    <Col>
                     <p className='msg'>
                       {message.content}<br/>
                       {getTimeFromTimestamp(message.date)}
-                    </p>
-                    </Col>
-                    <Col>
-                    </Col>
-                    </Row>
-                    
+                    </p>                    
                       ) : (
-
-                        <Row>
-                        <Col>
-                    </Col>
-                    <Col>
                       <p className='msg1'>
                       {message.content}<br/>
                       {getTimeFromTimestamp(message.date)}
                    </p>
-                    </Col>
-                    </Row>
-                  
-)
-
-
-             
-              ))}
+              )))}
             </div>
-      </div>
+            </div>
             
         </tr>
 
@@ -129,9 +108,9 @@ const Messages = () => {
 
       </div>
 
-    </div>
-    }
-      
+        </div>
+        </>
+      }
       </>
   )
 }
