@@ -131,6 +131,24 @@ body {
   transition: 0.2s;
 }
 
+/* Admin Sidebar */
+.adminSide{
+  display: inline-block;
+    background: #176B87;
+    color: #ffff;
+    padding: 20PX;   
+    width: 100%; 
+    height: 100%;  
+    min-height: 100vh;      
+}
+
+.sidebarLink{
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
+
 /* footer */
 .footer{
   background-color: #6DB2C9;
@@ -223,6 +241,7 @@ p a{
 }
 
 /* ProductList */
+
 .productlist{
   padding: 20px;
 }
@@ -236,7 +255,7 @@ p a{
   color: #053B50;
 }
 .card {
-  height: 100%;
+  height: 80%;
 }
 
 .card-title{
@@ -254,7 +273,7 @@ p a{
 }
 
 .card-text {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-family: 'Times New Roman', Times, serif;
 }
 .card-img-top {
@@ -288,7 +307,7 @@ p a{
 }
 .search form select,.search button{  
   margin-top: 20px;
-  border: 2px #053B50 solid;
+  border: 2px solid #053B50 ;
   color: #053B50;
 }
 
@@ -316,7 +335,7 @@ p a{
 }
 .login{
   width: 100%;
-  height: 60vh; 
+  height: 70vh; 
   border-top: 10px solid #053B50; 
   border-radius: 20px;
 }
@@ -325,7 +344,7 @@ p a{
 }
 .signup{
   width: 100%;
-  height: 60vh;
+  height: 70vh;
   margin-left: 20px;
   border-radius: 20px;
   position: relative;
@@ -348,6 +367,11 @@ p a{
   z-index: 1;
   padding: 20px;
 }
+.signup-content center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .login h1,.signup h1{
   text-align: center;
   padding-bottom: 50px;
@@ -360,6 +384,112 @@ p a{
   align-items: center;
     
 }
+
+/*Registration*/
+.profilePic:hover{
+  background-color: #3e8e41;
+}
+
+.profilePic-before{
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.profilePic-after{
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.register{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.register .frame{
+  width: 50%;
+  padding: 20px;
+  margin: 30px;
+  border: 2px solid #c7b8a13b;
+  box-shadow: 5px 5px 10px #053B50;
+  background-color: #c7b8a13b;
+  border-radius: 10px;  
+}
+
+.register .card::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d7c6ad3b;
+  background-position: center;
+  background-size: cover;
+  filter: blur(2px); 
+}
+  
+.register .error{
+  text-align: right;
+  color: #B0000B;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.btnstyle{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+  background-color: #FFF;
+  color: #053B50;
+  text-align: center;
+  font-size: 14px;
+  font-weight:800;
+  margin: 2px;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+}
+.register .btnstyle:hover{
+  color: #ffff;
+  font-weight:800;
+  background-color: #053B50;
+  border: 3px solid #fff;
+}
+
+/*Verify email*/
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .frame{
+  width: 50%;
+  padding: 20px;
+  margin: 80px;
+  border: 2px solid #c7b8a13b;
+  box-shadow: 5px 5px 10px #053B50;
+  background-color: #c7b8a13b;
+  border-radius: 10px; 
+}
+
+.container p{
+  text-align: center;
+}
+
+.round-image{
+  align-items: center;
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 150px;
+  margin-bottom: 10px;
+}
+
 /* Avatar */
 .avatar {
   display: inline-block;
@@ -555,6 +685,8 @@ width: 70%;
    .marginOff{ 
     margin-right:0px;
    }
+
+
   
   /*  resetpassword */
   .frame-reset{
@@ -570,11 +702,11 @@ width: 70%;
     border-radius:20px;
     color: #053B50;
     min-width: 200px;
-  }
-
-  /*  product owner  DashBoard  */
-   
+  }  
 }
+
+ /*  product owner  DashBoard  */
+/* 
 .sideb{
   display: inline-block;
   background: #176B87;
@@ -683,7 +815,7 @@ body {
   margin-left: 20px;
   font-size: 20px;
 }
-
+ */
 
 
 

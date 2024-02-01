@@ -1,7 +1,7 @@
 
 
 import axios from 'axios'
-import { addProductFail, addProductRequest, addProductSuccess, addReviewFail, addReviewRequest, addReviewSuccess,deleteProductFail,deleteProductRequest,deleteProductSuccess,productFail, productRequest, productSuccess, reviewsFail, reviewsRequest, reviewsSuccess } from '../slices/productSlice'
+import { addProductFail, addProductRequest, addProductSuccess, addReviewFail, addReviewRequest, addReviewSuccess,changeStatusFail,changeStatusRequest,changeStatusSuccess,deleteProductFail,deleteProductRequest,deleteProductSuccess,productFail, productRequest, productSuccess, reviewsFail, reviewsRequest, reviewsSuccess } from '../slices/productSlice'
 
 export const getProduct=(id,model)=>async(dispatch)=>{
     try {
@@ -56,6 +56,16 @@ export const deleteProduct=id=>async(dispatch)=>{
         dispatch(deleteProductSuccess(data))        
     } catch (error) {
         dispatch(deleteProductFail(error.response.data.message))
+
+    }
+}
+export const changeStatus=(id,status)=>async(dispatch)=>{
+    try {
+        dispatch(changeStatusRequest())
+        const {data}=await axios.put(`/SiteSupplyCraft/product/${id}/changeStatus`,{status})
+        dispatch(changeStatusSuccess(data))        
+    } catch (error) {
+        dispatch(changeStatusFail(error.response.data.message))
 
     }
 }

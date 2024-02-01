@@ -8,12 +8,13 @@ const path=require('path')
 const { deleteUserAllProducts } = require('./productController')
 const { stringify } = require('querystring')
 const mongoose=require('mongoose')
-
+const GoogleUser = require('../models/googleUserModel')
+ 
 //Registration:- SideSupplyCraft/registration
-const register=asyncHandler(async(req,res,next)=>{
-
-  try { 
+const register=asyncHandler(async(req,res,next)=>{  
+  try {  
     const{role}=req.body
+    if(role!=='Google User'){ 
     if(req.files){
       req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${encodeURI(req.files['profile'][0].filename)}`
       req.files['certificate']?req.body.certificate=`${process.env.BACK_END_URL}/uploads/users/${encodeURI(req.files['certificate'][0].filename)}`:null
@@ -92,7 +93,27 @@ const register=asyncHandler(async(req,res,next)=>{
          }
       
     }
-       
+  } 
+  else if(role==='Google User')
+  {
+    
+    const duplicate=await GoogleUser.findOne({email:req.body.email}).lean()
+    if(duplicate)
+    { 
+      const { token, ...userData } = req.body;
+      const user = await GoogleUser.findOneAndUpdate({ email: req.body.email }, userData, { new: true });      
+      sendToken(user,201,res,null,true)
+    
+    }
+    else{
+      const { token, ...userData } = req.body;
+      const user = await GoogleUser.create(userData);
+      sendToken(user,201,res,null,true)
+    }
+
+
+  }
+
   } catch (error) {
         if (error.name === 'ValidationError') {
           // Handle Mongoose validation errors
@@ -103,10 +124,13 @@ const register=asyncHandler(async(req,res,next)=>{
           return res.status(400).json({ success: 'Fail', errors: validationErrors });
         } else {
           console.error(error);
-          res.status(500).json({ success: 'Error', message: 'Internal Server Error' });
+          res.status(400).json({ success: 'Error', message:error.message });
         }
       }
-})
+
+}
+
+)
 //verify the Email /email/verify/:token
 const verifyEmail=asyncHandler(async(req,res)=>{
   try {
@@ -334,7 +358,22 @@ const resetPassword=asyncHandler(async(req,res)=>{
 //get logged user profile - /myprofile
 const getProfile=asyncHandler(async(req,res,next)=>{
   try{
-    const user=await User.findById(req.user.id).populate({
+    let user
+   if(req.user.role==='Google User')
+   {user=await GoogleUser.findById(req.user.id).populate({
+    path: 'carts.products',
+    select: 'name price ratings images.image type priceType',
+    populate: {
+        path: 'owner',
+        select: 'shopName'
+    }
+}).populate({
+    path:'carts.laborers',
+    select:'firstname lastname profile price priceType job'
+})
+.lean()
+}
+   else {user=await User.findById(req.user.id).populate({
       path: 'carts.products',
       select: 'name price ratings images.image type priceType',
       populate: {
@@ -346,6 +385,7 @@ const getProfile=asyncHandler(async(req,res,next)=>{
       select:'firstname lastname profile price priceType job'
   })
   .lean()
+}
     res.status(200).json({
       success:true,
       user,
@@ -593,7 +633,7 @@ const deleteAllCart=asyncHandler(async(req,res,next)=>{
   const user=req.user
   user.carts.products=[];
   user.carts.laborers=[];
-  user.numOfCarts=user.carts.length
+  user.numOfCarts=0
   await user.save({validateBeforeSave: false});
     res.status(200).json({
       success:true,

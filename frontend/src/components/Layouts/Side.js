@@ -146,7 +146,7 @@ const handleCitySelect = useCallback((city) => {
   ]
 
   return (
-    <div className='side'>   
+    <div className='side'>  
     
 
        {/* See the locations */}

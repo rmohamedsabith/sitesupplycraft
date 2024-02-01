@@ -4,6 +4,10 @@
     color: green; /* Set the color to green */
     text-decoration: underline; /* Add underline */
 }
+.previewImg{
+    border: 1px solid #053B50;
+    border-radius: 5px;
+}
 
 .block{
 

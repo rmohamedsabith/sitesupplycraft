@@ -59,6 +59,22 @@ const productsSlice=createSlice({
                 error:action.payload
             }
         },
+        //get total of  my products based on month
+        getTotal_per_monthRequest(state,action){
+            return {isLoading:true}
+        },
+        getTotal_per_monthSuccess(state,action){
+            return{
+                isLoading:false,
+                data:action.payload.data
+            }
+        },
+        getTotal_per_monthFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
         clearError(state, action){
             return {
                 ...state,
@@ -91,6 +107,9 @@ export const{
     deleteAllProductsRequest,
     deleteAllProductsSuccess,
     deleteAllProductsFail,
+    getTotal_per_monthRequest,
+    getTotal_per_monthSuccess,
+    getTotal_per_monthFail,
     clearError,
     clearProducts,
 }=actions

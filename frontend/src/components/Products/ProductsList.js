@@ -44,7 +44,7 @@ const ProductList = () => {
        <div className='frames'>
       <section id="products" className="container mt-2">
         <div className="row">
-         {products&&products.map(product=>(
+         {products&&products?.map(product=>(
            <Product key={product._id} product={product}/>
          ))}
         </div>
