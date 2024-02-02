@@ -165,3 +165,9 @@
 20240131	10:18:47	69f53ef4-7c9c-441f-93cd-699548975529	GET	/uploads/products/1706609631821-4-LED-Eco-Bulb.jpg	undefined
 20240131	10:18:47	58dd4c14-8270-49fd-8414-d3f29f78701e	GET	/uploads/products/1706609351410-download.jpeg	undefined
 20240131	10:18:48	b2059079-14f0-4647-8fb9-771b96f8dc3f	GET	/SiteSupplyCraft/myprofile	undefined
+20240131	12:29:55	e70d6e4b-e350-4d29-9b50-766d10885c87	GET	/SiteSupplyCraft/products?page=1	undefined
+20240131	12:29:55	f2d480f8-006a-43d1-9545-933514fe57b7	GET	/SiteSupplyCraft/myprofile	undefined
+20240131	12:29:55	0eaeb7c9-b295-40ee-8d3d-ce59c4d6012b	GET	/SiteSupplyCraft/products?page=1&price[gte]=1&price[lte]=100000	undefined
+20240131	12:29:58	e16c759d-afc4-4002-b05a-64b51248c7ce	GET	/uploads/products/1706609351410-download.jpeg	undefined
+20240131	12:29:58	89f6e285-5e95-478b-b0a2-5dae67f8a65c	GET	/uploads/products/1706609631821-4-LED-Eco-Bulb.jpg	undefined
+20240131	12:32:49	b1829506-f2d4-4e85-8924-a05f03d8246c	GET	/SiteSupplyCraft/myprofile	undefined
