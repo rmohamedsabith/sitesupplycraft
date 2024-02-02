@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import 'rc-slider/assets/index.css';
 import Slider from 'rc-slider'
 import Tolltip from'rc-tooltip'
@@ -10,7 +10,7 @@ import {filter} from '../../actions/productsFilteringActions'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 
-const Side = ({isDistrict,district}) => {
+const Side = ({isDistrict,district,refreshSide}) => {
   const {model}=useSelector((state)=>state.productsFilteringState)
 
   const dispatch=useDispatch()
@@ -18,13 +18,24 @@ const Side = ({isDistrict,district}) => {
 
   const[price,setPrice]=useState([1,100000]);
   const[priceChange,setPriceChanged]=useState(price);
-  const[category,setCategory]=useState(null);
+  const[category,setCategory]=useState('');
   const[rating,setRating]=useState(0);
-  const[city,setCity]=useState("");
+  const[city,setCity]=useState(null);
+
+  useEffect(() => {    
+      setCategory('')
+      setPrice([1,100000])
+      setRating(0)
+      setCity(null) 
+  }, [refreshSide]);
+
+
+ const handleFilter=()=>{
   
- useEffect(()=>{
-  dispatch(filter(priceChange,rating,category,city,model))
- },[dispatch,priceChange,rating,category,city])
+    dispatch(filter(priceChange,rating,category,city,model))
+ }
+
+ 
 
  const [selectedCity, setSelectedCity] = useState('');
  const[Districts,setDistricts]=useState([])
@@ -42,10 +53,10 @@ const Side = ({isDistrict,district}) => {
      }
    };
 
-   fetchData();
+   if(isDistrict)fetchData();
    setSelectedCity('')
    setCity('')
- },[district])
+ },[district,isDistrict])
 
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
@@ -93,10 +104,10 @@ const CustomMenu = React.forwardRef(
    );
  },
 );
-const handleCitySelect = (city) => {
+const handleCitySelect = useCallback((city) => {
  setCity(city);
  setSelectedCity(city)
-};
+},[setCity,setSelectedCity])
 
   
 
@@ -135,14 +146,22 @@ const handleCitySelect = (city) => {
   ]
 
   return (
-    <div className='side'>    
+    <div className='side'>  
+    
+
+       {/* See the locations */}
+     {/*   <h4>See the Available {model!=='laborers'?'Shops':'Loberors'}</h4>
+       <div className='location'  style={{margin:'20px 0',fontSize:'small',padding:'10px 20px',backgroundColor:'green'}}>
+          Google Map
+      </div>
+ */}
       <div>
           {/* Categories */}
           <h4>Categories</h4>        
               <span
-               className={`d-block ${category===null?'selectedCategory':''}`} 
+               className={`d-block ${category===''?'selectedCategory':''}`} 
                style={{cursor:'pointer', paddingBottom:'5px'}}  disabled={isLoading} onClick={()=>{
-                    setCategory(null)
+                    setCategory('')
                   }}>All</span>
             {model!=='laborers'? Categories.map(
               cat=>(            
@@ -159,7 +178,8 @@ const handleCitySelect = (city) => {
               )
             )}
       </div>
-      <hr/>
+      <br/>
+     
       <div>
           {/* price filter */}
           <h4>Price</h4>
@@ -209,7 +229,8 @@ const handleCitySelect = (city) => {
                         return (District.cities.map((city,index)=>{
                           return(<Dropdown.Item key={index} eventKey={city}>{city}</Dropdown.Item>)
                          }))
-                      }                  
+                      } 
+                      return null;                 
                    })
                   
                    }                   
@@ -232,7 +253,7 @@ const handleCitySelect = (city) => {
                setRating(star)
             }}
             >             
-              {star===0?<FontAwesomeIcon icon={faStar}/>
+              {star===0?<FontAwesomeIcon className={`${rating===0?'selectedRating':null}`} icon={faStar}/>
                 :Array.from({ length: star }).map((_, index) => (
                <FontAwesomeIcon style={{color:'#f8ce0b'}} icon={faStar} key={index} className={`${rating===star?'selectedRating':null}`} />
               ))
@@ -241,6 +262,9 @@ const handleCitySelect = (city) => {
           ) }        
           </ul>              
       </div>
+      <div className='location px-5' style={{width:'100%',marginLeft:"-10px",padding:'10px',backgroundColor:'goldenrod'}} onClick={()=>{
+        handleFilter()
+        }}>Filter</div>
     </div>  
   )
 }

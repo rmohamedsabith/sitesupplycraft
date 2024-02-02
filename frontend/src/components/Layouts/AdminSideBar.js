@@ -4,7 +4,7 @@ import "rc-tooltip/assets/bootstrap.css";
 
 const AdminSideBar = () => {
   return (
-    <div className="side">
+    <div className="adminSide">
       <Link
         to="/admin/dashboard"
         className={`d-block sidebarLink`}

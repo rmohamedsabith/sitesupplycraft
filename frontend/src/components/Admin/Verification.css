@@ -11,7 +11,7 @@
   padding-bottom: 20px;
 }
 
-input[type=text],[type=email],[type=tel] {
+.verificationInput{
     border: none;
     border-bottom: 2px solid rgb(145, 255, 0);
 }
@@ -20,7 +20,7 @@ label{
     color: rgb(23, 25, 146);
 }
 
-.col button {
+ .verificationBtn{
     border-color: rgb(13, 52, 73);
     color:rgb(13, 52, 73);
     padding: 20px;
@@ -32,10 +32,10 @@ label{
     border-radius: 12px;
     width: 250px;
   }
-
-.col button:hover {
+  
+.verificationBtn:hover {
     background-color: rgb(13, 52, 73);
     border-color: white;
     color: white;
   }
-  
+   

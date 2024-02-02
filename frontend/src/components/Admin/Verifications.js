@@ -22,50 +22,50 @@ function Verifications() {
       <tr>
         <td scope="row">2023/08/23</td>
         <td>Mark</td>
-        <td>Process</td>
-        <td><button><Link to={'1'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'1'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/08/23</td>
         <td>Jacob</td>
-        <td>Engineer</td>
-        <td><button><Link to={'2'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'2'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/06/23</td>
         <td>Sahan</td>
-        <td>Engineer</td>
-        <td><button><Link to={'3'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'3'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/09/23</td>
         <td>Supun</td>
-        <td>Engineer</td>
-        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'4'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/12/23</td>
         <td>Milan</td>
-        <td>Engineer</td>
-        <td><button><Link to={'5'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'5'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/09/23</td>
         <td>Supun</td>
-        <td>Engineer</td>
-        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'4'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/09/23</td>
         <td>Supun</td>
-        <td>Engineer</td>
-        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'4'} className="buttonDark">View</Link></div></td>
       </tr>
       <tr>
         <td scope="row">2023/09/23</td>
         <td>Supun</td>
-        <td>Engineer</td>
-        <td><button><Link to={'4'} className="buttonDark">View</Link></button></td>
+        <td style={{color:'orange'}}>Processing...</td>
+        <td><div><Link to={'4'} className="buttonDark">View</Link></div></td>
       </tr>
     </tbody>
   </table>

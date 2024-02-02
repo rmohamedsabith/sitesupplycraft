@@ -5,6 +5,8 @@ import productsFilteringReducers from './slices/productsFilteringSlice'
 import usersReducers from './slices/usersSlice'
 import authReducers from './slices/authSlice'
 import productReducers from './slices/productSlice'
+import messagesReducers from './slices/messagesSlice'
+import adminReducers from './slices/adminSlice'
 
 
 const reducer = combineReducers({
@@ -13,6 +15,8 @@ const reducer = combineReducers({
   productsFilteringState:productsFilteringReducers,
   authState:authReducers,
   productState:productReducers,
+  messagesState:messagesReducers,
+  adminState:adminReducers,
 });
 
 const store = configureStore({

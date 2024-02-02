@@ -68,7 +68,16 @@ body {
 .headRight{
   display: flex;
   flex-wrap: wrap; 
-  padding-right: 30px;
+  padding-right: 0px;
+}
+.bookmark span{
+  position: relative;
+  bottom:20px;
+  right: 10px;
+ 
+}
+.bookmark{
+  cursor: pointer;
 }
 
 #sitesupplycraft{
@@ -123,6 +132,16 @@ body {
 }
 
 /* Admin Sidebar */
+.adminSide{
+  display: inline-block;
+    background: #176B87;
+    color: #ffff;
+    padding: 20PX;   
+    width: 100%; 
+    height: 100%;  
+    min-height: 100vh;      
+}
+
 .sidebarLink{
   font-size: 20px;
   text-decoration: none;
@@ -135,6 +154,7 @@ body {
   background-color: #6DB2C9;
   color: #ffff;
   padding: 20px;
+  
 }
 p a{
   color: #ffff;
@@ -221,6 +241,7 @@ p a{
 }
 
 /* ProductList */
+
 .productlist{
   padding: 20px;
 }
@@ -234,8 +255,7 @@ p a{
   color: #053B50;
 }
 .card {
-  height: 100%;
-  
+  height: 80%;
 }
 
 .card-title{
@@ -253,12 +273,12 @@ p a{
 }
 
 .card-text {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-family: 'Times New Roman', Times, serif;
 }
 .card-img-top {
   width: 100%;
-  height: 50%;
+  height: 40%;
 }
 
 .ratings {
@@ -271,7 +291,7 @@ p a{
   color: grey;
   margin-left: 0.5rem;
 }
-
+ 
 /* Search */
 .search{
   padding-right: 20px;
@@ -287,7 +307,7 @@ p a{
 }
 .search form select,.search button{  
   margin-top: 20px;
-  border: 2px #053B50 solid;
+  border: 2px solid #053B50 ;
   color: #053B50;
 }
 
@@ -315,7 +335,7 @@ p a{
 }
 .login{
   width: 100%;
-  height: 60vh; 
+  height: 70vh; 
   border-top: 10px solid #053B50; 
   border-radius: 20px;
 }
@@ -324,7 +344,7 @@ p a{
 }
 .signup{
   width: 100%;
-  height: 60vh;
+  height: 70vh;
   margin-left: 20px;
   border-radius: 20px;
   position: relative;
@@ -338,7 +358,7 @@ p a{
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../src/images/signup.jpeg');
+  background-image: url('./images/signup.jpeg');
   background-position: center;
   background-size: cover;
   filter: blur(2px); 
@@ -346,6 +366,11 @@ p a{
 .signup-content {
   z-index: 1;
   padding: 20px;
+}
+.signup-content center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .login h1,.signup h1{
   text-align: center;
@@ -359,6 +384,112 @@ p a{
   align-items: center;
     
 }
+
+/*Registration*/
+.profilePic:hover{
+  background-color: #3e8e41;
+}
+
+.profilePic-before{
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.profilePic-after{
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.register{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.register .frame{
+  width: 50%;
+  padding: 20px;
+  margin: 30px;
+  border: 2px solid #c7b8a13b;
+  box-shadow: 5px 5px 10px #053B50;
+  background-color: #c7b8a13b;
+  border-radius: 10px;  
+}
+
+.register .card::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d7c6ad3b;
+  background-position: center;
+  background-size: cover;
+  filter: blur(2px); 
+}
+  
+.register .error{
+  text-align: right;
+  color: #B0000B;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.btnstyle{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+  background-color: #FFF;
+  color: #053B50;
+  text-align: center;
+  font-size: 14px;
+  font-weight:800;
+  margin: 2px;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+}
+.register .btnstyle:hover{
+  color: #ffff;
+  font-weight:800;
+  background-color: #053B50;
+  border: 3px solid #fff;
+}
+
+/*Verify email*/
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .frame{
+  width: 50%;
+  padding: 20px;
+  margin: 80px;
+  border: 2px solid #c7b8a13b;
+  box-shadow: 5px 5px 10px #053B50;
+  background-color: #c7b8a13b;
+  border-radius: 10px; 
+}
+
+.container p{
+  text-align: center;
+}
+
+.round-image{
+  align-items: center;
+  height:200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-left: 150px;
+  margin-bottom: 10px;
+}
+
 /* Avatar */
 .avatar {
   display: inline-block;
@@ -416,7 +547,7 @@ p a{
   margin:20px 80px;
   border-radius:20px;
   color: #053B50;
-  min-width: 200px;
+  min-width: 300px;
 }
 .smallImage
 {
@@ -521,6 +652,19 @@ width: 70%;
   min-width: 200px;
 }
 
+/* myCarts */
+.bookmarkProduct{
+  margin: 10px 0;
+  border: 1.5px solid black;
+  color: #053B50;
+  cursor: pointer;
+}
+.bookmarkProduct img{
+  width: 80px;
+  height: 80px;
+  border: 1px solid #053B50;
+}
+
 @media only screen and (max-width: 800px){
   /* Searchbar */
     .bar form{
@@ -541,6 +685,8 @@ width: 70%;
    .marginOff{ 
     margin-right:0px;
    }
+
+
   
   /*  resetpassword */
   .frame-reset{
@@ -556,12 +702,120 @@ width: 70%;
     border-radius:20px;
     color: #053B50;
     min-width: 200px;
-  }
- 
-   
+  }  
+}
+
+ /*  product owner  DashBoard  */
+/* 
+.sideb{
+  display: inline-block;
+  background: #176B87;
+  color: #ffff;   
+  width: 12.5%; 
+  height: 1200px;
+  padding: 0px;
+  
+}
+.main{
+  float: right;
+}
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  width: 100%;
+  height: auto;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  color: #053B50;
+}
+.con{
+  width: 87.5%;
+  float: right;
+  text-align: center;
 }
 
 
+.linechart{
+  width: 500px;
+  height: 300px;
+  float: left;
+}
+
+.phara1{
+  padding-left: 60px;
+  
+}
+.piechart{
+  width: 250px;
+  height: 200px;
+  float: right;
+  margin-right: 150px;
+  
+  
+}
+.img{
+  width: 400px;
+}
+.phara2{
+  
+  float: right;
+  margin-right: 60px;
+  
+}
+.table{
+  float: right;
+  height: 100%;
+  color: #053B50;
+}
+.page{
+  width: 100%;
+}
+
+.im1{
+  height: 50px;
+}
+.tearea{
+  background-color:aliceblue;
+}
+.im2{
+  padding-left: 50px;
+  height: 40px;
+}
+.btn1{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+  background-color: #edf1f4;
+  color: #053B50;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight:800;
+  padding: 10px 30px;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+}
+.btn1:hover{
+  color: #ffff;
+  font-weight:800;
+ background-color: #053B50;
+ border: 3px solid #fff;
+}
+.btn{
+  border-radius: 10px;
+  border: 3px solid #053B50;
+}
+.btn:hover{
+  background-color: #176B87;
+  color: #fff;
+  border: 3px solid #e4e5e6;
+}
+.textsearch{
+  float: left;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  font-size: 20px;
+}
+ */
 
 
 

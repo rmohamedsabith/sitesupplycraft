@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, {useState } from 'react'
 import { Button, Modal,Form} from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from'react-router-dom'
 import { addReview } from '../../actions/productActions'
 
 const AddReview = () => {
+  const {model}=useSelector((state)=>state.productsFilteringState)
+  
   const [show, setShow] = useState(false);
   const [rating,setRating]=useState(0)
   const [comment,setComment]=useState('')
@@ -15,7 +17,10 @@ const AddReview = () => {
   const handleShow = () => setShow(true);
   const handleSubmit=()=>{
     setShow(false)
-    dispatch(addReview(id,rating,comment))      
+    let type
+    if(model!=='laborers')type='product'
+              else type='laborer'
+    dispatch(addReview(id,rating,comment,type))      
   }
 
   return (
