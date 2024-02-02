@@ -66,7 +66,7 @@ const Registration = () => {
         setFormData({...formValue, [e.target.name]:e.target.value })
     }
 
-    if(e.target.name === 'currentBill') {
+    if(e.target.name === 'currentbill') {
       const reader = new FileReader();
       reader.onload = () => {
            if(reader.readyState === 2) {
@@ -413,7 +413,7 @@ const Registration = () => {
                         <div className='float'>     
                           <div style={{ paddingLeft: '10px',width:'400px' }}>
                             <FloatingLabel controlId="floatingInput" label="Current Bill" className="mb-3 z-0">
-                              <Form.Control type="file" placeholder='currentbill' name='currentBill' value={formValue.currentbill} onChange={onChange} />
+                              <Form.Control type="file" placeholder='currentbill' name='currentbill' value={formValue.currentbill} onChange={onChange} />
                             </FloatingLabel>
                             {CurrentBill ? <img src={CurrentBillPreview} width={50} height={50}/>:null}
                           </div>
