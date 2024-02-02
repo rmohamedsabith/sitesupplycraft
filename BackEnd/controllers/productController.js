@@ -221,7 +221,7 @@ const getOne=asyncHandler(async(req,res)=>{
 
 //change status /product/:id/changeStatus
 const changeStatus=asyncHandler(async(req,res)=>{
-    const p =await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
+    const p=await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
     const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email location').exec()
     res.status(200).json({
         Product
@@ -248,7 +248,7 @@ const addReview=asyncHandler(async(req,res,next)=>{
         //updating the  review
         Product.reviews.forEach(review => {
             if(review.user.normal?.toString() === user.toString()){
-                review.comment = comment
+review.comment = comment
                 review.rating = rating
                 review.date=Date.now()
             }
@@ -331,7 +331,7 @@ const deleteReview=asyncHandler(async(req,res,next)=>{
 
     res.status(200).json({
         success: true ,
-        Product
+        Product       
     })
 })
 

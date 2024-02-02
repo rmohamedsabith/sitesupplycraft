@@ -70,6 +70,14 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240129	13:39:48	abbcbcd6-91f9-4ad0-9c15-3f1457482667	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
 20240129	13:42:01	03d895de-92ae-44b4-8fe1-5729ab34ea47	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
 20240129	13:42:03	71aef46a-3d95-4635-99e5-a0ce20afb00f	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
+20240129	14:53:24	e2c82106-7802-4f6f-928c-d156b3251739	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	14:53:33	f7b3ba09-a29f-405f-9b65-5a84ac2ca7d3	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	14:53:52	7030ab9b-38c1-4e5e-8b9f-8734c9467971	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	14:53:56	8c2b8f75-2d0a-49f6-b5d7-3312f933766a	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:00:14	fea36168-ad83-47e3-8c1b-4c30eea842a5	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:00:22	8538cbd8-1bcf-4595-9f54-0a3aa5c24ed1	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:01:37	ba9b29f2-42af-41bc-a9e0-f7084d95e496	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:05:31	7795576b-5857-44ca-adcf-b8823485c389	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
 20240129	15:53:51	24f0c7d4-6501-4a51-94d8-d16f6c51bc03	ReferenceError: Cannot access 'product' before initialization	PUT	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/changeStatus	undefined
 20240130	10:07:50	09e44dd4-b1df-43ae-82c4-193bd0160138	MongoServerSelectionError: connect ETIMEDOUT 3.7.243.165:27017	GET	/SiteSupplyCraft/laborers?page=1	undefined
 20240130	10:08:21	468d521a-e124-4d37-8f0d-6f0398ea5da0	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/laborers?page=1	undefined

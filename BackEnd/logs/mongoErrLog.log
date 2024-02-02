@@ -10,6 +10,8 @@
 20240102	09:16:32	83b7565b-cc52-4010-8367-0cfb2d236fa8	undefined: ETIMEOUT	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
 20240104	12:57:28	9564d93a-92c1-41fb-8cce-e809d578b962	undefined: ETIMEOUT	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
 20240110	11:07:36	40c973f2-dbd1-418a-a13a-fb230d93c767	undefined: ETIMEOUT	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
+20240128	16:26:23	5279d374-435a-4de9-a57c-81e781c2004a	undefined: ECONNREFUSED	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
+20240128	16:29:15	918f4010-68b7-4ab7-95a6-f0e4f493b456	undefined: ECONNREFUSED	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
 20240130	12:46:14	b19c66a0-60ba-419d-9bc7-0fa9e3afc3c9	undefined: undefined	undefined	undefined
 20240130	12:51:34	3f3b0b08-e96d-4bf5-8034-2f5215fe0b12	undefined: undefined	undefined	undefined
 20240130	10:11:15	fae72e2a-39f0-4ea5-aeef-db5a390f97ad	undefined: ETIMEOUT	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net

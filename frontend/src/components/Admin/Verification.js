@@ -12,15 +12,13 @@ const Verification = () => {
       <h2><u>Account Details</u></h2>
       <div className="Details">
       <hr/>
-          <div className="container">
+          {/* <div className="container"> */}
             <div className="row">
               <div className="col">
                 <img src={ProfilePicture} alt="Company profile" width="200" height="300"/>
       
-              </div>
-              
-                
-                <div className="col">
+              </div>               
+              <div className="col">
                 <form>
                   <label style={{marginBottom:'15px'}}  htmlFor="seller_id">Seller ID:</label><br/>
                   <label style={{marginBottom:'15px'}} htmlFor="full_name">Owner/Full Name:</label><br/>
@@ -31,9 +29,8 @@ const Verification = () => {
                   <label style={{marginBottom:'15px'}} htmlFor="address">Address:</label><br/>
                   <label style={{marginBottom:'15px'}} htmlFor="landmark">Landmark (Optional):</label><br/>
                 </form>
-                </div>
-                        
-                <div className="col">   
+              </div>                        
+              <div className="col">   
                 <form className='verification'>
                         <input className="verificationInput"  style={{marginBottom:'10px'}} type="text" id="seller_id" name="seller_id" defaultValue={"S01"} required/><br/>
                         <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="full_name" name="full_name" defaultValue={"Mark Wood"} required/><br/>
@@ -44,11 +41,7 @@ const Verification = () => {
                         <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="district" name="district" defaultValue={"Colombo"} required/><br/>
                         <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="landmark" name="landmark" defaultValue={"01"}/><br/>
                   </form>
-                </div>   
-
-                
-                
-              
+              </div>           
             </div>
             <div className="row">
               <div className="col">
@@ -64,7 +57,7 @@ const Verification = () => {
               </div>
             
             </div>
-          </div>
+          {/* </div> */}
 
 
       </div>
