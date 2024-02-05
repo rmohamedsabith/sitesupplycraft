@@ -5,7 +5,8 @@ const usersSlice=createSlice({
     initialState:{
         isLoading:false,
         success:false,
-        isDeleted:false
+        isDeleted:false,
+        isUpdated:false
     },
     reducers:{
         addFavouriteRequest(state,action){
@@ -53,6 +54,67 @@ const usersSlice=createSlice({
                 error:action.payload
             }
         },
+        getProcessingRequest(state,action){
+            return {isLoading:true}
+        },
+        getProcessingSuccess(state,action){
+            return{
+                isLoading:false,
+                data:action.payload.data,
+                count:action.payload.count               
+            }
+        },
+        getProcessingFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        cancelAccountRequest(state,action){
+            return {isLoading:true}
+        },
+        cancelAccountSuccess(state,action){
+            return{
+                isLoading:false,            
+            }
+        },
+        cancelAccountFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        viewProcessingRequest(state,action){
+            return {isLoading:true}
+        },
+        viewProcessingSuccess(state,action){
+            return{
+                isLoading:false, 
+                data:action.payload.data           
+            }
+        },
+        viewProcessingFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        verifyAccountRequest(state,action){
+            return {isLoading:true}
+        },
+        verifyAccountSuccess(state,action){
+            return{
+                isLoading:false, 
+                user:action.payload.user           
+            }
+        },
+        verifyAccountFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       
         clearError(state, action){
             return {
                 ...state,
@@ -72,6 +134,18 @@ const usersSlice=createSlice({
 const {actions,reducer}=usersSlice;
 
 export const{
+    verifyAccountRequest,
+    verifyAccountSuccess,
+    verifyAccountFail,
+    viewProcessingRequest,
+    viewProcessingSuccess,
+    viewProcessingFail,
+    cancelAccountRequest,
+    cancelAccountSuccess,
+    cancelAccountFail,
+    getProcessingRequest,
+    getProcessingSuccess,
+    getProcessingFail,
     deleteAllRequest,
     deleteAllSuccess,
     deleteAllFail,

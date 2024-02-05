@@ -52,6 +52,7 @@ const getRent=asyncHandler(async(req,res)=>{
 
         })
 })
+
 //get all selling product /products/sell
 const getSell=asyncHandler(async(req,res)=>{
     const resultperpage=8;
@@ -75,7 +76,6 @@ const getSell=asyncHandler(async(req,res)=>{
 
         })
 })
-
 
 //create a new product  -> /product/new
 const createProduct=asyncHandler(async(req,res)=>{      
@@ -111,6 +111,7 @@ const createProduct=asyncHandler(async(req,res)=>{
 
     
 })
+
 //update a product  -> /product/:id/edit
 const updateProduct=asyncHandler(async(req,res)=>{
 

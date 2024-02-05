@@ -4,7 +4,8 @@ const authSlice=createSlice({
     name:'auth',
     initialState:{
         isLoading:false,
-        isAuthenticated:false
+        isAuthenticated:false,
+        message:null,
     },
     reducers:{
         registerRequest(state,action){
@@ -130,6 +131,105 @@ const authSlice=createSlice({
                 error:action.payload
             }
         },
+        deleteProfileRequest(state,action){
+            return {isLoading:true}
+        },
+        deleteProfileSuccess(state,action){
+            return{
+                isLoading:false, 
+                user:action.payload.user ,
+                isAuthenticated:false          
+            }
+        },
+        deleteProfileFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        updateProfileRequest(state,action){
+            return {isLoading:true}
+        },
+        updateProfileSuccess(state,action){
+            return{
+                isLoading:false,  
+                user:action.payload.user ,
+                isUpdated:true          
+            }
+        },
+        updateProfileFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       changePasswordRequest(state,action){
+            return {isLoading:true}
+        },
+       changePasswordSuccess(state,action){
+            return{
+                isLoading:false,  
+                user:action.payload.user ,
+                ispasswordChanged:true          
+            }
+        },
+       changePasswordFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       verifyEmailRequest(state,action){
+            return {isLoading:true}
+        },
+       verifyEmailSuccess(state,action){
+            return{
+                isLoading:false,  
+                user:action.payload.USER,
+                message:action.payload.message
+                        
+            }
+        },
+       verifyEmailFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       resendEmailRequest(state,action){
+            return {isLoading:true}
+        },
+       resendEmailSuccess(state,action){
+            return{
+                isLoading:false,  
+                user:action.payload.USER,
+                message:action.payload.message
+                        
+            }
+        },
+       resendEmailFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       changeEmailRequest(state,action){
+            return {isLoading:true}
+        },
+       changeEmailSuccess(state,action){
+            return{
+                isLoading:false,  
+                user:action.payload.USER,
+                message:action.payload.message
+                        
+            }
+        },
+       changeEmailFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
 
 
     }
@@ -137,6 +237,24 @@ const authSlice=createSlice({
 
 const{actions,reducer}=authSlice;
 export const{
+   verifyEmailRequest,
+   verifyEmailSuccess,
+   verifyEmailFail,
+   changeEmailRequest,
+   changeEmailSuccess,
+   changeEmailFail,
+   resendEmailRequest,
+   resendEmailSuccess,
+   resendEmailFail,
+   changePasswordRequest,
+   changePasswordSuccess,
+   changePasswordFail,
+    updateProfileRequest,
+    updateProfileSuccess,
+    updateProfileFail,
+    deleteProfileRequest,
+    deleteProfileSuccess,
+    deleteProfileFail,
     registerRequest,
     registerSuccess,
     registerFail,

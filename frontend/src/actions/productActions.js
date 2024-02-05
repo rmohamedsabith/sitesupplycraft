@@ -1,7 +1,5 @@
-
-
 import axios from 'axios'
-import { addProductFail, addProductRequest, addProductSuccess, addReviewFail, addReviewRequest, addReviewSuccess,changeStatusFail,changeStatusRequest,changeStatusSuccess,deleteProductFail,deleteProductRequest,deleteProductSuccess,productFail, productRequest, productSuccess, reviewsFail, reviewsRequest, reviewsSuccess } from '../slices/productSlice'
+import { addProductFail, addProductRequest, addProductSuccess, addReviewFail, addReviewRequest, addReviewSuccess,changeStatusFail,changeStatusRequest,changeStatusSuccess,deleteProductFail,deleteProductRequest,deleteProductSuccess,productFail, productRequest, productSuccess, reviewsFail, reviewsRequest, reviewsSuccess, updateProductFail, updateProductRequest, updateProductSuccess } from '../slices/productSlice'
 
 export const getProduct=(id,model)=>async(dispatch)=>{
     try {
@@ -12,7 +10,6 @@ export const getProduct=(id,model)=>async(dispatch)=>{
         dispatch(productFail(error.response.data.message))
     }
 }
-
 export const reviews =(id,model)=>async(dispatch)=>{
     try {
         dispatch(reviewsRequest())
@@ -22,7 +19,6 @@ export const reviews =(id,model)=>async(dispatch)=>{
         dispatch(reviewsFail(error.response.data.message))
     }
 }
-
 export const addReview=(id,rating,comment,model)=>async(dispatch)=>{
 
     try {
@@ -38,7 +34,6 @@ export const addReview=(id,rating,comment,model)=>async(dispatch)=>{
         dispatch(addReviewFail(error.response.data.message))
     }
 }
-
 export const addProduct=productData=>async(dispatch)=>{
     try {
         dispatch(addProductRequest())
@@ -46,6 +41,16 @@ export const addProduct=productData=>async(dispatch)=>{
         dispatch(addProductSuccess(data))        
     } catch (error) {
         dispatch(addProductFail(error.response.data.message))
+
+    }
+}
+export const updateProduct=id=>async(dispatch)=>{
+    try {
+        dispatch(updateProductRequest())
+        const {data}=await axios.put(`/SiteSupplyCraft/product/${id}/edit`)
+        dispatch(updateProductSuccess(data))        
+    } catch (error) {
+        dispatch(updateProductFail(error.response.data.message))
 
     }
 }

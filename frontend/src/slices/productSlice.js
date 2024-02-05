@@ -9,7 +9,9 @@ const productSlice=createSlice({
         isReviewSubmitted:false,
         isProductAdded:false,
         isReviewDeleted:false,
-        isProductDeleted:false
+        isProductDeleted:false,
+        isProductUpdated:false,
+
     },
     reducers:{
        
@@ -43,6 +45,28 @@ const productSlice=createSlice({
             }
         },
 
+        //Update product
+        updateProductRequest(state,action)
+        {
+            return{
+                ...state,
+                isLoading:true
+            }
+        },
+        updateProductSuccess(state,action){
+            return{
+                isLoading:false,
+                isProductUpdated:true,
+                product:action.payload.Product,
+            }
+        },
+        updateProductFail(state,action){
+            return {
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        
         //Add product
         addProductRequest(state,action)
         {
@@ -216,6 +240,9 @@ export const{
     addProductRequest,
     addProductSuccess,
     addProductFail,
+    updateProductRequest,
+    updateProductSuccess,
+    updateProductFail,
     deleteProductRequest,
     deleteProductSuccess,
     deleteProductFail,
