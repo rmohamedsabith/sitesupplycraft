@@ -17,7 +17,8 @@ const authSlice=createSlice({
             return{
                 isLoading:false,
                 isAuthenticated:true,
-                user:action.payload.USER
+                user:action.payload.USER,
+                message : action.payload.message
             }
         },
         registerFail(state,action){
@@ -63,7 +64,8 @@ const authSlice=createSlice({
             return{
                 ...state,
                 user:null,
-                error:null
+                error:null,
+                message:null
             }
         },
         loadUserRequest(state,action){

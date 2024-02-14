@@ -6,7 +6,11 @@ export const register=(userData)=>async(dispatch)=>{
     
     try {
         dispatch(registerRequest())
-        
+        const config = {
+            headers: {
+                'Content-type' : 'multipart/form-Data'
+            }
+        }
         if(userData.role!=='Google User'){
         const config = {
             headers: {
@@ -18,7 +22,7 @@ export const register=(userData)=>async(dispatch)=>{
         dispatch(registerSuccess(data))
     }
     else{
-        const { data }  = await axios.post(`/SiteSupplyCraft/registration`,userData);
+        const { data }  = await axios.post(`/SiteSupplyCraft/registration`,userData,config);
         dispatch(registerSuccess(data))
     }
         

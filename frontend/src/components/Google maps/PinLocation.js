@@ -6,6 +6,7 @@ const PinLocation = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [clickedLocation, setClickedLocation] = useState(null);
+  const [address, setAddress] = useState(false);
 
   const fetchUserLocation = useCallback(() => {
     if (navigator.geolocation) {
@@ -36,11 +37,27 @@ const PinLocation = () => {
   }, [currentLocation]);
 
   const handleMapClick = (event) => {
-    setClickedLocation({
+    const clickedLocation = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
-    })
+    };
+    setClickedLocation(clickedLocation);
 
+    // Get the address using reverse geocoding
+    getAddressFromCoordinates(clickedLocation);
+  };
+
+  const getAddressFromCoordinates = async (location) => {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ location }, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          setAddress(results[0].formatted_address);
+        }
+      } else {
+        console.error('Geocoder failed due to:', status);
+      }
+    });
   };
 
   const containerStyle = {
@@ -52,7 +69,8 @@ const PinLocation = () => {
     <>
          {clickedLocation &&(
             <h1>lat:{clickedLocation.lat}<br/>
-            lng:{clickedLocation.lng}</h1>
+            lng:{clickedLocation.lng}<br/>
+            {address}</h1>
         )}
       <LoadScript googleMapsApiKey={process.env.REACT_APP_MAP_API_KEY}>
         <GoogleMap

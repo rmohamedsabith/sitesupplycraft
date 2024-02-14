@@ -1,12 +1,9 @@
 import React, { useRef,useEffect, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { registerUser } from '../../actions/authActions'
 import {Link, Navigate, useNavigate, useParams} from 'react-router-dom'
-import {toast} from 'react-toastify'
 import MetaData from '../Layouts/MetaData'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import profile from '../../images/default_avatar.png'
-import Loader from '../Loader'
 import { Modal, Button } from 'react-bootstrap'
 import PinLocation from '../Google maps/PinLocation';
 
@@ -49,7 +46,7 @@ const UpdateUser = () => {
     const [CurrentBillPreview, setCurrentBillPreview] = useState(null)
     const [Certificate, setCertificate] = useState(null)
     const [CertificatePreview, setCertificatePreview] = useState(null)
-  
+
     const onChange = (e) => {
       if(e.target.name === 'profilePhoto') {
          const reader = new FileReader();
@@ -169,6 +166,36 @@ const UpdateUser = () => {
       }
     };
   
+    const options = [
+    /*'Plumber',
+    'Painter',
+    'Tiles',
+    'A/C Repair',
+    'LandScaping',
+    'Engineer',
+    'Capenders',
+    'Curtain',
+    'Cleaner',
+    'Concerete Slap',
+    'Interior Designer',
+    'Movers',
+    'CCTV Technician',
+    'Cieling',
+    'Architect',
+    'Contractors'*/
+      { value: "Electrician", label: "Electrician" },
+      { value: "JAVA", label: "JAVA" },
+      { value: "Javascript", label: "Javascript" },
+      { value: "Python", label: "Python" },
+      { value: "Swift", label: "Swift" },
+    ];
+
+    const [selectedOption, setSelectedOption] = useState(user.job);
+
+    const handleSelectChange = (event) => {
+      setSelectedOption(event.target.value);
+    };
+
     return (
       <>
           <div className='register'>
@@ -363,12 +390,14 @@ const UpdateUser = () => {
                         <div className='float'>     
                           <div style={{ paddingLeft: '10px',width:'400px' }}>
                             <FloatingLabel controlId="floatingInput" label="Job" className="mb-3 z-0">
-                              <Form.Select aria-label='job' name='job' value={user.job}>
-                                <option>Select a Job</option>
-                                <option value="1">Electrician</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </Form.Select>
+                              <Form.Select
+                                value={selectedOption}
+                                onChange={handleSelectChange}
+                              >
+                                {options.map(option => (
+                                  <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                              </Form.Select>                     
                             </FloatingLabel>
                             {formError.job&&formValue.job<=0 ? <div className='error'>{formError.job}</div>:""}
                           </div>
