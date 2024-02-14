@@ -12,3 +12,4 @@
 20240202	21:10:01	24804972-6458-4eda-8dc0-4e45a91304ce	Error: Amount must convert to at least 50 cents. 1.00 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
 20240202	22:23:54	f17abb17-f8ed-4117-9e17-ed2071e12925	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
 20240202	22:26:08	6a78f680-d75b-4cda-a0be-f5cca9bd9720	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
+20240214	14:45:46	b312f9c7-874f-433e-a61c-4a8ea4e7a44d	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-02.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products/rent?page=1	undefined
