@@ -517,9 +517,10 @@ const deleteMyprofile=asyncHandler(async(req,res)=>{
     {
       currentBill=req.user.currentBill;
       certificate=req.user.certificate
+      deleteUserAllProducts(req)
     }
     const user=await User.deleteOne({_id:req.user.id})
-    deleteUserAllProducts(req)
+    
     // delete the stored image if the new image is different
     if (profile) {
       const oldProfileFilename = encodeURI(path.basename(new URL(profile).pathname));

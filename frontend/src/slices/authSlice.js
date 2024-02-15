@@ -10,7 +10,8 @@ const authSlice=createSlice({
         registerRequest(state,action){
             return{
                 ...state,
-                isLoading:true
+                isLoading:true,
+                isAuthenticated:false
             }
         },
         registerSuccess(state,action){
@@ -25,13 +26,15 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },
         loginRequest(state,action){
             return{
                 ...state,
-                isLoading:true
+                isLoading:true,
+                isAuthenticated:false
             }
         },
         loginSuccess(state,action){
@@ -45,6 +48,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },
@@ -72,6 +76,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:true,
+                isAuthenticated:false,
             }
         },
         loadUserSuccess(state,action){
@@ -85,6 +90,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },
@@ -114,6 +120,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:true,
+                isAuthenticated:false,
                 
             }
         },
@@ -129,6 +136,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },

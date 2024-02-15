@@ -13,7 +13,7 @@ import Loader from '../Loader';
 
 const SendVerification = () => {
   const {isLoading,error, message}=useSelector((state)=>state.authState)
-  const location = useLocation();
+  /* const location = useLocation(); */
   const [show, setShow] = useState(false);
   const navigate=useNavigate()
   const dispatch=useDispatch()
@@ -21,8 +21,15 @@ const SendVerification = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [email, setEmail] = useState(location.state.email);
+  const [email, setEmail] = useState('');
 
+  useEffect(()=>{
+    if(message) {
+      return toast.success(message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
+  },[message])
 
  
 
@@ -30,22 +37,14 @@ const SendVerification = () => {
     setEmail(event.target.value)
   }
 
-  const verifyEmail = async () =>{
-    try {
-      const response = await axios.post('/api/send-verification-email', {
-        email,
-      });
-  
-      console.log('Email sent successfully!', response.data);
-    } catch (error) {
-      console.error('Failed to send email:', error);
-    }
+  const handleResendLink = async () =>{
+    dispatch()
   };
 
   return (
     <>
-      {isLoading? <Loader/>:
-      <>
+     {/*  {isLoading? <Loader/>:
+      <> */}
     <div className='container'>
       <div className='frame'>
         <img src={icon} className='round-image'/>
@@ -55,7 +54,7 @@ const SendVerification = () => {
         <p>We have sent a verification link to {email}</p>
         <p>Please click on the link to complete the verification process.</p>
         <p>Please make sure you check your spam folder</p>
-        <Button onClick={verifyEmail}>Resend Verification Email</Button>
+        <Button onClick={handleResendLink}>Resend Verification Email</Button>
         <Button onClick={handleShow}>Change Email Address</Button>
         </center>
       </div>
@@ -83,13 +82,14 @@ const SendVerification = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={verifyEmail}>
             Send Verification Email
           </Button>
         </Modal.Footer>
+        
       </Modal>
-    </>
-    }
+  {/*   </>
+    } */}
     
     </>
   )
