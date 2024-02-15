@@ -248,13 +248,9 @@ const AddProduct = () => {
                  </Button>
                 </Col>
               </Row>
-                </div>
-              
-
-            
+                </div>           
             </Form>
           </div>
-          <Payment/>
         </div>
       </Col>
         

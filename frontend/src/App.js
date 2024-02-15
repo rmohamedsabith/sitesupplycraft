@@ -33,6 +33,9 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
+import axios from 'axios';
+import {Element} from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js';
 
 
 
@@ -46,13 +49,22 @@ function App() {
   const {count,products,ActiveProducts,DeactiveProducts}=useSelector((state)=>state.productsState)
   const[hide,setHide]=useState(false)
   const[isHumClicked,setIsHumClicked]=useState(false)
+  const[stripeApi,setStripeApi]=useState('')
   const dispatch=useDispatch()
 
   const isMobile = useMediaQuery({ maxWidth: 1100 });
   useEffect(()=>{
     dispatch(loadUser)
     setHide(isMobile)
-  },[dispatch,isMobile])
+  },[isMobile])
+
+  useEffect(()=>{
+    async function getStripeAPI(){
+      const {data}=await axios.get('/SiteSupplyCraft/payment/stripeApi')
+      setStripeApi(data.stripeApiKey)
+    }
+    getStripeAPI();
+  },[])
 
 
   
@@ -74,10 +86,16 @@ function App() {
           {/*Auth Routes*/}
           <Route path="login" element={<Login/>}/>
           <Route path="password/reset/:token" element={<ResetPassword/>}/>
+
             {/* Poorni */}
           <Route path="register/:role" element={<Registration/>}/>
+<<<<<<< HEAD
           <Route path="register/:role/verify/email" element={<SendVerification/>}/>
           <Route path="register/:role/verify/email/:token" element={<VerifyingEmail/>}/>
+=======
+          <Route path="register/:role/verify/email" element={<ProtectedRoute><SendVerification/></ProtectedRoute>}/>
+          <Route path="register/:role/verify/:token" element={<VerifyingEmail/>}/>
+>>>>>>> origin/sabith
 
           {/* Users Routes */}
           <Route path="myprofile/">
@@ -87,15 +105,16 @@ function App() {
 
           {/* ProductOwner */}
               {/* Tharushi */}
-          <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
-          <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+          <Route path='ProductOwner/DashBoard' element={<ProtectedRoute><DashBoard/></ProtectedRoute>}/> 
+          <Route path='ProductOwner/Messages' element={<ProtectedRoute><Messages/></ProtectedRoute>}/> 
           
           
               {/* Sandeepa */}
-          <Route path='ProductOwner/addProduct' element={<AddProduct/>}/>
-          <Route path='ProductOwner/addProduct/Payment' element={<Payment/>}/>   
-          <Route path='ProductOwner/addProduct/Preview' element={<PreviewProduct/>}/>          
-           
+          <Route path='ProductOwner/addProduct' element={<ProtectedRoute><AddProduct/></ProtectedRoute>}/>
+          <Route path='ProductOwner/addProduct/Payment' element={<ProtectedRoute><Payment/></ProtectedRoute>}/>   
+          <Route path='ProductOwner/addProduct/Preview' element={<ProtectedRoute><PreviewProduct/></ProtectedRoute>}/>       
+          {stripeApi&&<Route path='ProductOwner/addProduct/Pay' element={<ProtectedRoute><Element stripe={loadStripe(stripeApi)}><Payment/></Element></ProtectedRoute>}/>       
+}           
           {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
 
           {/* Admin */}
@@ -107,8 +126,8 @@ function App() {
             <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
           
             {/* Hiran */}
-            <Route path='Verification' element={<Verifications/>}/>
-            <Route path='Verification/:id' element={<Verification/>}/>
+            <Route path='Verification' element={<ProtectedRoute><Verifications/></ProtectedRoute>}/>
+            <Route path='Verification/:id' element={<ProtectedRoute><Verification/></ProtectedRoute>}/>
           </Route>
             
               
