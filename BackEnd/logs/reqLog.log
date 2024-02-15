@@ -3645,3 +3645,6 @@
 20240215	20:20:40	8342734f-09df-4570-8ac4-fde7877de32b	GET	/favicon.ico	undefined
 20240215	20:21:28	dfbf66d0-9470-4388-bfcf-3d57a47f386e	GET	/SiteSupplyCraft/logout	undefined
 20240215	20:21:28	7ebf6163-288a-4d24-a60e-5f5b1f4eba4b	GET	/SiteSupplyCraft/products?page=1	undefined
+20240215	22:47:33	c24fe5c3-3901-4d34-8553-fa2c33babaea	GET	/SiteSupplyCraft/products?page=1	undefined
+20240215	22:47:33	3bed4f94-72eb-4751-b8cd-285f3b7f97dc	GET	/SiteSupplyCraft/myprofile	undefined
+20240215	22:47:33	0d7c137b-3fcd-43a9-8500-2497c19a71f9	GET	/uploads/users/1707981316265-product_Owner3.jpeg	undefined
