@@ -8,16 +8,9 @@ export const register=(userData)=>async(dispatch)=>{
         dispatch(registerRequest())
         const config = {
             headers: {
-<<<<<<< HEAD
                 'Content-type' : 'multipart/form-Data'
             }
         }
-=======
-                'Content-type': 'multipart/form-data'
-            }
-        }
-        
->>>>>>> origin/sabith
         if(userData.role!=='Google User'){
         const config = {
             headers: {
@@ -29,7 +22,7 @@ export const register=(userData)=>async(dispatch)=>{
         dispatch(registerSuccess(data))
     }
     else{
-        const { data }  = await axios.post(`/SiteSupplyCraft/registration`,userData,config);
+        const { data }  = await axios.post(`/SiteSupplyCraft/registration`,userData);
         dispatch(registerSuccess(data))
     }
         
@@ -144,7 +137,7 @@ export const resendEmail=async(dispatch)=>{
 export const changeEmail=(newEmail)=>async(dispatch)=>{
     try {
         dispatch(changeEmailRequest())
-        const {data}=await axios.put(`/SiteSupplyCraft/email/change'`,newEmail,)
+        const {data}=await axios.put(`/SiteSupplyCraft/email/change`,{'email':newEmail},)
         dispatch(changeEmailSuccess(data))
     } catch (error) {
         dispatch(changeEmailFail(error.response.data.message))

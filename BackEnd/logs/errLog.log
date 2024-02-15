@@ -13,3 +13,5 @@
 20240202	22:23:54	f17abb17-f8ed-4117-9e17-ed2071e12925	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
 20240202	22:26:08	6a78f680-d75b-4cda-a0be-f5cca9bd9720	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
 20240214	14:45:46	b312f9c7-874f-433e-a61c-4a8ea4e7a44d	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-02.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products/rent?page=1	undefined
+20240215	17:05:35	fea6142f-ab73-444a-816a-e9c0321f942b	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
+20240215	17:06:25	4bf8b640-9464-4449-977f-29efce92ea75	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/

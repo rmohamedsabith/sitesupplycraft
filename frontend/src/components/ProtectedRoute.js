@@ -13,13 +13,13 @@ const ProtectedRoute = ({children}) => {
             return  <Navigate to="/login" />
         
     }
-    if (!user?.isValidEmail) {
+    if (!user.isvalidEmail) {
         toast.warning('You need to verify your email', {
             position: 'bottom-center',
         });
     
         return (
-            <Navigate to={`/register/${user?.role}/verify/email`} />
+            <Navigate to={`/register/verify/email`} />
         );
     }
     if(isAuthenticated && user.isvalidEmail){

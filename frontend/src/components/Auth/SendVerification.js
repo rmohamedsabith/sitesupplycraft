@@ -5,14 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import icon from '../../images/logo.jpeg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { clearAuthError } from '../../actions/authActions';
+import { changeEmail, clearAuthError, resendEmail } from '../../actions/authActions';
 import Loader from '../Loader';
+import { clearMessage } from '../../slices/authSlice';
 
 const SendVerification = () => {
-  const {isLoading,error, message}=useSelector((state)=>state.authState)
+  const {isLoading,error, message,user}=useSelector((state)=>state.authState)
   /* const location = useLocation(); */
   const [show, setShow] = useState(false);
   const navigate=useNavigate()
@@ -24,27 +24,35 @@ const SendVerification = () => {
   const [email, setEmail] = useState('');
 
   useEffect(()=>{
+    if(user?.isvalidEmail)return navigate('/')
     if(message) {
-      return toast.success(message, {
+      toast.success(message, {
         position: toast.POSITION.BOTTOM_CENTER,
+        onOpen:dispatch(clearMessage())
       });
     }
-  },[message])
+    if(error){
+      toast.error(error, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        onOpen:()=>dispatch(clearAuthError)
+      });
+    }
+  },[message,error,dispatch])
 
  
 
-  const changeEmail = (event) => {
-    setEmail(event.target.value)
-  }
-
-  const handleResendLink = async () =>{
-    dispatch()
+  const handleResendLink = () =>{
+    dispatch(resendEmail)
   };
+  const handleChangeEmail=()=>{
+    dispatch(changeEmail(email))
+    setShow(false)
+  }
 
   return (
     <>
-     {/*  {isLoading? <Loader/>:
-      <> */}
+     {isLoading? <Loader/>:
+      <>
     <div className='container'>
       <div className='frame'>
         <img src={icon} className='round-image'/>
@@ -71,8 +79,8 @@ const SendVerification = () => {
               <Form.Control
                 type="email"
                 value = {email}
-                onChange={changeEmail}
-                placeholder={email}
+                onChange={(e)=>setEmail(e.target.value)}
+                placeholder='Enter your new Email'
                 autoFocus
               />
             </Form.Group>
@@ -82,14 +90,14 @@ const SendVerification = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={verifyEmail}>
-            Send Verification Email
+          <Button variant="primary" onClick={handleChangeEmail}>
+            Upadate Email & Resend Link
           </Button>
         </Modal.Footer>
         
       </Modal>
-  {/*   </>
-    } */}
+   </>
+    } 
     
     </>
   )
