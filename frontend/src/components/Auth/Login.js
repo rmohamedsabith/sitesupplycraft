@@ -20,7 +20,8 @@ const Login = () => {
   const navigate=useNavigate()
   
   const handleSubmit=(e)=>{
-    e.preventDefault()
+    navigate('/admin')
+     e.preventDefault()
     dispatch(login(email,password))    
   }
   const handleForgetPassword=()=>{

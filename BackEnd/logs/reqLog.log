@@ -3631,3 +3631,17 @@
 20240131	09:10:36	59979b6d-b809-43e0-be20-ab7b584d94d7	GET	/images/default_avatar.png	undefined
 20240131	09:10:43	40f21ed0-98d9-4ea9-9f78-8eb280e7800c	GET	/SiteSupplyCraft/logout	undefined
 20240131	09:10:43	2dc75572-3b3d-4618-bfbf-793b9b80b27f	GET	/SiteSupplyCraft/products?page=1	undefined
+20240215	20:19:35	2603cb77-9db6-4841-bfc0-14a62316f12d	GET	/SiteSupplyCraft/products?page=1	undefined
+20240215	20:19:35	5c565805-d8bb-4435-b284-658e6059de08	GET	/SiteSupplyCraft/myprofile	undefined
+20240215	20:19:42	322c8874-5ca9-4512-8947-e92ce7e5c291	GET	/SiteSupplyCraft/products?page=1	undefined
+20240215	20:19:52	f8c96f73-765b-4501-ad80-7ef0ce99047c	GET	/SiteSupplyCraft/logout	undefined
+20240215	20:20:00	3118b8aa-f3bd-48fd-984b-0ad397342327	GET	/SiteSupplyCraft/products?page=1	undefined
+20240215	20:20:01	a44dd47f-c3b2-4855-ad30-0e3af14f8598	POST	/SiteSupplyCraft/login	http://localhost:4500/
+20240215	20:20:02	b91f67bf-a1da-470a-8e7b-cf13752f2f86	GET	/uploads/users/1707981316265-product_Owner3.jpeg	undefined
+20240215	20:20:14	ac733253-4652-4b3d-a5aa-42b7223b6a26	GET	/SiteSupplyCraft/myprofile	undefined
+20240215	20:20:15	b4f1157a-44dd-46f0-8a89-04696afd6abb	GET	/SiteSupplyCraft/myprofile	undefined
+20240215	20:20:15	0537fe31-a9b7-4fc0-bc62-d736092ae5ac	GET	/uploads/users/1707981316265-product_Owner3.jpeg	undefined
+20240215	20:20:40	b9a0c2dc-939f-4b6e-93ec-1620c9f8c7cf	GET	/uploads/users/1707981316265-product_Owner3.jpeg	undefined
+20240215	20:20:40	8342734f-09df-4570-8ac4-fde7877de32b	GET	/favicon.ico	undefined
+20240215	20:21:28	dfbf66d0-9470-4388-bfcf-3d57a47f386e	GET	/SiteSupplyCraft/logout	undefined
+20240215	20:21:28	7ebf6163-288a-4d24-a60e-5f5b1f4eba4b	GET	/SiteSupplyCraft/products?page=1	undefined

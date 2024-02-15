@@ -1,44 +1,61 @@
-import React from "react";
-import Message from "./Message";
+import React from 'react';
+import { MDBDataTable } from 'mdbreact';
 
-const messageDummyData = [
-  {
-    Date: "14/12/2023",
-    Role: "Product Owner",
-  },
-  {
-    Date: "20/12/2023",
-    Role: "Labourer",
-  },
-  {
-    Date: "30/12/2023",
-    Role: "Product Owner",
-  },
-  {
-    Date: "29/12/2023",
-    Role: "Product Owner",
-  },
-];
-const Messages = () => {
+const DatatablePage = () => {
+  const data = {
+    columns: [
+      {
+        label: 'Date',
+        field: 'Date',
+        sort: 'asc',
+        width: 150
+      },
+      {
+        label: 'Role',
+        field: 'Role',
+        sort: 'asc',
+        width: 270
+      },
+      {
+        label: 'Option',
+        field: 'Option',
+        sort: 'asc',
+        width: 200
+      },
+      
+    ],
+    rows: [
+      {
+        Date: "14/12/2023",
+        Role: "Product Owner",
+        Option: <button  style={{width: '68px', borderRadius: '5px'}}>View</button>
+      },
+      {
+        Date: "20/12/2023",
+        Role: "Labourer",
+        Option: <button  style={{width: '68px', borderRadius: '5px'}}>View</button>
+      },
+      {
+        Date: "30/12/2023",
+        Role: "Product Owner",
+        Option: <button  style={{width: '68px', borderRadius: '5px'}}>View</button>
+      },
+      {
+        Date: "29/12/2023",
+        Role: "Product Owner",
+        Option: <button style={{width: '68px', borderRadius: '5px'}}>View</button>
+      },
+    ]
+  };
+
   return (
-    <section className="container mt-2">
-      <h1>Messages</h1>
-      <table className="table table-sm mt-2">
-        <thead>
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Role</th>
-            <th scope="col">Option</th>
-          </tr>
-        </thead>
-        <tbody>
-          {messageDummyData.map((message, index) => (
-            <Message messageData={message} key={index} />
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <MDBDataTable
+      striped
+      bordered
+      small
+      data={data}
+    />
   );
-};
+}
 
-export default Messages;
+export default DatatablePage;

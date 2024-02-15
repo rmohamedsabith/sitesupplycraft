@@ -50,10 +50,12 @@ const Product = ({product}) => {
           </div>
           <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
         </div>
-        <p className="card-text">Rs.{product.price}{model!=='laborers'?<span style={{color:'red',textDecoration:'line-through',fontSize:'large',paddingLeft:'30px'}}>{product.discount>0?'Rs.'+product.discount:null}</span>:<span>  {product.priceType}</span>}
+
+        <p className="card-text" style={{fontSize:'20px'}}>Rs.{product.price}{model!=='laborers'?<span style={{color:'red',textDecoration:'line-through',fontSize:'large',paddingLeft:'30px'}}>{product.discount>0?'Rs.'+product.discount:null}</span>:<span>  {product.priceType}</span>}
 </p>
           
-         <button id="view_btn" type='submit' className="btn btn-block">View Details</button>
+         {/* <button id="view_btn" type='submit' className="btn btn-block" style={{border:'none'}}>View Details</button> */}
+
          
       </div>
     </div>

@@ -9,7 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import Login from './components/Auth/Login';
 import Missing from './components/Missing';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './actions/authActions';
 import ResetPassword from './components/Auth/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -34,6 +34,10 @@ import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import PinLocation from './components/Google maps/PinLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
+import AdminLayout from './components/Layouts/AdminLayout';
+import Payments from './components/Admin/Payments';
+import PaymentDetails from './components/Admin/PaymentDetails';
+
 
 
 
@@ -41,6 +45,7 @@ import AdminLayout from './components/Layouts/AdminLayout';
 function App() {
   const[isDistrict,setIsDistrict]=useState(false)
   const[district,setDistrict]=useState('')
+  const {count,products,ActiveProducts,DeactiveProducts}=useSelector((state)=>state.productsState)
   const[hide,setHide]=useState(false)
   const[isHumClicked,setIsHumClicked]=useState(false)
   const dispatch=useDispatch()
@@ -74,6 +79,7 @@ function App() {
           <Route path="register/verify/email" element={<SendVerification/>}/>
           <Route path="register/verify/:token" element={<VerifyingEmail/>}/>
 
+
           {/* Users Routes */}
           <Route path="myprofile/">
             <Route index element={<ProtectedRoute><UserDeail/></ProtectedRoute>}/>
@@ -98,11 +104,16 @@ function App() {
             <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
             <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
+            <Route path='payments/details' element={<PaymentDetails/>}/>
+            <Route path='payments' element={<Payments/>}/>
+          
+            {/* Hiran */}
+            <Route path='Verification' element={<Verifications/>}/>
+            <Route path='Verification/:id' element={<Verification/>}/>
+            
           </Route>
             
-              {/* Hiran */}
-         <Route path='Admin/Verification' element={<Verifications/>}/>
-          <Route path='Admin/Verification/:id' element={<Verification/>}/>
+
           
 
 
