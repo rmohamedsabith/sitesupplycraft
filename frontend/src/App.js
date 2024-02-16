@@ -33,6 +33,7 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
+import Update from './components/Product Owner/Update';
 
 
 
@@ -89,6 +90,7 @@ function App() {
               {/* Tharushi */}
           <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
           <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+          <Route path='ProductOwner/:id/edit' element={<Update/>}/> 
           
           
               {/* Sandeepa */}

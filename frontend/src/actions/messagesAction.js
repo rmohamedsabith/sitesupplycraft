@@ -1,11 +1,18 @@
 import axios from 'axios'
 import { getMessagesFail, getMessagesFromAdminFail, getMessagesFromAdminRequest, getMessagesFromAdminSuccess, getMessagesListFail, getMessagesListRequest, getMessagesListSuccess, getMessagesRequest, getMessagesSuccess, sendMessageFail, sendMessageRequest, sendMessageSuccess } from "../slices/messagesSlice"
 
-export const sendMessage=(receiver,content)=>async(dispatch)=>{
+export const sendMessage=(receiver,role,content)=>async(dispatch)=>{
     try {
         dispatch(sendMessageRequest())
-        const{data}=await axios.post(`/SiteSupplyCraft/message/send`,{receiver,content})
-        dispatch(sendMessageSuccess(data))
+        let DATA;
+        if(role==='Product Owner')
+        {
+            DATA=(await axios.post(`/SiteSupplyCraft/message/send`,{content})).data
+        }
+        else{
+            DATA=(await axios.post(`/SiteSupplyCraft/message/send`,{receiver,content})).data
+        }
+        dispatch(sendMessageSuccess(DATA))
     } catch (error) {
         dispatch(sendMessageFail(error.response.data.message))
     }

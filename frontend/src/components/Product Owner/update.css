@@ -1,8 +1,7 @@
 .styled-heading {
     text-align: center; /* Center the text */
-    font-weight: bold; /* Make the text bold */
-    color: green; /* Set the color to green */
-    text-decoration: underline; /* Add underline */
+    color: #053B50; /* Set the color to green */
+     
 }
 .previewImg{
     border: 1px solid #053B50;

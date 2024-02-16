@@ -83,3 +83,7 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240130	10:08:21	468d521a-e124-4d37-8f0d-6f0398ea5da0	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/laborers?page=1	undefined
 20240130	10:08:25	98cd751b-684c-452f-acd3-b333c57a527b	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
 20240130	11:24:49	64e467f7-9734-404f-abf8-180a1f16c7c4	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
+20240216	11:16:41	e7c4ae91-fc11-4bca-b85b-db2942502322	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
+20240216	11:28:25	9d1a2aeb-b7c8-4797-af60-4a904dfce45a	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
+20240216	11:29:05	3aefb978-c111-49c1-9a38-03d87bc3c726	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
+20240216	11:30:31	7ca02d62-5b81-450f-b2f4-5eab061c32fa	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
