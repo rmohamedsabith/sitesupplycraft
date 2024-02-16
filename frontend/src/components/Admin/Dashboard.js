@@ -3,8 +3,8 @@ import DashboardTile from "./DashboardTile";
 
 const Dashboard = () => {
   return (
-    <section className="container mt-2">
-      <div className="row">
+    <section  className="container mt-2">
+      <div style={{display: "flex", alignItems: "center", justifyContent: "center"}} className="row">
         <div style={{margin: '45px'}} className="col-md-4 mb-3">
           <DashboardTile
             categoryTitle={"Advertisements"}

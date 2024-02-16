@@ -1,41 +1,53 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "rc-tooltip/assets/bootstrap.css";
-import "./AdminSideBar.css"; // Assuming you have a CSS file for styles
 
 const AdminSideBar = () => {
-  const location = useLocation(); // Gets the current location object
+  const location = useLocation();
 
-  // Function to determine if a link is active based on the current path
-  const isActive = (path) => location.pathname === path;
+  const isAdminPath = (path) => {
+    const adminPaths = ["/admin/dashboard", "/admin/messages", "/admin/verification", "/admin/payments", "/admin/payments/details"];
+    return adminPaths.includes(location.pathname);
+  };
+
+ 
+  const isActive = (path) => {
+    if (location.pathname === path) {
+      return true;
+    }
+    if (path === "/admin/dashboard" && !isAdminPath(location.pathname)) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="adminSide">
       <Link
         to="/admin/dashboard"
         className={`d-block sidebarLink ${isActive("/admin/dashboard") ? "active" : ""}`}
-        style={{ color: "white", cursor: "pointer", paddingBottom: "5px", paddingLeft: '8px' }}
+        style={{ cursor: "pointer" }}
       >
         Dashboard
       </Link>
       <Link
         to="/admin/messages"
         className={`d-block sidebarLink ${isActive("/admin/messages") ? "active" : ""}`}
-        style={{ color: "white", cursor: "pointer", paddingBottom: "5px", paddingLeft: '8px' }}
+        style={{ cursor: "pointer" }}
       >
         Messages
       </Link>
       <Link
         to="/admin/verification"
         className={`d-block sidebarLink ${isActive("/admin/verification") ? "active" : ""}`}
-        style={{ color: "white", cursor: "pointer", paddingBottom: "5px" , paddingLeft: '8px'}}
+        style={{ cursor: "pointer" }}
       >
         Verifications
       </Link>
       <Link
         to="/admin/payments"
         className={`d-block sidebarLink ${isActive("/admin/payments") ? "active" : ""}`}
-        style={{ color: "white", cursor: "pointer", paddingBottom: "5px" , paddingLeft: '8px' }}
+        style={{ cursor: "pointer" }}
       >
         Payments
       </Link>
