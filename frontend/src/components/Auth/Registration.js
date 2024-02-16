@@ -99,6 +99,7 @@ const Registration = () => {
         price:'',
         duration:'',
         description:'',
+        
       });
       navigate('/register/verify/email', { state: { email: formData.email }})
 
