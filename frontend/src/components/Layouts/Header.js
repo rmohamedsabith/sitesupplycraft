@@ -1,20 +1,26 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import logo from '../../images/logo.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Dropdown,Image} from 'react-bootstrap'
-import { logout } from '../../actions/authActions'
+import { loadUser, logout } from '../../actions/authActions'
 import{filter} from '../../actions/productsFilteringActions'
 import { clearProducts } from '../../slices/productsSlice'
 import Favourites from '../Users/Favourites'
+import defaultProfile from '../../images/default_avatar.png'
 
 
 
 const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) => {
   
-  const {isAuthenticated,user}=useSelector((state)=>state.authState)
+  const {isAuthenticated,user,isLoading}=useSelector((state)=>state.authState)
   const navigate=useNavigate()
   const dispatch=useDispatch()
+
+ /*  useEffect(()=>{
+    dispatch(loadUser)
+  },[dispatch]) */
+
   const logoutHandler=()=>{
     navigate('/')
     dispatch(logout)
@@ -49,7 +55,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
               <Dropdown>
                   <Dropdown.Toggle variant='text-white pr-5'  className='no-hover-dropdown' style={{boxShadow:'none',fontWeight:'800', border:'none'}}>
                     <figure className='avatar avatar-nav'>
-                      <Image src={user.profile?user.profile:'../../images/default_avatar.png'} className='rounded-circle' />
+                      <Image src={user.profile?user.profile:defaultProfile} className='rounded-circle' />
                     </figure>
                     <span>{user.role!=='Google User'?user.firstname+' '+user.lastname:user.name}</span>
                   </Dropdown.Toggle>

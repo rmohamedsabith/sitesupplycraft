@@ -2,8 +2,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-const PinLocation = () => {
-  const [currentLocation, setCurrentLocation] = useState(null);
+const PinLocation = ({currentLocation,setCurrentLocation}) => {
   const [showModal, setShowModal] = useState(false);
   const [clickedLocation, setClickedLocation] = useState(null);
   const [address, setAddress] = useState(false);
@@ -13,7 +12,7 @@ const PinLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
+          setCurrentLocation({ lat: latitude, long: longitude });
           setShowModal(false);
         },
         (error) => {
