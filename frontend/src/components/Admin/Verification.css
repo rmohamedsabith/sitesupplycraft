@@ -14,6 +14,7 @@
 .verificationInput{
     border: none;
     border-bottom: 2px solid rgb(145, 255, 0);
+    width: 300px;
 }
 
 label{
@@ -40,7 +41,6 @@ label{
     color: white;
   }
    
-
   /* CSS for fullscreen image */
 .fullscreen-image-overlay {
   position: fixed;

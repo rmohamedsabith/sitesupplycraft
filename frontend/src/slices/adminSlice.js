@@ -34,7 +34,7 @@ const adminSlice=createSlice({
         getProcessingOwnersSuccess(state,action){
             return{
                 isLoading:false,
-                user:action.payload.data
+                users:action.payload.data
             }
         },
         getProcessingOwnersFail(state,action){

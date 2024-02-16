@@ -1,19 +1,19 @@
 import axios from 'axios'
-import { cancelOwnerFail, cancelOwnerRequest, cancelOwnerSuccess, getProcessingOwnersFail, getProcessingOwnersRequest, getProcessingOwnersSuccess, getTotals_per_monthRequest, getTotals_per_monthSuccess, verifyOwnerFail, verifyOwnerRequest, verifyOwnerSuccess, viewProcessingOwnerFail, viewProcessingOwnerRequest, viewProcessingOwnerSuccess } from '../slices/adminSlice'
+import { cancelOwnerFail, cancelOwnerRequest, cancelOwnerSuccess, getProcessingOwnersFail, getProcessingOwnersRequest, getProcessingOwnersSuccess, getTotalsFail, getTotalsRequest, getTotalsSuccess, getTotals_per_monthFail, getTotals_per_monthRequest, getTotals_per_monthSuccess, verifyOwnerFail, verifyOwnerRequest, verifyOwnerSuccess, viewProcessingOwnerFail, viewProcessingOwnerRequest, viewProcessingOwnerSuccess } from '../slices/adminSlice'
 
 export const getProcessingOwners=async(dispatch)=>{
     try {
         dispatch(getProcessingOwnersRequest())
-        const{data}=await axios.post(`/SiteSupplyCraft/processing`)
+        const{data}=await axios.get(`/SiteSupplyCraft/processing`)
         dispatch(getProcessingOwnersSuccess(data))
     } catch (error) {
         dispatch(getProcessingOwnersFail(error.response.data.message))
     }
 }
-export const viewProcessingOwner=async(dispatch)=>{
+export const viewProcessingOwner=(id)=>async(dispatch)=>{
     try {
         dispatch(viewProcessingOwnerRequest())
-        const{data}=await axios.post(`/SiteSupplyCraft/processing`)
+        const{data}=await axios.get(`/SiteSupplyCraft/processing/${id}`)
         dispatch(viewProcessingOwnerSuccess(data))
     } catch (error) {
         dispatch(viewProcessingOwnerFail(error.response.data.message))

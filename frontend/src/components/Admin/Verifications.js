@@ -1,77 +1,81 @@
 
-import 'bootstrap/dist/css/bootstrap.min.css';  
-import {Table } from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';   
 import { Link } from 'react-router-dom'; 
 import './Verifications.css'
-import React, { useState } from 'react';
+import React, { useEffect} from 'react';
+import { MDBDataTable } from 'mdbreact';
+import {useDispatch,useSelector} from 'react-redux'
+import { getProcessingOwners } from '../../actions/adminActions';
+import Loader from '../Loader.js'
 
-function handleClick() {
-  // Function logic here
-}
+
 
 function Verifications() {  
-  
-  const [keyword,setKeyword]=useState('')
-  const [status, setStatus] = useState(false);
+  const dispatch=useDispatch()
+  const {isLoading,users}=useSelector((state)=>state.adminState)
+
+  useEffect(()=>{
+    dispatch(getProcessingOwners)
+  },[dispatch])
 
 
-  
-  return (  
-    <>  
-    <div className='textsearch'>
-        Search Name: <input type="text"
-        value={keyword}
-        onChange={(e)=>setKeyword(e.target.value)}
-        ></input>
-        <button className='btn2' onClick={handleClick}  >Search</button></div>
 
-    <div className='p-5'>  
-  <Table striped bordered hover>  
-  <thead>  
-    <tr>  
-      <th><b>Date</b></th>  
-      <th><b>Name</b></th>  
-      <th><b>Status</b></th>  
-      <th><b>Option</b></th>  
-    </tr>  
-  </thead>  
-  <tbody>  
-    <tr>  
-      <td>2023/12/11</td>  
-      <td>John</td>  
-      <td>Processing</td>  
-      <td><Link to={'1'} className="buttonDark">View</Link></td>  
-    </tr>  
-    <tr>  
-      <td>2023/12/10</td>  
-      <td>Nuwan</td>  
-      <td>Processing</td>  
-      <td><Link to={'1'} className="buttonDark">View</Link></td> 
-    </tr>  
-    <tr>  
-      <td>2023/12/10</td>  
-      <td>Nuwan</td>  
-      <td>Processing</td>  
-      <td><Link to={'1'} className="buttonDark">View</Link></td> 
-    </tr>  
-    <tr>  
-      <td>2023/12/10</td>  
-      <td>Nuwan</td>  
-      <td>Processing</td>  
-      <td><Link to={'1'} className="buttonDark">View</Link></td> 
-    </tr>  
-    <tr>  
-      <td>2023/12/10</td>  
-      <td>Nuwan</td>  
-      <td>Processing</td>  
-      <td><Link to={'1'} className="buttonDark">View</Link></td> 
-    </tr>  
-   
-  </tbody>  
-</Table>  
-</div>  
-    </>  
-    
-  );  
+  const items=users?.map(user=>{
+    let statusColor = user.status === 'processing' ? 'red' : user.status === 'verified' ?'green': null;
+    return {
+        Date: user.createdAt.split("T")[0].replace(/-/g, "/"),
+        Name: user.firstname + ' ' + user.lastname,
+        Status: <span style={{ color: statusColor }}>{user.status}</span>,
+        Option: <Link to={`/admin/verification/${user._id}`}><button style={{ padding:'8px 20px'}} className='btn'>View</button></Link>
+    }
+  })
+  const data = {
+    columns: [
+      {
+        label: 'Date',
+        field: 'Date',
+        sort: 'asc',
+        width: 150
+      },
+      {
+        label: 'Name',
+        field: 'Name',
+        sort: 'asc',
+        width: 270
+      },
+      {
+        label: 'Status',
+        field: 'Status',
+        sort: 'asc',
+        width: 270
+      },
+      {
+        label: 'Option',
+        field: 'Option',
+        sort: 'asc',
+        width: 200
+      },
+      
+    ],
+    rows: items
+  };
+
+  return (
+    <>
+    {
+      isLoading?<Loader/>:
+      <div style={{padding: '0 150px'}}>
+      <h2 style={{textAlign: 'center', margin: '20px 0'}}><u>Verifications</u></h2>
+      <MDBDataTable
+      striped
+      bordered
+      small
+      data={data}
+    />
+    </div>
+    }
+    </>
+  );
+
 }  
 export default Verifications;  

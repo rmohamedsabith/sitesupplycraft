@@ -3,7 +3,7 @@ const { User, ProductOwner} = require('../models/userModel')
 
 //Processing status data  -> /procesing
 const getProcessing=asyncHandler(async(req,res)=>{
-    const data=await ProductOwner.findOne({status:'processing',isvalidEmail:true}).exec()
+    const data=await ProductOwner.find({status:'processing',isvalidEmail:true}).exec()
     if(!data)
     {
         return res.status(400).json({message:"There are no produt owner on processing State"})

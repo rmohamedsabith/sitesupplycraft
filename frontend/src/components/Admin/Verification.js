@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfilePicture from '../../images/Untitled-1.png';
 import BRegistration from '../../images/BusinessRegistration.jpg';
 import EBill from '../../images/electricitybill.jpg';
 import './Verification.css';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { viewProcessingOwner } from '../../actions/adminActions';
+import Loader from '../Loader';
 
 const Verification = () => {
   const [fullscreenImage, setFullscreenImage] = useState(null);
+  const {isLoading,user}=useSelector((state)=>state.adminState)
+  const{id}=useParams();
+  const dispatch=useDispatch()
+
+  useEffect(()=>{
+    dispatch(viewProcessingOwner(id))
+  },[id,dispatch])
 
   // Function to toggle fullscreen image
   const toggleFullscreenImage = (image) => {
@@ -13,46 +24,51 @@ const Verification = () => {
   };
 
   return (
-    <center>
+    <>
+    {isLoading?<Loader/>
+      :
+      <center>
       <hr />
       <h2><u>Account Details</u></h2>
       <div className="Details">
         <hr />
         <div className="row">
-          <div className="col" onClick={() => toggleFullscreenImage(ProfilePicture)}>
-            <img src={ProfilePicture} alt="Company profile" width="200" height="300" />
+          <div className="col-3 ml-3" onClick={() => toggleFullscreenImage(user?.profile)}>
+            <img src={user?.profile} alt="Company profile" width="250" height="250" />
           </div>
-          <div className="col">
+          <div className="col-3">
             <form>
                   <label style={{marginBottom:'15px'}}  htmlFor="seller_id">Seller ID:</label><br/>
                   <label style={{marginBottom:'15px'}} htmlFor="full_name">Owner/Full Name:</label><br/>
-                  <label style={{marginBottom:'15px'}} htmlFor="license_no">License No.:</label><br/>
+                  <label style={{marginBottom:'15px'}} htmlFor="Shop Registration No">Shop Registration No:</label><br/>
                   <label style={{marginBottom:'15px'}} htmlFor="email">E-mail:</label><br/>
                   <label style={{marginBottom:'15px'}} htmlFor="phone_no">Phone No.:</label><br/>
                   <label style={{marginBottom:'15px'}} htmlFor="address">Address:</label><br/>
-                  <label style={{marginBottom:'15px'}} htmlFor="address">Address:</label><br/>
-                  <label style={{marginBottom:'15px'}} htmlFor="landmark">Landmark (Optional):</label><br/>
+                  <label style={{marginBottom:'15px'}} htmlFor="city">City:</label><br/>
+                  <label style={{marginBottom:'15px'}} htmlFor="district">District:</label><br/>
+                  <label style={{marginBottom:'15px'}} htmlFor="landmark">Postal Code :</label><br/>
                 </form>
           </div>
-          <div className="col">
+          <div className="col-5">
             <form className='verification'>
-                        <input className="verificationInput"  style={{marginBottom:'10px'}} type="text" id="seller_id" name="seller_id" defaultValue={"S01"} required/><br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="full_name" name="full_name" defaultValue={"Mark Wood"} required/><br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="license_no" name="license_no" defaultValue={"ID1234567"} required/><br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="email" id="email" name="email" defaultValue={"Mark@gmail.com"} required/><br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="tel" id="phone_no" name="phone_no" defaultValue={"0763542567"} required/><br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="address" name="address" defaultValue={"153/2,Colombo 07"} required/> <br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="district" name="district" defaultValue={"Colombo"} required/><br/>
-                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="landmark" name="landmark" defaultValue={"01"}/><br/>
+                        <input className="verificationInput"  style={{marginBottom:'10px'}} type="text" id="seller_id" name="seller_id" defaultValue={user?._id} required/><br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="full_name" name="full_name" defaultValue={user?.firstname+" "+user?.lastname} required/><br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="license_no" name="license_no" defaultValue={user?.shopReg_no} required/><br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="email" id="email" name="email" defaultValue={user?.email} required/><br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="tel" id="phone_no" name="phone_no" defaultValue={user?.phone} required/><br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="address" name="address" defaultValue={user?.address.number+" "+user?.address.street} required/> <br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="address" name="city" defaultValue={user?.address.city} required/> <br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="district" name="district" defaultValue={user?.address.district} required/><br/>
+                        <input className="verificationInput" style={{marginBottom:'10px'}} type="text" id="landmark" name="landmark" defaultValue={user?.address.postalCode}/><br/>
                   </form>
           </div>
         </div>
         <div className="row">
-          <div className="col" onClick={() => toggleFullscreenImage(BRegistration)}>
-            <img src={BRegistration} alt="Business registration certificate" width="200" height="300" />
+          <div className="col" onClick={() => toggleFullscreenImage(user?.certificate)}>
+            <img src={user?.certificate} alt="Business registration certificate" width="200" height="300" />
           </div>
-          <div className="col" onClick={() => toggleFullscreenImage(EBill)}>
-            <img src={EBill} alt="Current bill" width="250" height="150" />
+          <div className="col" onClick={() => toggleFullscreenImage(user?.currentBill)}>
+            <img src={user?.currentBill} alt="Current bill" width="250" height="150" />
           </div>
         </div>
       </div>
@@ -71,6 +87,8 @@ const Verification = () => {
         </div>
       </div>
     </center>
+    }
+    </>
   );
 };
 
