@@ -464,10 +464,10 @@ const updateMyprofile=asyncHandler(async(req,res,next)=>{
     {
       user.status='processing'
       await user.save()
-      res.status(200).json({
+      /* res.status(200).json({
         success:true,
         message:'success it is on the processing status',
-      })
+      }) */
 
     }
     else
@@ -507,6 +507,7 @@ const updateMyprofile=asyncHandler(async(req,res,next)=>{
   }
 
 })
+
 //delete logged user profile - /myprofile/delete
 const deleteMyprofile=asyncHandler(async(req,res)=>{
   try{
