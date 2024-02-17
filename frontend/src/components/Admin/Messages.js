@@ -28,7 +28,7 @@ const DatatablePage = () => {
       {
         Date: "14/12/2023",
         Role: "Product Owner",
-        Option: <button  style={{width: '68px', borderRadius: '5px'}}>View</button>
+        Option: <button  style={{padding:'5px 20px',margin:'0'}} className='btn'>View</button>
       },
       {
         Date: "20/12/2023",

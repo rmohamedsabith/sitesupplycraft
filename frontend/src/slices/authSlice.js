@@ -64,8 +64,8 @@ const authSlice=createSlice({
         clearError(state,action){
             return{
                 ...state,
-                user:null,
-                error:null
+                error:null,
+                ispasswordChanged:false
             }
         },
         loadUserRequest(state,action){
@@ -165,10 +165,15 @@ const authSlice=createSlice({
             }
         },
        changePasswordRequest(state,action){
-            return {isLoading:true}
+            return {
+                ...state,
+                isLoading:true,
+                
+            }
         },
        changePasswordSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,  
                 user:action.payload.user ,
                 ispasswordChanged:true          
@@ -176,6 +181,7 @@ const authSlice=createSlice({
         },
        changePasswordFail(state,action){
             return {
+                ...state,
                 isLoading:false,
                 error:action.payload
             }

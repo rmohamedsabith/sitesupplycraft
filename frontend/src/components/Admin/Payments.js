@@ -100,7 +100,7 @@ const DatatablePage = () => {
         date: '2011/04/25',
         no_of_products: 'A03',
         amount: '544',
-        details:<button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
+        details:<button onClick={handleClick} style={{padding:'5px 20px',margin:'0'}} className='btn'>View</button>
       },
       {
         payment_id: '745623722',

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { cancelOwnerFail, cancelOwnerRequest, cancelOwnerSuccess, getProcessingOwnersFail, getProcessingOwnersRequest, getProcessingOwnersSuccess, getTotals_per_monthRequest, getTotals_per_monthSuccess, verifyOwnerFail, verifyOwnerRequest, verifyOwnerSuccess, viewProcessingOwnerFail, viewProcessingOwnerRequest, viewProcessingOwnerSuccess } from '../slices/adminSlice'
+import { cancelOwnerFail, cancelOwnerRequest, cancelOwnerSuccess, getProcessingOwnersFail, getProcessingOwnersRequest, getProcessingOwnersSuccess, getTotalsFail, getTotalsRequest, getTotalsSuccess, getTotals_per_monthFail, getTotals_per_monthRequest, getTotals_per_monthSuccess, verifyOwnerFail, verifyOwnerRequest, verifyOwnerSuccess, viewProcessingOwnerFail, viewProcessingOwnerRequest, viewProcessingOwnerSuccess } from '../slices/adminSlice'
 
 export const getProcessingOwners=async(dispatch)=>{
     try {

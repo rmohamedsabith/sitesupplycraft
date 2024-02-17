@@ -1,47 +1,70 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardTile from "./DashboardTile";
+import {useDispatch, useSelector} from 'react-redux'
+import Loader from '../Loader'
+import { getTotals, getTotals_per_month } from "../../actions/adminActions";
 
 const Dashboard = () => {
+  const dispatch=useDispatch()
+  const {isLoading,Totals,datas,error}=useSelector((state)=>state.adminState)
+  useEffect(()=>{
+    dispatch(getTotals_per_month)
+    dispatch(getTotals)
+  },[])
+
+const payments = datas?.payments ? Object.keys(datas.payments).map((key) => ({ key: key, value: datas.payments[key] })) : [];
+const jobseekers = datas?.jobseekers ? Object.keys(datas.jobseekers).map((key) => ({ key: key, value: datas.jobseekers[key] })) : [];
+const productOwners = datas?.productOwners ? Object.keys(datas.productOwners).map((key) => ({ key: key, value: datas.productOwners[key] })) : [];
+const customers = datas?.customers ? Object.keys(datas.customers).map((key) => ({ key: key, value: datas.customers[key] })) : [];
+const products = datas?.products ? Object.keys(datas.products).map((key) => ({ key: key, value: datas.products[key] })) : [];
+
   return (
+    <>
+   {
+    isLoading?<Loader/>:
     <section  className="container mt-2">
-      <div style={{display: "flex", alignItems: "center", justifyContent: "center"}} className="row">
-        <div style={{margin: '45px'}} className="col-md-4 mb-3">
-          <DashboardTile
-            categoryTitle={"Advertisements"}
-            CategotyTotalCount={1780}
-            graphData={[0, 10, 98, 45, 68, 159, 254, 65, 45, 36, 98, 45]}
-          />
-        </div>
-        <div style={{margin: '45px'}} className="col-md-4 mb-3">
-          <DashboardTile
-            categoryTitle={"Customers"}
-            CategotyTotalCount={521}
-            graphData={[0, 35, 89, 45, 12, 69, 75, 12, 66, 57, 41, 57]}
-          />
-        </div>
-        <div style={{margin: '45px'}} className="col-md-4 mb-3">
-          <DashboardTile
-            categoryTitle={"Product Owners"}
-            CategotyTotalCount={120}
-            graphData={[0, 2, 10, 9, 5, 7, 20, 32, 5, 12, 32, 34]}
-          />
-        </div>
-        <div style={{margin: '45px'}} className="col-md-4 mb-3">
-          <DashboardTile
-            categoryTitle={"Job Seekers"}
-            CategotyTotalCount={35}
-            graphData={[0, 1, 2, 1, 4, 5, 6, 3, 9, 7, 4, 1]}
-          />
-        </div>
-        <div style={{margin: '45px'}} className="col-md-4 mb-3">
-          <DashboardTile
-            categoryTitle={"Payments"}
-            CategotyTotalCount={44}
-            graphData={[0, 2, 8, 6, 4, 1, 8, 9, 9, 5, 2, 4]}
-          />
-        </div>
+      
+    <div style={{display: "flex", alignItems: "center", justifyContent: "center",marginTop:'10px'}} className="row">
+          <center><u><h3>Monthly Item Counts and Totals for {new Date().getFullYear()}</h3></u></center>
+      <div style={{margin: '45px'}} className="col-md-4 mb-3">
+        <DashboardTile
+          categoryTitle={"Advertisements"}
+          CategotyTotalCount={Totals?.adsCount}
+          graphData={products.map(item=>item.value)}
+        />
       </div>
-    </section>
+      <div style={{margin: '45px'}} className="col-md-4 mb-3">
+        <DashboardTile
+          categoryTitle={"Customers"}
+          CategotyTotalCount={Totals?.cutomerCount}
+          graphData={customers.map(item=>item.value)}
+        />
+      </div>
+      <div style={{margin: '45px'}} className="col-md-4 mb-3">
+        <DashboardTile
+          categoryTitle={"Product Owners"}
+          CategotyTotalCount={Totals?.productOwnerCount}
+          graphData={productOwners.map(item=>item.value)}
+        />
+      </div>
+      <div style={{margin: '45px'}} className="col-md-4 mb-3">
+        <DashboardTile
+          categoryTitle={"Job Seekers"}
+          CategotyTotalCount={Totals?.jobSeekerCount}
+          graphData={jobseekers.map(item=>item.value)}
+        />
+      </div>
+      <div style={{margin: '45px'}} className="col-md-4 mb-3">
+        <DashboardTile
+          categoryTitle={"Payments"}
+          CategotyTotalCount={Totals?.paymentCount}
+          graphData={payments.map(item=>item.value)}
+        />
+      </div>
+    </div>
+  </section>
+   }
+   </>
   );
 };
 

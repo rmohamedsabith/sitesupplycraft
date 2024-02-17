@@ -98,7 +98,9 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
     }
   }
   products.map((item)=>{
-      switch(item.createdAt.getMonth())
+      if(item.createdAt.getFullYear()===new Date().getFullYear())
+      {
+        switch(item.createdAt.getMonth())
       {
           case 0:{
               data.products['January']++;
@@ -148,6 +150,7 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
               data.products['December']++;
               break;
           }
+        }
       }
       
   })
@@ -206,6 +209,8 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
       
   })
   jobseekers.map((item)=>{
+    if(item.createdAt.getFullYear()===new Date().getFullYear())
+    {
       switch(item.createdAt.getMonth())
       {
           case 0:{
@@ -257,6 +262,7 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
               break;
           }
       }
+    }
       
   })
   payments.map((item)=>{

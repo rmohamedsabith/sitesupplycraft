@@ -33,6 +33,8 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
+import Payments from './components/Admin/Payments'
+import PaymentDetails from './components/Admin/PaymentDetails'
 import axios from 'axios';
 import {Element} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
@@ -119,6 +121,8 @@ function App() {
             <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
             <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
+            <Route path="payments" element={<ProtectedRoute><Payments/></ProtectedRoute>} />
+            <Route path="payments/details" element={<ProtectedRoute><PaymentDetails/></ProtectedRoute>} />
           
             {/* Hiran */}
             <Route path='Verification' element={<ProtectedRoute><Verifications/></ProtectedRoute>}/>
