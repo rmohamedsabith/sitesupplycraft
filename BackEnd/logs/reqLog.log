@@ -1637,3 +1637,8 @@
 20240214	15:33:31	1a7b99ad-8ef0-427a-a319-06fcbee4ff77	GET	/SiteSupplyCraft/myprofile	undefined
 20240214	15:33:31	b43958ef-93d7-48c3-a1db-be591f38c1a1	GET	/SiteSupplyCraft/payment/stripeApi	undefined
 20240214	15:33:31	4be04261-fa60-4324-9d89-92bf4048a97c	GET	/SiteSupplyCraft/myprofile	undefined
+20240217	09:26:44	502e5a01-5a6f-4b80-85d2-bf2ebbbafa0a	POST	/SiteSupplyCraft/login	undefined
+20240217	09:26:50	9e590b81-0e97-4986-ad7d-4116dd7d8953	GET	/SiteSupplyCraft/payments	undefined
+20240217	09:27:35	0b0d4940-952f-413e-b779-e96e92cffb10	GET	/SiteSupplyCraft/admin/counts	undefined
+20240217	09:29:30	60035c82-5f1e-421c-acf3-3d4f817abe7a	GET	/SiteSupplyCraft/admin/counts	undefined
+20240217	09:30:31	7bbfc3cc-37bf-4313-b518-56380773a6cd	GET	/SiteSupplyCraft/admin/totals	undefined
