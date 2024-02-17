@@ -75,7 +75,8 @@ const authSlice=createSlice({
         clearMessage(state,action){
             return{
                 ...state,
-                message:null
+                message:null,
+                ispasswordChanged:false
             }
         },
         loadUserRequest(state,action){
@@ -189,7 +190,9 @@ const authSlice=createSlice({
        changePasswordRequest(state,action){
             return {
                 ...state,
-                isLoading:true}
+                isLoading:true,
+                
+            }
         },
        changePasswordSuccess(state,action){
             return{

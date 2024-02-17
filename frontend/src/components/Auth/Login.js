@@ -9,6 +9,7 @@ import Loader from '../Loader'
 import {GoogleLoginButton} from 'react-social-login-buttons'
 import {LoginSocialGoogle} from 'reactjs-social-login'
 import axios from 'axios'
+import { getTotals, getTotals_per_month } from '../../actions/adminActions'
 const Login = () => {
 
   const {isLoading,isAuthenticated,user,error,message}=useSelector((state)=>state.authState)
@@ -20,16 +21,23 @@ const Login = () => {
   const navigate=useNavigate()
   
   const handleSubmit=(e)=>{
-    e.preventDefault()
+    //navigate('/admin')
+     e.preventDefault()
     dispatch(login(email,password))    
   }
   const handleForgetPassword=()=>{
     dispatch(forgetPassword(email))
   }
+  
   useEffect(()=>{
     if(isAuthenticated)
     {
-      if(user && user.role ==='Admin') return navigate('/admin')
+      if(user && user.role ==='Admin')
+      {
+        dispatch(getTotals_per_month)
+        dispatch(getTotals)
+        return navigate('/admin')
+      } 
       else return navigate('/')
     }
     if(error)
