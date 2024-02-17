@@ -20,7 +20,7 @@ const AdminSideBar = () => {
         Messages
       </Link>
       <Link
-        to="/admin/verification"
+        to="/admin/verifications"
         className={`d-block sidebarLink`}
         style={{ color: "white", cursor: "pointer", paddingBottom: "5px" }}
       >

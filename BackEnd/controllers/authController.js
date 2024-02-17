@@ -437,7 +437,7 @@ const updateMyprofile=asyncHandler(async(req,res,next)=>{
   try{
     
     if(req.files){
-      req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${req.files['profile'][0].filename}`
+      req.files['profile']?req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${req.files['profile'][0].filename}`:null
       req.files['certificate']?req.body.certificate=`${process.env.BACK_END_URL}/uploads/users/${req.files['certificate'][0].filename}`:null
       req.files['currentBill']?req.body.currentBill=`${process.env.BACK_END_URL}/uploads/users/${req.files['currentBill'][0].filename}`:null
     }

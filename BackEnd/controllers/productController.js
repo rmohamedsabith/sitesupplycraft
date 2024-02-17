@@ -251,6 +251,7 @@ const deleteProduct=asyncHandler(async(req,res)=>{
         
     }
     
+    
     res.status(200).json(deletedData)
 })
 //get one product  -> /product/:id

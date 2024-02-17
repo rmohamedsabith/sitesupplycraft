@@ -34,7 +34,7 @@ const adminSlice=createSlice({
         getProcessingOwnersSuccess(state,action){
             return{
                 isLoading:false,
-                user:action.payload.data
+                users:action.payload.data
             }
         },
         getProcessingOwnersFail(state,action){
@@ -52,8 +52,10 @@ const adminSlice=createSlice({
         },
         verifyOwnerSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
-                user:action.payload.data
+                user:action.payload.data,
+                message:action.payload.message,
             }
         },
         verifyOwnerFail(state,action){
@@ -66,13 +68,16 @@ const adminSlice=createSlice({
         cancelOwnerRequest(state,action){
             return{
                 ...state,
-                isLoading:true
+                isLoading:true,
+                message:null
             }
         },
         cancelOwnerSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
-                user:action.payload.data
+                user:action.payload.data,
+                message:action.payload.message
             }
         },
         cancelOwnerFail(state,action){
@@ -125,7 +130,8 @@ const adminSlice=createSlice({
             return{
                 ...state,
                 user:null,
-                error:null
+                error:null,
+                message:null,
             }
         },
         
