@@ -67,8 +67,8 @@ const register=asyncHandler(async(req,res,next)=>{
           await user.save({validateBeforeSave:false})
       
           //create URL
-          const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/email/verify/${token}`
-          /* const resetURL=`${process.env.FROND_END_URL}/email/verify/${token}` */
+         /* const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/email/verify/${token}` */
+            const resetURL=`${process.env.FROND_END_URL}/email/verify/${token}`
           const message = `Hi ${user.firstname} ${user.lastname},\n\n
                           We just need to verify your email address before you can access your Account.
                           <a href="${resetURL}"><button style="padding: 10px; background-color: #3498db; color: #ffffff; border-radius: 5px; cursor: pointer;">Verify Email</button></a>
@@ -165,7 +165,7 @@ const changeUserEmail=asyncHandler( async (req,res)=>{
   //checking for existing email in database
   const emailExist = await User.findOne({ email : req.body.email});
   if(emailExist){
-    return res.status(400).send("The given email already exists.");
+    return res.status(400).json({message:"The given email already exists."});
   }
   user.email=req.body.email
   //save the email
@@ -178,8 +178,8 @@ const changeUserEmail=asyncHandler( async (req,res)=>{
     await user.save({validateBeforeSave:false})
 
     //create URL
-    const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/email/verify/${token}`
-    /* const resetURL=`${process.env.FROND_END_URL}/email/verify/${token}` */
+    /* const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/email/verify/${token}` */
+    const resetURL=`${process.env.FROND_END_URL}/email/verify/${token}`
     const message = `Hi ${user.firstname} ${user.lastname},\n\n
                     We just need to verify your email address before you can access your Account.
                     <a href="${resetURL}"><button style="padding: 10px; background-color: #3498db; color: #ffffff; border-radius: 5px; cursor: pointer;">Verify Email</button></a>
@@ -196,7 +196,8 @@ const changeUserEmail=asyncHandler( async (req,res)=>{
     )
     res.status(200).json({
         success: true,
-        message: `Email sent to your ${user.email} to Verify Your Email`
+        message: `Email sent to your ${user.email} to Verify Your Email`,
+        USER:user,
     })
 
    } catch (error) {
@@ -218,8 +219,8 @@ const resendVerificationEmail=asyncHandler( async (req,res)=>{
     console.log(user)
 
     //create URL
-    const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/email/verify/${token}`
-    /* const resetURL=`${process.env.FROND_END_URL}/email/verify/${token}` */
+    /* const resetURL=`${req.protocol}://${req.get('host')}/SiteSupplyCraft/email/verify/${token}` */
+    const resetURL=`${process.env.FROND_END_URL}/email/verify/${token}`
     const message = `Hi ${user.firstname} ${user.lastname},\n\n
                     We just need to verify your email address before you can access your Account.
                     <a href="${resetURL}"><button style="padding: 10px; background-color: #3498db; color: #ffffff; border-radius: 5px; cursor: pointer;">Verify Email</button></a>
@@ -518,9 +519,10 @@ const deleteMyprofile=asyncHandler(async(req,res)=>{
     {
       currentBill=req.user.currentBill;
       certificate=req.user.certificate
+      deleteUserAllProducts(req)
     }
     const user=await User.deleteOne({_id:req.user.id})
-    deleteUserAllProducts(req)
+    
     // delete the stored image if the new image is different
     if (profile) {
       const oldProfileFilename = encodeURI(path.basename(new URL(profile).pathname));

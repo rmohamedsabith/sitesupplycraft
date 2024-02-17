@@ -477,6 +477,26 @@ p a{
   border-radius: 10px; 
 }
 
+.container .frame Button{
+  margin: 10px;
+  border-radius: 10px;
+  border: 3px solid #053B50;
+  background-color: #FFF;
+  color: #053B50;
+  text-align: center;
+  font-size: 12px;
+  font-weight:800;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.container .frame Button:hover{
+  color: #ffff;
+   font-weight:800;
+  background-color: #053B50;
+  border: 3px solid #fff;
+}
+
 .container p{
   text-align: center;
 }

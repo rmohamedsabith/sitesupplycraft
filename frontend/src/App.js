@@ -89,8 +89,8 @@ function App() {
 
             {/* Poorni */}
           <Route path="register/:role" element={<Registration/>}/>
-          <Route path="register/:role/verify/email" element={<ProtectedRoute><SendVerification/></ProtectedRoute>}/>
-          <Route path="register/:role/verify/:token" element={<VerifyingEmail/>}/>
+          <Route path="register/verify/email" element={<SendVerification/>}/>
+          <Route path="email/verify/:token" element={<VerifyingEmail/>}/>
 
           {/* Users Routes */}
           <Route path="myprofile/">

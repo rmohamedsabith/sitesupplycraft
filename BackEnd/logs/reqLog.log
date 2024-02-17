@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 20240202	10:17:12	21d26679-f100-4fa9-a033-fff472729194	GET	/SiteSupplyCraft/products?page=1	undefined
 20240202	10:17:12	9d79f40a-3d84-46f4-8291-ef82c50e8096	GET	/SiteSupplyCraft/myprofile	undefined
 20240202	10:19:17	8a91653a-6029-47f0-8201-6ca6b6f4fbf9	GET	/SiteSupplyCraft/product/65938b80a7dfdc482472a453	undefined
@@ -1642,3 +1643,5 @@
 20240217	09:27:35	0b0d4940-952f-413e-b779-e96e92cffb10	GET	/SiteSupplyCraft/admin/counts	undefined
 20240217	09:29:30	60035c82-5f1e-421c-acf3-3d4f817abe7a	GET	/SiteSupplyCraft/admin/counts	undefined
 20240217	09:30:31	7bbfc3cc-37bf-4313-b518-56380773a6cd	GET	/SiteSupplyCraft/admin/totals	undefined
+=======
+>>>>>>> poorni
