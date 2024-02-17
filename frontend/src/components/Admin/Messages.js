@@ -49,12 +49,15 @@ const DatatablePage = () => {
   };
 
   return (
-    <MDBDataTable
+    <div style={{padding: '0 150px'}}>
+      <h2 style={{textAlign: 'center', margin: '20px 0'}}><u>Message Details</u></h2>
+      <MDBDataTable
       striped
       bordered
       small
       data={data}
     />
+    </div>
   );
 }
 

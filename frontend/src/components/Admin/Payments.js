@@ -36,9 +36,10 @@ const DatatablePage = () => {
         sort: 'asc',
         width: 100
       },
+      
       {
-        label: 'Product ID',
-        field: 'product_id',
+        label: 'No. of Products',
+        field: 'no_of_products',
         sort: 'asc',
         width: 150
       },
@@ -61,63 +62,63 @@ const DatatablePage = () => {
         user_id: '12',
         status: 'Fail',
         date: '2011/04/25',
-        product_id: 'B03',
+        no_of_products: '300',
         amount: '30',
-        details: <div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details: <button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
       {
         payment_id: '345623722',
         user_id: '12',
         status: 'Fail',
         date: '2011/04/25',
-        product_id: 'A03',
+        no_of_products: 'A03',
         amount: '345',
-        details: <div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details: <button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
       {
         payment_id: '745623722',
         user_id: '11',
         status: 'Success',
         date: '2011/04/25',
-        product_id: 'A03',
+        no_of_products: 'A03',
         amount: '500',
-        details: <div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details: <button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
       {
         payment_id: '745623722',
         user_id: '32',
         status: 'Success',
         date: '2011/04/25',
-        product_id: 'A06',
+        no_of_products: 'A06',
         amount: '500',
-        details: <div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details: <button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
       {
         payment_id: '745623722',
         user_id: '42',
         status: 'Fail',
         date: '2011/04/25',
-        product_id: 'A03',
+        no_of_products: 'A03',
         amount: '544',
-        details:<div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details:<button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
       {
         payment_id: '745623722',
         user_id: '25',
         status: 'Success',
         date: '2011/04/25',
-        product_id: 'A09',
+        no_of_products: 'A09',
         amount: '1220',
-        details: <div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details: <button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
       {
         payment_id: '745623722',
         user_id: '11',
         status: 'Success',
         date: '2011/04/25',
-        product_id: 'A05',
+        no_of_products: 'A05',
         amount: '500',
-        details: <div onClick={handleClick} style={{border: '2px solid black', borderRadius: '13px'}}>View</div>
+        details: <button onClick={handleClick} style={{width: '68px', borderRadius: '5px'}}>View</button>
       },
      
       
@@ -125,12 +126,15 @@ const DatatablePage = () => {
   };
 
   return (
-    <MDBDataTable
+   <div style={{padding: '0 150px'}}>
+          <h2 style={{textAlign: 'center', margin: '20px 0'}}><u>Payment Details</u></h2>
+     <MDBDataTable
       striped
       bordered
       small
       data={data}
     />
+   </div>
   );
 }
 
