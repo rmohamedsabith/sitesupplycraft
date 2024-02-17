@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { changeEmail, clearAuthError, resendEmail } from '../../actions/authActions';
 import Loader from '../Loader';
 import { clearMessage } from '../../slices/authSlice';
+import { getTotals, getTotals_per_month } from '../../actions/adminActions';
 
 const SendVerification = () => {
   const {isLoading,error, message,user}=useSelector((state)=>state.authState)
@@ -24,7 +25,20 @@ const SendVerification = () => {
   const [email, setEmail] = useState('');
 
   useEffect(()=>{
-    if(user?.isvalidEmail)return navigate('/')
+    if(user?.isvalidEmail)
+    {      
+      /* if(user && user.role ==='Admin')
+      {
+        dispatch(getTotals_per_month)
+        dispatch(getTotals)
+        return navigate('/admin')
+      } 
+      else if(user && user.role ==='Product Owner')
+      {
+        return navigate('/ProductOwner/DashBoard')
+      } 
+      else */ return navigate('/')
+    }
     if(message) {
       toast.success(message, {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -53,10 +67,11 @@ const SendVerification = () => {
     <>
      {isLoading? <Loader/>:
       <>
+    <center>
     <div className='container'>
       <div className='frame'>
-        <img src={icon} className='round-image'/>
-        <center>
+      <img src={icon} className='round-image' style={{position:'relative',right:'80px'}}/>
+      <center>        
         <h1>Please Verify Your Email</h1>
         <p>You have submitted your application successfully!</p>
         <p>We have sent a verification link to {email}</p>
@@ -67,6 +82,7 @@ const SendVerification = () => {
         </center>
       </div>
     </div>
+    </center>
     
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

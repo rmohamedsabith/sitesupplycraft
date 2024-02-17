@@ -22,13 +22,11 @@ import DashBoard from './components/Product Owner/DashBoard'
 import AddProduct from './components/Product Owner/AddProduct'
 import PreviewProduct from './components/Product Owner/PreviewProduct';
 import Messages from './components/Product Owner/Messages'
-import BecomeJobSeeker from './components/Product Owner/BecomeJobSeeker';
 import AdminDashboard from './components/Admin/Dashboard';
 import AdminMessages from './components/Admin/Messages'
 import Verifications from './components/Admin/Verifications'; 
 import Payment from './components/Product Owner/Payment';
 import Verification from './components/Admin/Verification';
-import Message from './components/Admin/Message';
 import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
@@ -38,6 +36,7 @@ import PaymentDetails from './components/Admin/PaymentDetails'
 import axios from 'axios';
 import {Element} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
+import MessageDetails from './components/Admin/MessageDetail';
 
 
 
@@ -120,14 +119,14 @@ function App() {
             <Route index element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
-            <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
             <Route path="payments" element={<ProtectedRoute><Payments/></ProtectedRoute>} />
             <Route path="payments/details" element={<ProtectedRoute><PaymentDetails/></ProtectedRoute>} />
           
             {/* Hiran */}
-            <Route path='Verification' element={<ProtectedRoute><Verifications/></ProtectedRoute>}/>
+            <Route path='Verifications' element={<ProtectedRoute><Verifications/></ProtectedRoute>}/>
             <Route path='Verification/:id' element={<ProtectedRoute><Verification/></ProtectedRoute>}/>
           </Route>
+          <Route path="/admin/messages/:id" element={<ProtectedRoute><MessageDetails /></ProtectedRoute>} />
             
               
           

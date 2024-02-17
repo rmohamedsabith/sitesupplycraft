@@ -32,13 +32,23 @@ const Login = () => {
   useEffect(()=>{
     if(isAuthenticated)
     {
-      if(user && user.role ==='Admin')
+      if(user.isvalidEmail)
       {
-        dispatch(getTotals_per_month)
-        dispatch(getTotals)
-        return navigate('/admin')
-      } 
-      else return navigate('/')
+        if(user && user.role ==='Admin')
+        {
+          dispatch(getTotals_per_month)
+          dispatch(getTotals)
+          return navigate('/admin')
+        } 
+        else if(user && user.role ==='Product Owner')
+        {
+          return navigate('/ProductOwner/DashBoard')
+        } 
+        else return navigate('/')
+      }
+      else{
+        return navigate('/register/verify/email')
+      }
     }
     if(error)
     {

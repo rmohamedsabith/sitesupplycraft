@@ -28,7 +28,7 @@ function Verifications() {
         Date: user.createdAt.split("T")[0].replace(/-/g, "/"),
         Name: user.firstname + ' ' + user.lastname,
         Status: <span style={{ color: statusColor }}>{user.status}</span>,
-        Option: <Link to={`/admin/verifications/${user._id}`}><button style={{ padding:'8px 20px'}} className='btn'>View</button></Link>
+        Option: <Link to={`/admin/verification/${user._id}`}><button style={{ padding:'8px 20px'}} className='btn'>View</button></Link>
     }
   })
   const data = {

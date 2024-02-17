@@ -10,6 +10,7 @@ import Favourites from '../Users/Favourites'
 import { toast } from 'react-toastify'
 import Loader from '../Loader'
 import { getTotals, getTotals_per_month } from '../../actions/adminActions'
+import defaultProfile from '../../images/default_avatar.png'
 
 function MyVerticallyCenteredModal(props) {
   const dispatch=useDispatch()
@@ -159,8 +160,13 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     setDistrict('')  
     setIsDistrict(false)
     await dispatch(clearProducts())
-    dispatch(filter(null,null,null,null,'products'))  
-    navigate('/')     
+    dispatch(filter(null,null,null,null,'products'))
+    if(user?.isValidEmail||!isAuthenticated)navigate('/') 
+    else{
+      
+      navigate('/register/verify/email')
+    }  
+        
   },[setDistrict,setIsDistrict,dispatch,navigate])
 
   const handleAdminDashboard=async()=>{

@@ -69,7 +69,8 @@ const authSlice=createSlice({
             return{
                 ...state,
                 error:null,
-                message:null
+                message:null,
+                ispasswordChanged:false
             }
         },
         clearMessage(state,action){
