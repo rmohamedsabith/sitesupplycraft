@@ -3,25 +3,53 @@ import ProfilePicture from '../../images/Untitled-1.png';
 import BRegistration from '../../images/BusinessRegistration.jpg';
 import EBill from '../../images/electricitybill.jpg';
 import './Verification.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { viewProcessingOwner } from '../../actions/adminActions';
+import { cancelOwner, verifyOwner, viewProcessingOwner } from '../../actions/adminActions';
 import Loader from '../Loader';
+import { toast } from 'react-toastify';
+import { clearError } from '../../slices/adminSlice';
 
 const Verification = () => {
   const [fullscreenImage, setFullscreenImage] = useState(null);
-  const {isLoading,user}=useSelector((state)=>state.adminState)
+  const {isLoading,user,error,message}=useSelector((state)=>state.adminState)
   const{id}=useParams();
   const dispatch=useDispatch()
+  const navigate=useNavigate()
 
   useEffect(()=>{
     dispatch(viewProcessingOwner(id))
   },[id,dispatch])
 
+  useEffect(()=>{
+    if(error){
+      return toast.error(error,{
+        position:'bottom-center',
+        onOpen:()=>clearError()
+      })
+    }
+    else if(message){
+      navigate('/admin/verifications')
+      toast.success(message,{
+        position:'bottom-center',
+        onOpen:()=>clearError()
+      })
+    }
+    return
+  },[dispatch,error,message])
+
   // Function to toggle fullscreen image
   const toggleFullscreenImage = (image) => {
     setFullscreenImage(image);
   };
+
+  const handleApprove=()=>{
+    dispatch(verifyOwner(id))
+  }
+
+  const handleCancel=()=>{
+    dispatch(cancelOwner(id))
+  }
 
   return (
     <>
@@ -80,10 +108,10 @@ const Verification = () => {
       )}
       <div className="row">
         <div className="col">
-          <button className="verificationBtn" type="submit" name="approve">Approve</button>
+          <button className="verificationBtn" type="submit" name="approve" onClick={handleApprove}>Approve</button>
         </div>
         <div className="col">
-          <button className="verificationBtn" type="reset" name="cancel">Cancel</button>
+          <button className="verificationBtn" type="reset" name="cancel" onClick={handleCancel}>Cancel</button>
         </div>
       </div>
     </center>

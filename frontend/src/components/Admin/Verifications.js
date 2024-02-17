@@ -7,12 +7,14 @@ import { MDBDataTable } from 'mdbreact';
 import {useDispatch,useSelector} from 'react-redux'
 import { getProcessingOwners } from '../../actions/adminActions';
 import Loader from '../Loader.js'
+import { clearError } from '../../slices/adminSlice.js';
+import { toast } from 'react-toastify';
 
 
 
 function Verifications() {  
   const dispatch=useDispatch()
-  const {isLoading,users}=useSelector((state)=>state.adminState)
+  const {isLoading,users,error,message}=useSelector((state)=>state.adminState)
 
   useEffect(()=>{
     dispatch(getProcessingOwners)
@@ -21,12 +23,12 @@ function Verifications() {
 
 
   const items=users?.map(user=>{
-    let statusColor = user.status === 'processing' ? 'red' : user.status === 'verified' ?'green': null;
+    let statusColor = user.status === 'processing' ? 'green' : user.status === 'verified' ?null: 'red';
     return {
         Date: user.createdAt.split("T")[0].replace(/-/g, "/"),
         Name: user.firstname + ' ' + user.lastname,
         Status: <span style={{ color: statusColor }}>{user.status}</span>,
-        Option: <Link to={`/admin/verification/${user._id}`}><button style={{ padding:'8px 20px'}} className='btn'>View</button></Link>
+        Option: <Link to={`/admin/verifications/${user._id}`}><button style={{ padding:'8px 20px'}} className='btn'>View</button></Link>
     }
   })
   const data = {

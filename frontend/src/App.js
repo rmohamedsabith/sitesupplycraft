@@ -107,8 +107,8 @@ function App() {
             <Route path="messages/:id" element={<ProtectedRoute><Message /></ProtectedRoute>} />
           
             {/* Hiran */}
-            <Route path='Verification' element={<Verifications/>}/>
-            <Route path='Verification/:id' element={<Verification/>}/>
+            <Route path='Verifications' element={<Verifications/>}/>
+            <Route path='Verifications/:id' element={<Verification/>}/>
           </Route>
             
               

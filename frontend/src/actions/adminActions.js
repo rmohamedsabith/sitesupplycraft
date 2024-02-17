@@ -22,7 +22,7 @@ export const viewProcessingOwner=(id)=>async(dispatch)=>{
 export const verifyOwner=(id)=>async(dispatch)=>{
     try {
         dispatch(verifyOwnerRequest())
-        const{data}=await axios.put(`/SiteSupplyCraft/${id}/verify`)
+        const{data}=await axios.put(`/SiteSupplyCraft/processing/${id}/verify`)
         dispatch(verifyOwnerSuccess(data))
     } catch (error) {
         dispatch(verifyOwnerFail(error.response.data.message))
@@ -31,7 +31,7 @@ export const verifyOwner=(id)=>async(dispatch)=>{
 export const  cancelOwner=(id)=>async(dispatch)=>{
     try {
         dispatch(cancelOwnerRequest())
-        const{data}=await axios.put(`/SiteSupplyCraft/${id}/cancel`)
+        const{data}=await axios.put(`/SiteSupplyCraft/processing/${id}/cancel`)
         dispatch(cancelOwnerSuccess(data))
     } catch (error) {
         dispatch(cancelOwnerFail(error.response.data.message))
