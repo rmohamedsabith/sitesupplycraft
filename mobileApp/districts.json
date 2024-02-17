@@ -1,0 +1,28 @@
+
+[
+	{"district":"Matara","cities":["Matara","Akurassa","Athuraliya","Devinuwara","Dikwalla","Hakmana","Kamburupitiya","Kirinda Puhuwalla","Kotapola","Malimbada","Matara","Mulatiyana","Pasgoda","Pitabaddara","Thihagoda","Weligama","Welipitiya"]},
+	{"district":"Jaffna","cities":["Kayts","Velanai","Jaffna","Karainagar","Nallur","Chavakachcheri","Maruthankerney","Point Pedro","Karaveddy"]},
+	{"district":"Ampara","cities":["Addalaichchenai","Akkaraipattu","Alayadivembu","Ampara","Damana","Dehiattakandiya","Irakkamam","Kalmunai","Karaitivu","Lahugala","MahaOya"]},
+	{"district":"Anuradhapura","cities":["Anuradhapura","Eppawala","Habarana","Kekirawa","Medawachchiya","Mihintale","Nochchiyagama","Horowupotana","Kahatagasdigiliya","Kebitigollawa","Talawa","Padawiya"]},
+	{"district":"Batticaloa","cities":["Batticaloa","Chenkalady","Eravur","Kattankudy","Valaichchenai","Pasikudah","Vakarai","Kiran","Oddamavadi","Araiyampathy"]},
+	{"district":"Kandy","cities":["Kandy","Gampola","Nawalapitiya","Teldeniya","Kadugannawa","Wattegama","Peradeniya","Katugastota","Pallekele","Akurana","Alawatugoda","Ankubura","Pussellawa"]},
+	{"district":"Colombo","cities":["Colombo","Dehiwala","Homagama","Kaduwela","Kesbewa","Kollonnawa","Maharagama","Moratuwa","Padukka","Avissawella","Sri Jayawardenepura Kotte"]},
+	{"district":"Galle","cities":["Galle","Ahangama","Mapalagama","Hiniduma","Neluwa","Pitigala","Thawalama","Karandeniya","Wanduramba","Balapitiya","Batapola","Bentota","Hikkaduwa","Koggala","Kosgoda"]},
+	{"district":"Hambantota","cities":["Hambantota","Tangalle","Ambalantota","Beliatta","Tissamaharama","Middeniya","Angunukolapelessa","Walasmulla","Weeraketiya"]},
+	{"district":"Matale","cities":["Matale","Dambulla","Galewela","Naula","Pallepola","Rattota","Ukuwela","Yatawatta","Sigiriya"]},
+	{"district":"Mullaitivu","cities":["MUllaitivu","Iranaipalai","Maankulam","Mallavi","Mulliyawalai","Kalvilan","Kokkilai","Kokkuthoduvai","Oddusuddan","Puthukkudiyiruppu","Thunukkai"]},
+	{"district":"Kegalle","cities":["Kegalle","Bulathkohupitiya","Dehiovita","Galigamuwa","Karawanella","Kotiyakumbura","Mawanella","Ruwanwella","Thalgaspitiya","Ganthuna","Yatiyanthota","Warakapola"]},
+	{"district":"Kilinochchi","cities":["Kilinochchi","Kanagapuram","Pallai","Paranthan","Poonakary","Tharmapuram","Thiruvaiyaru","Umayaalpuram"]},
+	{"district":"Mannar","cities":["Mannar","Madhu","Adampan","Chilawathurai","Nanaddan"]},
+	{"district":"Badulla","cities":["Badulla","Bandarawela","Diyatalawa","Beragala","Boralanda","Ella","Gurutalwa","Haputale","Idalgashinna","Mahiyangana","Passara","Welimada","Haldummulla"]},
+	{"district":"Gampaha","cities":["Nittambuwa","Biyagama","Gampaha","Divulapitiya","Kiridiwela","Ja-Ela","Katana","Kelaniya","Mahara","Minuwangoda","Mirigama","Negombo","Wattala"]},
+	{"district":"Kurunagala","cities":["Kurunagala","Kuliyapitiya","Girathalana","Ibbagamuwa","Giriulla","Hiripitiya","Dandagamuwa","Melsiripura","Pothuhera","Bingiriya","Ridigama","Alawwa"]},
+	{"district":"NuwaraEliya","cities":["Nuwara Eliya","Agarapatana","Ambewela","Bopattalawa","Haggala","Labukele","Laxapana","Udapussallawa","Ginigathena","Haguranketha","Kotagala","Nanu Oya","Watawala","Maskeliya"]},
+	{"district":"Vavuniya","cities":["Vavuniya","Nedunkerny","Cheddikulam"]},
+	{"district":"Kalutara","cities":["Agalawatta","Bandaragama","Beruwala","Bulathsinhala","Dodangoda","Horana","Ingiriya","Kalutara","Madurawela","Matugama","Millaniya","Baduraliya","Panadura","Walallavita"]},
+	{"district":"Polonnaruwa","cities":["Polonnaruwa","Hingurakgoda","Medirigiriya","Thalpotha","Welikanda","Manampitiya","Bakamuna"]},
+	{"district":"Kotte","cities":["Pita Kotte","Athul Kotte","Nawala","Nugegoda","Rajagiriya"]},
+	{"district":"Monaragala","cities":["Monaragala","Bibile","Buttala","Wellawaya","Kataragama","Siyabalanduwa","Medagama","Thanamalvila","Badalkubura","Sevenagala","Madulla"]},
+	{"district":"Rathnapura","cities":["Rathnapura","Balangoda","Embilipitiya","Rakwana","Pelmadulla","Kuruwita","Godakawela","Kahawatta","Eheliyagoda","Nivitigala","Kalawana","Panamure","Pallebedda","Udawalawa"]},
+	{"district":"Trincomalee","cities":["Tricomalee","Gomarankadawala","Kantalai","Kinniya","Kuchchaveli","Morawewa","Muttur","Siripura","Seruvila"]}
+]

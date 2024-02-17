@@ -52,6 +52,7 @@ const getRent=asyncHandler(async(req,res)=>{
 
         })
 })
+
 //get all selling product /products/sell
 const getSell=asyncHandler(async(req,res)=>{
     const resultperpage=8;
@@ -76,9 +77,8 @@ const getSell=asyncHandler(async(req,res)=>{
         })
 })
 
-
 //create a new product  -> /product/new
-const createProduct=asyncHandler(async(req,res)=>{      
+/* const createProduct=asyncHandler(async(req,res)=>{      
     // Check for duplicate username
     const duplicate = await product.findOne({name:req.body.name,owner:req.user._id}).lean().exec()
     if (duplicate) {
@@ -110,7 +110,56 @@ const createProduct=asyncHandler(async(req,res)=>{
     } 
 
     
-})
+}) */
+const createProduct = asyncHandler(async(req, res) => {
+    // Check if the request body contains an array of products
+    if (!Array.isArray(req.body)) {
+        return res.status(400).json({ message: 'Request body must be an array of products' });
+    }
+
+    const products = req.body.map(async (productData) => {
+        // Check for duplicate product name for each product
+        const duplicate = await product.findOne({ name: productData.name, owner: req.user._id }).lean().exec();
+        if (duplicate) {
+            return { error: `Duplicate name for product '${productData.name}'` };
+        }
+
+        let images = [];
+        if (productData.images && productData.images.length > 0) {
+            productData.images.forEach(file => {
+                let url = `${process.env.BACK_END_URL}/uploads/products/${file.filename}`;
+                images.push({ image: url });
+            });
+        }
+        productData.images = images;
+        // Add the user id to the owner field
+        productData.owner = req.user.id;
+
+        const newProduct = await product.create(productData);
+        if (!newProduct) {
+            return { error: `Failed to create product '${productData.name}'` };
+        }
+        return newProduct;
+    });
+
+    Promise.all(products).then(createdProducts => {
+        const errors = createdProducts.filter(product => product.error);
+        if (errors.length > 0) {
+            return res.status(409).json({ errors });
+        }
+        res.status(201).json({
+            success: true,
+            products: createdProducts
+        });
+    }).catch(err => {
+        console.error('Error creating products:', err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    });
+});
+
+
+
+
 //update a product  -> /product/:id/edit
 const updateProduct=asyncHandler(async(req,res)=>{
 
@@ -221,7 +270,7 @@ const getOne=asyncHandler(async(req,res)=>{
 
 //change status /product/:id/changeStatus
 const changeStatus=asyncHandler(async(req,res)=>{
-    const p =await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
+    const p=await product.findOneAndUpdate({_id:req.params.id},{status:req.body.status}).populate('owner','shopName address phone email location').exec()
     const Product=await product.findOne({_id:req.params.id}).populate('owner','shopName address phone email location').exec()
     res.status(200).json({
         Product
@@ -248,7 +297,7 @@ const addReview=asyncHandler(async(req,res,next)=>{
         //updating the  review
         Product.reviews.forEach(review => {
             if(review.user.normal?.toString() === user.toString()){
-                review.comment = comment
+review.comment = comment
                 review.rating = rating
                 review.date=Date.now()
             }
@@ -331,7 +380,7 @@ const deleteReview=asyncHandler(async(req,res,next)=>{
 
     res.status(200).json({
         success: true ,
-        Product
+        Product       
     })
 })
 
