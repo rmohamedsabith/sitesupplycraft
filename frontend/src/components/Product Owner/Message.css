@@ -121,6 +121,13 @@ margin: 20px;
 margin-left: 250px;
 border-radius: 20px;
 }
+.chat-day{
+  text-align: center;
+  color:#4c284b;
+  font-weight: bold;
+
+  
+}
 
 .typebox{
   width: 100%;
