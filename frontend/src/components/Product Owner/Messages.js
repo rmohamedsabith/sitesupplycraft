@@ -17,14 +17,17 @@ const Messages = () => {
   const { user } = useSelector((state) => state.authState);
   const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState('');
-  const messagesEndRef = useRef(null);
+  const chatBoxRef = useRef(null);
+  
 
   useEffect(() => {
     dispatch(getMessages);
   }, [dispatch]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -81,31 +84,49 @@ const Messages = () => {
                     <div className='logo'>Chat Box</div>
                   </div>
                 </div>
-                <div className='messages'>
+                <div className='messages' ref={chatBoxRef}>
                   {messages &&
                     messages.map((message, index) => (
-                      <div
+                      <>
+                         {getChatDay(index) && ( 
+                            <div className='chat-day'>
+                              {new Date().toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) === new Date(message.date).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) ? 'Today' : new Date(Date.now() - 86400000).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) === new Date(message.date).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) ? 'Yesterday' : new Date(message.date).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              })}
+                            </div>
+                          )}
+
+                         <div
                         key={index}
-                        ref={index === messages.length - 1 ? messagesEndRef : null}
                         className={
                           message.receiver === null ? 'message msg' : 'message other-message'
                         }>
-                        {getChatDay(index) && ( 
-                          <div className='chat-day'>
-                            {new Date(message.date).toLocaleDateString('en-US', {
-                              day: 'numeric',
-                              month: 'long',
-                              year: 'numeric',
-                            
-                            })}
-                          </div>
-                        )}
                         <div className='name'>
                           <p className='person'>{message.receiver === null ? 'You' : 'Admin'}</p>
                           {message.content}
                         </div>
                         <div className='text'>{getTimeFromTimestamp(message.date)}</div>
                       </div>
+                      </>
+                     
                     ))}
                 </div>
                 <div className='typebox'>

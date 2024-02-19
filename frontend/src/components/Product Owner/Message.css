@@ -124,7 +124,8 @@ border-radius: 20px;
 .chat-day{
   text-align: center;
   color:#4c284b;
-  font-weight: bold;
+  padding-top: 10px;
+  border-bottom: 3px solid grey;
 
   
 }
@@ -195,7 +196,6 @@ box-sizing: border-box;
   font-size: 10px;
   color: #4c284b;
 }
-
 
 
 
