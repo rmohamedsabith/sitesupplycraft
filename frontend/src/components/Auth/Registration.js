@@ -77,6 +77,7 @@ const Registration = () => {
     if(isAuthenticated)
     {
       setFormData({
+        profile:'',
         firstname:'',
         lastname:'',
         password:'',
@@ -528,7 +529,7 @@ const jobs=[
              {role==="Product Owner" ?
              <div className="row">       
 
-             <div className="col-md-6">
+              <div className="col-md-6">
                      <div className="mb-3">
                      <div className='float'>     
                        <div style={{ paddingLeft: '10px',width:'400px' }}>
@@ -538,8 +539,8 @@ const jobs=[
                          </FloatingLabel>
                        </div>
                      </div>
-                     </div>
-            </div>               
+                </div>
+              </div>               
              <div className="col-md-6">
                      <div className="mb-3">
                      <div className='float'>     
@@ -895,7 +896,7 @@ const jobs=[
                        <div style={{ paddingLeft: '10px',width:'400px' }}>
                        {formError.duration&&formData.duration<=0 ? <div className='error'>{formError.duration}</div>:""}
                          <FloatingLabel controlId="floatingInput" label="Duration" className="mb-3 z-0">
-                           <Form.Select aria-label='duration' name='duration' value={formData.duration}  onChange={handleInput}>
+                           <Form.Select aria-label='duration' name='duration' value={formData.duration} onChange={handleInput}>
                              <option value={''}>Select the payment type</option>
                              <option value="/PerHour">Per Hour</option>  
                              <option value="/perDay">Per Day</option>

@@ -416,7 +416,8 @@ const changePassword=asyncHandler(async(req,res,next)=>{
      if(req.body.password!==req.body.confirmPassword) return res.status(409).json({message:"Password is not matched"})
 
      //assign new password
-     user.password=req.body.password
+     if(req.body.password)user.password=req.body.password
+
      await user.save()
     res.status(200).json({
       success:true,
@@ -432,12 +433,13 @@ const changePassword=asyncHandler(async(req,res,next)=>{
   }
 
 })
+
 //update profile - /myprofile/edit/
 const updateMyprofile=asyncHandler(async(req,res,next)=>{
   try{
     
     if(req.files){
-      req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${req.files['profile'][0].filename}`
+      req.files['profile']?req.body.profile=`${process.env.BACK_END_URL}/uploads/users/${req.files['profile'][0].filename}`:null
       req.files['certificate']?req.body.certificate=`${process.env.BACK_END_URL}/uploads/users/${req.files['certificate'][0].filename}`:null
       req.files['currentBill']?req.body.currentBill=`${process.env.BACK_END_URL}/uploads/users/${req.files['currentBill'][0].filename}`:null
     }

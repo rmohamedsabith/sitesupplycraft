@@ -1,4 +1,3 @@
-
 import{loginFail, loginRequest, loginSuccess,clearError, loadUserRequest, loadUserSuccess, loadUserFail, logoutSuccess, logoutFail, forgetPasswordRequest, forgetPasswordSuccess, forgetPasswordFail, resetPasswordRequest, resetPasswordSuccess, resetPasswordFail, registerRequest, registerSuccess, registerFail, updateProfileRequest, updateProfileSuccess, updateProfileFail, deleteProfileRequest, deleteProfileSuccess, deleteProfileFail, changePasswordRequest, changePasswordSuccess, changePasswordFail, verifyEmailRequest, verifyEmailSuccess, verifyEmailFail, resendEmailRequest, resendEmailSuccess, resendEmailFail, changeEmailRequest, changeEmailSuccess, changeEmailFail} from '../slices/authSlice'
 import axios from 'axios'
 
@@ -152,7 +151,7 @@ export const changePassword=(userData)=>async(dispatch)=>{
                 'Content-type': 'application/json'
             }
         }
-        const {data}=await axios.put(`/SiteSupplyCraft/myprofile/changepassword`,userData,config)
+        const {data}=await axios.put(`/SiteSupplyCraft/myprofile/edit`,userData,config)
         dispatch(changePasswordSuccess(data))
     } catch (error) {
         dispatch(changePasswordFail(error.response.data.message))
