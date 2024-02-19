@@ -22,7 +22,8 @@ const AdminSideBar = () => {
   };
 
   return (
-    <div className="adminSide">
+    <center>
+      <div className="adminSide">
       <Link
         to="/admin/dashboard"
         className={`d-block sidebarLink ${isActive("/admin/dashboard") ? "active" : ""}`}
@@ -52,6 +53,7 @@ const AdminSideBar = () => {
         Payments
       </Link>
     </div>
+    </center>
   );
 };
 

@@ -22,6 +22,8 @@ const ProductList = () => {
     ToastAndroid.show('Welcome to Site Supply Craft', ToastAndroid.BOTTOM);
   }, []);
 
+ 
+
   useEffect(() => {
     if (error) {
       ToastAndroid.show(error, ToastAndroid.BOTTOM);

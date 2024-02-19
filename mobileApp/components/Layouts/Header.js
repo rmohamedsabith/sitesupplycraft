@@ -23,14 +23,14 @@ const Header = ({ hide, setIsHumClicked, isHumClicked, setDistrict, setIsDistric
     setIsDistrict(false);
     await dispatch(clearProducts());
     dispatch(filter(null, null, null, null, 'products'));
-    navigation.navigate('/');
+    navigation.navigate('Home');
   }, [setDistrict, setIsDistrict, dispatch, navigation]);
 
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:28,paddingTop:20,paddingBottom:20,padding:10,backgroundColor:'#053B50'}}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity onPress={handleRefresh}>
-          <Image source={require('../../images/logo.jpeg')} style={{ width: 75, height: 35}} />
+          <Image source={require('../../images/logo.jpeg')} style={{ width: 75, height: 40}} />
         </TouchableOpacity>
         <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 16,color:'#FFFF' }}>Site Supply Craft</Text>
       </View>
