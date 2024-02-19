@@ -15,6 +15,7 @@ import { Button, Modal, Tab, Tabs } from "react-bootstrap";
 import "./Previw.css";
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import back from "../../images/back.png"
 
 const PreviewProduct = () => {
   // handling the item array
@@ -182,7 +183,7 @@ const PreviewProduct = () => {
       <MetaData title={"Preview"} />
       <div style={{ marginLeft: "3px", marginTop: "3px" }}>
         <img
-          src="../images/back.png"
+          src={back}
           alt="back page"
           onClick={handleBackPage}
         />
