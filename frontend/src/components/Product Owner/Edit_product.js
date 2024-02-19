@@ -1,5 +1,4 @@
 import React from "react";
-import Payment from "./Payment";
 import "./AddProduct.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Col, Form, Image, Row } from "react-bootstrap";
@@ -8,25 +7,46 @@ import { useState, useEffect } from "react";
 import MetaData from "../Layouts/MetaData";
 import PreviewProduct from "./PreviewProduct"; // Import the PreviewProduct component
 import { useSelector } from "react-redux";
-import Edit_product from "./Edit_product";
 
-const AddProduct = () => {
-  const navigate = useNavigate(); //get the navigate object
+const Edit_product = () => {
+  //fetching the index of the element
+
+  const Details = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storage
+  const location = useLocation();
+  const activeTabIndex = location.state || 0;
+  const ProductDetails = Details[activeTabIndex];
 
   const { user } = useSelector((state) => state.authState);
 
-  /* USESTATE HOOKS */
-
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [discription, setDiscript] = useState("");
-  const [catagory, setCatagory] = useState("");
-  const [images, setImages] = useState([]);
-  const [previewImages, setPreviewImages] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("sell");
-  const [isRent, setIsRent] = useState(false);
-  const [priceType, setPriceType] = useState("");
+  const navigate = useNavigate();
+  const [name, setName] = useState(ProductDetails ? ProductDetails.name : "");
+  const [price, setPrice] = useState(
+    ProductDetails ? ProductDetails.price : ""
+  );
+  const [discount, setDiscount] = useState(
+    ProductDetails ? ProductDetails.discount : ""
+  );
+  const [discription, setDiscript] = useState(
+    ProductDetails ? ProductDetails.description : ""
+  );
+  const [catagory, setCatagory] = useState(
+    ProductDetails ? ProductDetails.category : ""
+  );
+  const [images, setImages] = useState(
+    ProductDetails ? ProductDetails.images : []
+  );
+  const [previewImages, setPreviewImages] = useState(
+    ProductDetails ? ProductDetails.images : []
+  );
+  const [selectedOption, setSelectedOption] = useState(
+    ProductDetails ? ProductDetails.type : "sell"
+  );
+  const [isRent, setIsRent] = useState(
+    ProductDetails ? ProductDetails.type === "rent" : false
+  );
+  const [priceType, setPriceType] = useState(
+    ProductDetails ? ProductDetails.priceType : ""
+  );
   const [items, setItems] = useState([]);
 
   const Categories = [
@@ -90,12 +110,9 @@ const AddProduct = () => {
     setPriceType(event.target.value);
     /* console.log(event.target.value); */
   };
-
-  //functions for add more items (creating the items array and adding products to it)
-
-  const handleAddItem = () => {
-    const newItem = {
-      //creating newItem to add the array
+  const handleEditItem = () => {
+    const updatedDetails = [...Details];
+    updatedDetails[activeTabIndex] = {
       name: name,
       price: price,
       discount: discount,
@@ -107,31 +124,19 @@ const AddProduct = () => {
       priceType: priceType,
       owner: user,
     };
-    const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
-    const updatedArray = [...existingData, newItem]; // Combine existing data with new data
-    setItems(updatedArray);
-    sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
+    sessionStorage.setItem("items", JSON.stringify(updatedDetails));
 
-    //placing input field empty again to create a new product
-    setName("");
-    setPrice("");
-    setDiscount("");
-    setDiscript("");
-    setCatagory("");
-    setPreviewImages([]);
-    setSelectedOption("sell");
-    setIsRent(false);
-    setPriceType("");
-
-    navigate("preview");
+    navigate("/ProductOwner/addProduct/Preview");
   };
-
-  /* functions for buttons */
-  /* privew button */
+  const handleRemoveItem = () => {
+    Details.splice(activeTabIndex, 1);
+    sessionStorage.setItem("items", JSON.stringify(Details));
+    navigate("/ProductOwner/addProduct/Preview");
+  };
 
   return (
     <>
-      <MetaData title={"Add Product"} />
+      <MetaData title={"EditProduct"} />
       <Row>
         <Col xs={2} style={{ backgroundColor: "#176B87" }}>
           <div className="p-3">
@@ -148,7 +153,7 @@ const AddProduct = () => {
         </Col>
         <Col className="addProduct">
           <div className="block" style={{ marginBottom: "30px" }}>
-            <h1 className="styled-heading">Product Adverticement</h1>
+            <h1 className="styled-heading">Edit Product</h1>
             <br />
 
             {/*FORM ELEMENTS*/}
@@ -190,9 +195,7 @@ const AddProduct = () => {
                     </label>
                   </div>
                 </div>
-
                 <br />
-
                 <div>
                   <label>Name: </label>
                   <Form.Control
@@ -204,6 +207,7 @@ const AddProduct = () => {
                   />
                 </div>
                 <br />
+
                 {isRent ? (
                   <Row>
                     <Col>
@@ -317,20 +321,30 @@ const AddProduct = () => {
                   />
                 ))}
 
-                <div
-                  className="mb-2 PreviewButtonContainer"
-                  style={{ alignContent: "center" }}
-                >
-                  <div style={{ marginTop: "20px", marginBottom: "2pxs" }}>
-                    <Button
-                      variant="primary"
-                      style={{ marginLeft: "35%", border: "none" }}
-                      size="lg"
-                      onClick={handleAddItem}
-                    >
-                      Add item
-                    </Button>
-                  </div>
+                <div style={{ marginLeft: "16%", marginTop: "5px" }}>
+                  <Row>
+                    <Col>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        style={{ border: "none" }}
+                        onClick={handleRemoveItem}
+                      >
+                        Remove
+                      </Button>
+                    </Col>
+
+                    <Col>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        style={{ border: "none" }}
+                        onClick={handleEditItem}
+                      >
+                        Update
+                      </Button>
+                    </Col>
+                  </Row>
                 </div>
               </Form>
             </div>
@@ -340,5 +354,4 @@ const AddProduct = () => {
     </>
   );
 };
-
-export default AddProduct;
+export default Edit_product;

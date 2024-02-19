@@ -33,7 +33,7 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
-
+import Edit_product from './components/Product Owner/Edit_product';
 
 
 
@@ -94,8 +94,9 @@ function App() {
               {/* Sandeepa */}
           <Route path='ProductOwner/addProduct' element={<AddProduct/>}/>
           <Route path='ProductOwner/addProduct/Payment' element={<Payment/>}/>   
-          <Route path='ProductOwner/addProduct/Preview' element={<PreviewProduct/>}/>          
-           
+          <Route path='ProductOwner/addProduct/Preview' element={<PreviewProduct/>}/> 
+          <Route path='ProductOwner/addProduct/Preview/Edit' element={<Edit_product/>} />        
+          
           {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
 
           {/* Admin */}
@@ -123,7 +124,7 @@ function App() {
          
       </HelmetProvider>
     </div> 
-             
+            
     
  
   );
