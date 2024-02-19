@@ -106,28 +106,16 @@ const UpdateUser = () => {
   }
 
   useEffect(() => {
-    if (error) {
-      toast.error(error, {
+  if(isUpdated)
+    {
+      toast.success(`successfully Data was updated`, {
         position: toast.POSITION.BOTTOM_CENTER,
         onOpen: () => dispatch(clearAuthError)
       });
-    } 
-
-    if(isUpdated)
-    {
-      navigate('/')
+      navigate('/myprofile')
     }
-
-    if(ispasswordChanged)
-    {
-      setFormData({
-        oldPassword: '',
-        password:'',
-        confirmPassword:'',
-      });
-      navigate('/')
-    }
-  }, [dispatch, error, ispasswordChanged, isUpdated]);
+    if(ispasswordChanged)navigate('/myprofile')
+  },[dispatch,error, ispasswordChanged, isUpdated]);
 
   const [formData, setFormData] = useState({
     role: user.role,
@@ -330,7 +318,7 @@ const UpdateUser = () => {
                       </div>
                       <div className="col-md-6">
                           <div className="mb-3">
-                          <div className='float'>     
+                           <div className='float'>     
                             <div style={{ paddingLeft: '10px',width:'400px' }}>
                               <FloatingLabel controlId="floatingInput" label="E-mail Address" className="mb-3 z-0">
                                 <Form.Control type="email" placeholder='email' name='email' value={formData.email} onChange={handleInput} />
@@ -588,11 +576,6 @@ const UpdateUser = () => {
             </div>
           </div>
         </div>
-      </>
-      }
-
-      {isLoadingAuth?<Loader/>:
-      <>
         <div className='register'>
           <MetaData title={'register'}/>
           <div className="frame">
