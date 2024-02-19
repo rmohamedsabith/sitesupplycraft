@@ -14114,3 +14114,8 @@
 20240219	21:24:54	2c3a66da-e1b8-4984-b808-c154e5902356	GET	/SiteSupplyCraft/laborers?page=1	undefined
 20240219	21:25:11	37eb6f93-1dee-4d8b-99cf-03f297d20290	GET	/SiteSupplyCraft/laborers?page=1	undefined
 20240219	21:25:14	baabc3e0-569a-40b9-8883-9dd5d4d0af57	GET	/SiteSupplyCraft/products/sell?page=1	undefined
+20240220	03:21:50	12304e68-7fdb-48af-bdce-1a8ede0bebd3	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	03:21:50	b4e1a591-df88-4209-be6e-3203b3ff0506	GET	/SiteSupplyCraft/payment/stripeApi	undefined
+20240220	03:21:50	9b860e3a-9f09-4c5b-957e-692f2e8f67cc	GET	/SiteSupplyCraft/products?page=1	undefined
+20240220	03:22:11	cd23a28e-fd70-4402-b3ea-cb118d565815	GET	/SiteSupplyCraft/logout	undefined
+20240220	03:22:11	4d5efe09-0556-430a-abd3-c04e5fb1abc7	GET	/SiteSupplyCraft/products?page=1	undefined
