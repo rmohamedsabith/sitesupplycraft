@@ -100,8 +100,9 @@ const Registration = () => {
         price:'',
         duration:'',
         description:'',
+        
       });
-      navigate('verify/email', { state: { email: formData.email }})
+      navigate('/register/verify/email', { state: { email: formData.email }})
 
     }
   }, [dispatch, error,isAuthenticated]);
@@ -316,8 +317,8 @@ const Registration = () => {
         {
           userData.append('shopReg_no', formData.shopno)
           userData.append('shopName', formData.shopName)
-          userData.append('currentBill', formData.currentbill)
-          userData.append('certificate', formData.certificate) 
+          userData.append('currentBill', CurrentBill)
+          userData.append('certificate', Certificate) 
         }
         if(role==='Job Seeker')
         {

@@ -12,7 +12,7 @@ const VerifyingEmail = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const {token}=useParams()
-  useEffect(()=>{
+ useEffect(()=>{
     if(error)
     {
       return navigate('/register/verify/email')
@@ -25,16 +25,20 @@ const VerifyingEmail = () => {
 
   return (
     <>
+    <center>
     <div className='container'>
-      <div className='frame'>
-        <img src={icon} className='round-image'/>
-        <center>
-        <h1>Email Verified</h1>
-        <p>Your email address was succesfully verified</p>
-        <Link to={'/'} >Back to Home</Link>
-        </center>
-      </div>
-    </div>
+     
+     <div className='frame'>
+       <img src={icon} className='round-image' style={{position:'relative',right:'80px'}}/>
+       <center>
+       <h1>Email Verified</h1>
+       <p>Your email address was succesfully verified</p>
+       <Link to={user?.role==='Admin'?'/admin':user?.role==='Product Owner'?'/ProductOwner/DashBoard':'/'} >Back to Home</Link>
+       </center>
+     </div>
+    
+   </div>
+    </center>
     </>
   )
 }

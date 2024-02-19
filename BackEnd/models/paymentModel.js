@@ -38,7 +38,7 @@ const paymentSchema = mongoose.Schema({
         },
         status: {
             type: String,
-            required: true
+            required: true,
         }
     },
     count:{
@@ -47,7 +47,8 @@ const paymentSchema = mongoose.Schema({
     }
     ,
     paidAt: {
-        type: Date
+        type: Date,
+        default: Date.now
     },
     createdAt: {
         type: Date,
