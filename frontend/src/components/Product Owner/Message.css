@@ -121,6 +121,18 @@ margin: 20px;
 margin-left: 250px;
 border-radius: 20px;
 }
+.chat-day{
+  text-align: center;
+  color:#4c284b;
+  padding-top: 10px;
+  border-bottom: 3px solid grey;
+}
+
+
+.btnicon{
+  background-color: none;
+  
+}
 
 .typebox{
   width: 100%;
@@ -188,48 +200,3 @@ box-sizing: border-box;
   font-size: 10px;
   color: #4c284b;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

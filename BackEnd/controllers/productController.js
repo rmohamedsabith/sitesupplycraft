@@ -502,7 +502,7 @@ const getTotal_per_month=asyncHandler(async(req,res)=>{
 })
 
 //Delete user's all products
-const deleteUserAllProducts=asyncHandler(async(req,res)=>{
+const deleteUserAllProducts=asyncHandler(async(req,res)=>{ 
     const Products=await product.find({owner:req.user.id}).exec()
     if(!Products)
     {

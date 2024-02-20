@@ -1,17 +1,85 @@
-20240202	19:40:15	89f274ae-d39c-4eea-ac3e-30f22caf28fa	Error: Received unknown parameters: firstname, lastname	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	19:40:38	97f1834f-95fc-4667-a315-0c0cda297321	SyntaxError: Unexpected string in JSON at position 81	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	19:41:10	a9412df0-4df8-4227-be99-dba77a33c990	Error: Received unknown parameters: district, number, street, postalCode. Did you mean postal_code?	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	19:42:13	702b8bbb-99b6-42cc-9d8a-a451d78a96cc	Error: Received unknown parameter: shipping[address][postalCode]. Did you mean postal_code?	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	19:42:26	30fa1a0b-3272-4a8c-a3b9-d7388ec90a2b	Error: Amount must convert to at least 50 cents. 2.00 ₨ converts to approximately $0.01.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	19:43:00	0c1a8ac2-89a9-406d-8551-bc3579897fce	Error: Amount must convert to at least 50 cents. 2.00 ₨ converts to approximately $0.01.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	21:01:57	0f0b1a33-4f32-4f7c-ba4b-c622c25c0c02	Error: Amount must convert to at least 50 cents. 0.64 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	21:03:02	bc5eec19-98d9-4d92-9e26-96ced1edb585	Error: Amount must convert to at least 50 cents. 1.28 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	21:06:16	72d2c2fb-aaa6-475d-a61a-49090405d785	Error: Amount must convert to at least 50 cents. 6.41 ₨ converts to approximately $0.02.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	21:06:40	72af63a8-7baf-4c9a-b6ea-02c3e9b5e700	Error: Amount must convert to at least 50 cents. 64.09 ₨ converts to approximately $0.20.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	21:07:19	2e1e4b6d-2259-4aa6-9f92-4dfd27aefa8c	Error: Amount must convert to at least 50 cents. 1.00 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	21:10:01	24804972-6458-4eda-8dc0-4e45a91304ce	Error: Amount must convert to at least 50 cents. 1.00 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	22:23:54	f17abb17-f8ed-4117-9e17-ed2071e12925	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
-20240202	22:26:08	6a78f680-d75b-4cda-a0be-f5cca9bd9720	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
-20240214	14:45:46	b312f9c7-874f-433e-a61c-4a8ea4e7a44d	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-02.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products/rent?page=1	undefined
-20240215	17:05:35	fea6142f-ab73-444a-816a-e9c0321f942b	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
-20240215	17:06:25	4bf8b640-9464-4449-977f-29efce92ea75	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
+20240124	07:54:39	3cba2e15-0b8a-47e5-aec2-01bfcb12e69f	TypeError: Cannot read properties of null (reading 'reviews')	DELETE	/SiteSupplyCraft/product/658108d668907ee2ec767d75/deletereview	undefined
+20240127	11:24:05	0cc0578f-029f-42bd-85aa-33c79cce5aef	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938919a7dfdc482472a448/reviews	undefined
+20240127	11:24:19	489cc219-2dd3-4bc0-a4db-f507d552e83d	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938c28a7dfdc482472a468/reviews	undefined
+20240127	11:24:32	4f606cc4-39b1-47c0-bbf5-c8ae0ae72e78	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938c28a7dfdc482472a468/reviews	undefined
+20240127	11:43:44	a77d725b-c24a-4121-99f2-b2cf068c41e7	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938c94a7dfdc482472a46e/reviews	undefined
+20240127	12:23:15	b1793a78-f8c5-47e0-88ba-14d40c406690	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:23:45	2f1a7fb3-02d1-4f5e-be29-a1d5d2a5b233	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:24:50	3074072e-15cb-413d-b0be-11d3a0ca817f	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:24:53	31ea57b9-7f8a-4611-af44-af2f6fad03c3	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:28:52	efbfff88-53c6-4768-b7fe-0876263fee14	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:29:56	72fdd1ce-d085-4fdf-968c-c41ce30c020d	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:32:33	192008f8-a3fe-4831-8c3d-9125618d300b	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:33:30	3fd7c4e5-5801-40c8-9772-7ae47d5fa96a	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:34:44	4acb2fa6-eec8-44b7-aa9d-0ea0c774c973	MissingSchemaError: Schema hasn't been registered for model "model".
+Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/reviews	undefined
+20240127	12:48:21	82b2f7f4-f856-4bee-ae0b-c1f96018435f	TypeError: Cannot read properties of undefined (reading 'toString')	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/addreview	undefined
+20240127	12:50:54	c66868d8-f714-4e08-888a-3cf83d918269	TypeError: Cannot read properties of undefined (reading 'toString')	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/addreview	undefined
+20240127	12:53:27	6308d47b-ef40-4f3b-8e00-2fc831370ac2	TypeError: Cannot read properties of undefined (reading 'toString')	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/addreview	undefined
+20240127	12:53:33	90f45403-01f8-43a3-b449-8d4ca401170f	TypeError: Cannot read properties of undefined (reading 'toString')	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/addreview	undefined
+20240127	12:58:12	a3de4ec9-9ae6-4d91-9cee-609540e4ed59	TypeError: Cannot read properties of null (reading 'reviews')	DELETE	/SiteSupplyCraft/product/659178f60f4c96e2aebbe72f/deletereview	undefined
+20240127	12:58:33	52804da3-94f7-4e2b-b35c-341d94b5bfc2	TypeError: Cannot read properties of undefined (reading 'toString')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:08:07	3c6000a8-8fe1-4dbe-b6f9-e4337404747c	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:08:52	0491e2df-7cf4-47ed-b416-8485cec8649a	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:09:48	b597215a-d199-488b-b734-a9c9af8e9938	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:14:50	20c731b3-975a-4e2a-8ae4-80bac260111f	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:15:09	1043ab2e-7e3a-419b-aa85-263d527d066a	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:15:50	9666f487-bf1e-45c4-90e7-5790ecb44a7d	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:16:39	641a69d0-a957-47e8-8a13-ad4b45325676	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:17:30	d9f348ac-424d-44b6-abc8-2ceedeac4c75	ReferenceError: normal is not defined	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:19:55	3a2b51a9-a2c9-4ed9-8614-dfac187571a9	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:23:53	78554f11-1096-443a-8544-47e8b44737fd	TypeError: Cannot read properties of undefined (reading 'filter')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:24:10	b61e5795-ad42-4bb4-a4f4-0e2064faa85d	TypeError: Cannot read properties of undefined (reading 'filter')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:24:37	a4773826-c29a-4362-8af2-f1357d6ce279	TypeError: Cannot read properties of undefined (reading 'filter')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:25:13	9f93407e-397d-43d7-963a-05112155ec17	TypeError: Cannot read properties of undefined (reading 'length')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:25:36	1235da0e-6077-4e3c-94a5-8f7e24c0b4be	TypeError: Cannot read properties of undefined (reading 'reduce')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	13:25:51	3b402639-8ad4-4ea9-b4ec-3b19337d79e7	TypeError: Cannot read properties of undefined (reading 'length')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	14:07:35	63f52449-f981-4bbb-95e2-b8cb3aa1bfee	TypeError: Assignment to constant variable.	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240127	14:24:29	7b401950-4b66-4295-9714-53a9b835f5b8	TypeError: Cannot read properties of undefined (reading 'toString')	DELETE	/SiteSupplyCraft/product/65938919a7dfdc482472a448/deletereview	undefined
+20240128	13:59:21	fb2ce570-a1ef-4246-b6e0-4992983999e0	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	13:59:27	94786297-6af6-4027-b353-8f501dc3770c	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	13:59:36	2d3f01be-e617-426b-86b1-1c780c366df5	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:00:00	eb43f99f-c99e-479f-8361-de19a18b6654	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:00:09	f2df6cb4-dc0a-491f-b4af-e5e0f1d2fcfd	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:14:39	6b186318-db76-4272-b51e-714133686e92	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:15:20	80e82601-5817-4b50-b5af-c8134031444b	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/product/65938ceca7dfdc482472a474	undefined
+20240128	14:16:00	13f4a7a3-8036-43ae-8bb2-974200bb7cd2	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:16:07	99c2d25b-babe-4c9a-8091-05a43e6e9351	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:16:10	aa4a7205-db8d-4b3a-8dc5-031579e41d34	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:40:28	6bea3b8e-8a9c-4d09-914d-6da956d8d7a1	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:41:40	495ba2f8-a44d-42da-8f3d-6e578657f840	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:44:09	9e26897e-63d6-4328-af1a-c9efbcf5047b	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:46:47	6e5e47a6-c4d8-4cb2-96e7-3e5363b3b8e9	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:51:09	ef459786-210d-418d-8bed-ec3618f0ff42	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	14:51:41	a9945aba-8092-4ee2-86fe-5408f7770f2b	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	15:41:55	45a9ad69-1355-4086-a411-f1b139dd8709	JsonWebTokenError: jwt malformed	GET	/SiteSupplyCraft/myprofile	undefined
+20240128	23:02:27	063445e8-63be-481f-a897-0ff8ed131d2c	CastError: Cast to ObjectId failed for value "{ status: 'processing' }" (type Object) at path "_id" for model "Product Owner"	GET	/SiteSupplyCraft/processing	undefined
+20240129	13:36:44	1d35b437-8ca1-4f8f-9502-ed6c73d4f4c6	TypeError: Cannot set properties of null (setting 'status')	PUT	/SiteSupplyCraft/product/659278c74af76a11efa9e18b/changeStatus	undefined
+20240129	13:39:48	abbcbcd6-91f9-4ad0-9c15-3f1457482667	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
+20240129	13:42:01	03d895de-92ae-44b4-8fe1-5729ab34ea47	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
+20240129	13:42:03	71aef46a-3d95-4635-99e5-a0ce20afb00f	ValidationError: product validation failed: reviews.0.rating: Path `rating` is required., reviews.1.rating: Path `rating` is required.	PUT	/SiteSupplyCraft/product/65938919a7dfdc482472a448/changeStatus	undefined
+20240129	14:53:24	e2c82106-7802-4f6f-928c-d156b3251739	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	14:53:33	f7b3ba09-a29f-405f-9b65-5a84ac2ca7d3	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	14:53:52	7030ab9b-38c1-4e5e-8b9f-8734c9467971	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	14:53:56	8c2b8f75-2d0a-49f6-b5d7-3312f933766a	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:00:14	fea36168-ad83-47e3-8c1b-4c30eea842a5	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:00:22	8538cbd8-1bcf-4595-9f54-0a3aa5c24ed1	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:01:37	ba9b29f2-42af-41bc-a9e0-f7084d95e496	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:05:31	7795576b-5857-44ca-adcf-b8823485c389	ReferenceError: activeProducts is not defined	GET	/SiteSupplyCraft/myProducts?	undefined
+20240129	15:53:51	24f0c7d4-6501-4a51-94d8-d16f6c51bc03	ReferenceError: Cannot access 'product' before initialization	PUT	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d/changeStatus	undefined
+20240130	10:07:50	09e44dd4-b1df-43ae-82c4-193bd0160138	MongoServerSelectionError: connect ETIMEDOUT 3.7.243.165:27017	GET	/SiteSupplyCraft/laborers?page=1	undefined
+20240130	10:08:21	468d521a-e124-4d37-8f0d-6f0398ea5da0	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/laborers?page=1	undefined
+20240130	10:08:25	98cd751b-684c-452f-acd3-b333c57a527b	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-01.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
+20240130	11:24:49	64e467f7-9734-404f-abf8-180a1f16c7c4	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined

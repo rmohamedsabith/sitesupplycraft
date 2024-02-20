@@ -31,6 +31,7 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
+import Update from './components/Product Owner/Update';
 import Payments from './components/Admin/Payments'
 import PaymentDetails from './components/Admin/PaymentDetails'
 import axios from 'axios';
@@ -101,8 +102,8 @@ function App() {
 
           {/* ProductOwner */}
               {/* Tharushi */}
-          <Route path='ProductOwner/DashBoard' element={<ProtectedRoute><DashBoard/></ProtectedRoute>}/> 
-          <Route path='ProductOwner/Messages' element={<ProtectedRoute><Messages/></ProtectedRoute>}/> 
+          <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
+          <Route path='ProductOwner/Messages' element={<Messages/>}/> 
           
           
               {/* Sandeepa */}
