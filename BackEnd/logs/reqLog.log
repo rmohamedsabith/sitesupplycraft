@@ -11827,3 +11827,7 @@
 20240220	09:59:12	dec25db7-ad05-4c59-8a58-112f713421bf	GET	/logo512.png	undefined
 20240220	09:59:22	51b3bf23-b91f-423e-9a6b-3150e946c9df	GET	/SiteSupplyCraft/myprofile	undefined
 20240220	09:59:51	aaeb50d7-6e84-403a-84d9-0add76a3ee4a	GET	/SiteSupplyCraft/messages	undefined
+20240220	10:00:58	74c56d7a-23a2-4e7f-aed3-baa9e761f8a6	GET	/SiteSupplyCraft/products?page=1	undefined
+20240220	10:00:58	61b1bbd6-21f7-4d45-b9a3-f8be80128a67	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	10:00:58	0b835d35-89b3-4d00-8f09-f1ca137fd969	GET	/uploads/products/1708062387445-sand.jpeg	undefined
+20240220	10:00:58	9db07d6d-5b20-4039-8028-1d8221097f38	GET	/uploads/products/1708064639897-pipe2.jpeg	undefined
