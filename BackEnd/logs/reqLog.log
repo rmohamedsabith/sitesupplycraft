@@ -14124,3 +14124,6 @@
 20240220	09:44:11	83767012-8672-42b2-9af5-0ccdfe4fb4ea	GET	/SiteSupplyCraft/payment/stripeApi	undefined
 20240220	09:46:54	9da83c64-cf03-4819-8986-55b9125064fc	POST	/SiteSupplyCraft/login	http://localhost:4500/
 20240220	09:46:54	28c933e2-234b-4752-9666-4e2c18347257	GET	/SiteSupplyCraft/myProducts?	undefined
+20240220	09:47:51	cec11c15-1955-4e35-b25f-029ee41b2f08	GET	/SiteSupplyCraft/products?page=1	undefined
+20240220	09:47:51	24de350f-475e-4d5e-be73-efc410ec460a	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	09:47:51	22c7c3ff-670f-4ce7-89d0-3d3cd19d7ff6	GET	/SiteSupplyCraft/payment/stripeApi	undefined
