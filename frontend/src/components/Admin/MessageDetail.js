@@ -99,9 +99,11 @@ const MessageDetails = () => {
               )))}
             </div>
             
-      
-        <div className='typebox'>
-              <input type='text' value={newMessage}   onChange={e => setNewMessage(e.target.value)} className='inputbox' placeholder='   Enter Message ..'></input>
+        </tr>
+
+      <tr>
+        <div className='submit'>
+              Message : <input type='text' value={newMessage}   /* onChange={handleChange} */ className='text1'></input>
                         <button className='btnicon'  onClick={handleSubmit}><FontAwesomeIcon icon={faPaperPlane} className='tt'/></button>
         </div>
       

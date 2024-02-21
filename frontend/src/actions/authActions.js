@@ -151,7 +151,7 @@ export const changePassword=(userData)=>async(dispatch)=>{
                 'Content-type': 'application/json'
             }
         }
-        const {data}=await axios.put(`/SiteSupplyCraft/myprofile/edit`,userData,config)
+        const {data}=await axios.put(`/SiteSupplyCraft/myprofile/changepassword`,userData,config)
         dispatch(changePasswordSuccess(data))
     } catch (error) {
         dispatch(changePasswordFail(error.response.data.message))
