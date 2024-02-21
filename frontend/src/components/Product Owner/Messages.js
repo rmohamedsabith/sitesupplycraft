@@ -1,119 +1,153 @@
-import React, { useEffect } from 'react'
-import './Message.css'
-import back from '../../images/back.png'
-import { Link } from 'react-router-dom'
-import send1 from '../../images/send1.png'
-import {useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons'
-import{useDispatch, useSelector} from 'react-redux'
-import Loader from '../Loader'
-import {sendMessage} from '../../actions/messagesAction'
-import {getMessages} from '../../actions/messagesAction'
-import MetaData from '../Layouts/MetaData'
-
-
+import React, { useEffect, useRef } from 'react';
+import './Message.css';
+import back from '../../images/back.png';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../Loader';
+import { sendMessage } from '../../actions/messagesAction';
+import { getMessages } from '../../actions/messagesAction';
+import MetaData from '../Layouts/MetaData';
+import { toast } from 'react-toastify';
 
 const Messages = () => {
-
-
-  const{isLoading,messages} = useSelector((state)=> state.messagesState)
-  const dispatch=useDispatch()
-  const [content,setcontent] = useState([])
-  const[currentchat,setcurrentchat] = useState([])
-  const [newMessage, setNewMessage] = useState("");
-  const [id,setid] =useState('')
+  const { isLoading, messages } = useSelector((state) => state.messagesState);
+  const { user } = useSelector((state) => state.authState);
+  const dispatch = useDispatch();
+  const [newMessage, setNewMessage] = useState('');
+  const chatBoxRef = useRef(null);
   
-  const handleChange = (newMessage)=> {
-    setNewMessage(newMessage)
-  }
 
-  
-  useEffect(()=>{
-    dispatch(getMessages)
-  },[dispatch])
+  useEffect(() => {
+    dispatch(getMessages);
+  }, [dispatch]);
 
-  /* useEffect(()=>{
-    dispatch(sendMessage(null,content))},[dispatch]
-  )
- */
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newMessage !== '') {
-      dispatch(sendMessage(id,newMessage));
-      setNewMessage('');
-      setid('')
+  const scrollToBottom = () => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
   };
 
-  
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newMessage !== '') {
+      dispatch(sendMessage(null, user.role, newMessage));
+      setNewMessage('');
+    } else {
+      toast.warning('Please type something', {
+        position: 'bottom-center',
+      });
+    }
+  };
+
   const getTimeFromTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    return `${hours}:${minutes}`;
+    return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
   };
 
-  
-  
-  
+  const getChatDay = (index) => {
+    const currentMessage = messages[index];
+    const prevMessage = messages[index - 1];
+    if (!prevMessage) return true; 
+    const currentMessageDate = new Date(currentMessage.date);
+    const prevMessageDate = new Date(prevMessage.date);
+    return (
+      currentMessageDate.getDate() !== prevMessageDate.getDate() ||
+      currentMessageDate.getMonth() !== prevMessageDate.getMonth() ||
+      currentMessageDate.getFullYear() !== prevMessageDate.getFullYear()
+    );
+  };
+
   return (
-      <>
-      {
-        isLoading?<Loader/>:
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
         <>
-        <MetaData title={'Message'}/>
+          <MetaData title={'Message'} />
           <div className='_main'>
-        <h1>Contact Admin</h1> 
-     <Link to = '/ProductOwner/DashBoard'><img src = {back} className='im3'></img></Link>
+            <Link to='/ProductOwner/DashBoard'>
+              <img src={back} className='im3' alt='back' />
+            </Link>
+            <div className='body1'>
+              <div className='app'>
+                <div className='chat-screen'>
+                  <div className='header'>
+                    <div className='logo'>Chat Box</div>
+                  </div>
+                </div>
+                <div className='messages' ref={chatBoxRef}>
+                  {messages &&
+                    messages.map((message, index) => (
+                      <>
+                         {getChatDay(index) && ( 
+                            <div className='chat-day'>
+                              {new Date().toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) === new Date(message.date).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) ? 'Today' : new Date(Date.now() - 86400000).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) === new Date(message.date).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              }) ? 'Yesterday' : new Date(message.date).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              })}
+                            </div>
+                          )}
 
-    <div className='Mbox'>
-      <table>
-      <tbody>
-        <tr>
-            <div className='chat1'>
-                <p>Chat Box </p>
+                         <div
+                        key={index}
+                        className={
+                          message.receiver === null ? 'message msg' : 'message other-message'
+                        }>
+                        <div className='name'>
+                          <p className='person'>{message.receiver === null ? 'You' : 'Admin'}</p>
+                          {message.content}
+                        </div>
+                        <div className='text'>{getTimeFromTimestamp(message.date)}</div>
+                      </div>
+                      </>
+                     
+                    ))}
+                </div>
+                <div className='typebox'>
+                  <input
+                    type='text'
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    className='inputbox'
+                    placeholder='   Enter Message ..'
+                  />
+                  <button className='btnicon' onClick={handleSubmit}>
+                    <FontAwesomeIcon icon={faPaperPlane} className='tt' />
+                  </button>
+                </div>
+              </div>
             </div>
-        </tr>
-
-        <tr>
-            <div className='cbox'>
-            <div className="chat-body" >
-              {messages && messages.map((message) => (             
-              message.receiver === null ? (
-                    <p className='msg'>
-                      {message.content}<br/>
-                      {getTimeFromTimestamp(message.date)}
-                    </p>                    
-                      ) : (
-                      <p className='msg1'>
-                      {message.content}<br/>
-                      {getTimeFromTimestamp(message.date)}
-                   </p>
-              )))}
-            </div>
-            </div>
-            
-        </tr>
-
-      <tr>
-        <div className='submit'>
-              Message : <input type='text' value={newMessage}   onChange={handleChange} className='text1'></input>
-                        <button className='btnicon'  onClick={handleSubmit}><FontAwesomeIcon icon={faPaperPlane} className='tt'/></button>
-        </div>
-      </tr>
-    </tbody>
-    </table>
-
-      </div>
-
-        </div>
+          </div>
         </>
-      }
-      </>
-  )
-}
+      )}
+    </>
+  );
+};
 
-
-export default Messages
+export default Messages;

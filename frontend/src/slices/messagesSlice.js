@@ -15,11 +15,15 @@ const messagesSlice=createSlice({
         },
         sendMessageRequest(state,action)
         {
-            return{isLoading:true}
+            return{
+                ...state,
+                isLoading:true
+            }
         },
         sendMessageSuccess(state,action)
         {
             return{
+                ...state,
                 isLoading:false,
                 message:action.payload.Message,
             }
@@ -27,6 +31,7 @@ const messagesSlice=createSlice({
         sendMessageFail(state,action)
         {
             return{
+                ...state,
                 isLoading:false,
                 error:action.payload
             }

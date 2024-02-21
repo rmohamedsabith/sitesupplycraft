@@ -6,15 +6,16 @@ import { filter } from '../../actions/productsFilteringActions';
 import { clearProducts } from '../../slices/productsSlice';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign'; 
+import Filter from '../Layouts/Filter';
 
 const Search = ({ setIsDistrict, setDistrict, district, setRefreshSide, refreshSide }) => {
   const { isLoading } = useSelector((state) => state.productsState);
   const { model } = useSelector((state) => state.productsFilteringState);
   const [keyword, setKeyword] = useState(''); 
-  const [value, setValue] = useState(null);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+
 
   const handleChanges = (text) => {
     setKeyword(text);
@@ -24,20 +25,24 @@ const Search = ({ setIsDistrict, setDistrict, district, setRefreshSide, refreshS
     navigation.navigate(`Home`, { key: keyword }); 
     inputRef.current.blur(); 
   };
-
+ 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        ref={inputRef} 
-        style={styles.input}
-        placeholder="Search"
-        onChangeText={handleChanges}
-        value={keyword}
-      />
-      <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-        <Text style={styles.buttonText}>Search</Text>
-      </TouchableOpacity>       
-    </View>
+   <View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          ref={inputRef} 
+          style={styles.input}
+          placeholder="Search"
+          onChangeText={handleChanges}
+          value={keyword}
+        />
+        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+          <Text style={styles.buttonText}>Search</Text>
+        </TouchableOpacity>       
+      </View>
+      
+   </View>
   );
 };
 
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginHorizontal: 20,
-    marginBottom: 10,
+    
   },
   buttonText: {
     color: 'white',

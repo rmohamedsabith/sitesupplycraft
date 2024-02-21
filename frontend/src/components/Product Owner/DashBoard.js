@@ -10,7 +10,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { getOwnerProducts } from '../../actions/productsActions'
 import Loader from '../Loader'
 import './DashBoard.css'
-import { changeStatus } from '../../actions/productActions';
+import { changeStatus, getProduct } from '../../actions/productActions';
+import {deleteProduct} from '../../actions/productActions'
 
 import MetaData from '../Layouts/MetaData'
 import { Col, Image, Row } from 'react-bootstrap'
@@ -22,7 +23,8 @@ ChartJS.register(
 
 const DashBoard = () => {
 
-  const{isLoading,products,ActiveProducts,DeactiveProducts} = useSelector((state)=> state.productsState)
+  const{isLoading,products,ActiveProducts,DeactiveProducts,count,error} = useSelector((state)=> state.productsState)
+  const{isProductDeleted}=useSelector((state)=> state.productState)
   const dispatch=useDispatch()
   const [keyword,setKeyword]=useState('')
   const [status, setStatus] = useState(false);
@@ -42,7 +44,7 @@ const DashBoard = () => {
       datasets: [
         {
           label: "Posted Product",
-          data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
+          data: [count],
           backgroundColor: '#176B87',
           borderColor: '#053B50',
           tension: 0.4,
@@ -74,14 +76,6 @@ const DashBoard = () => {
       ],
     };
 
-
-    
-     /*  const monthdata = (timestamp) => {
-        const dateObject = new Date(timestamp);
-        const month = dateObject.getMonth() + 1;
-      
-        return `${month}`;
-      }; */
   
     const formatDate = (timestamp) => {
       const dateObject = new Date(timestamp);
@@ -100,13 +94,7 @@ const DashBoard = () => {
       return <p className='statusa'>Active</p>
     }};
 
-      /* const imagesize = (image)=>{
-        return <img src = 'image' className='imp'/>
-      }; */
-
-  /*     const handleSearchInputChange = (event) => {
-    setKeyword(event.target.value);
-  }; */
+      
 
   
 
@@ -120,23 +108,46 @@ const DashBoard = () => {
     dispatch(changeStatus(id,'Deactive'))
     
     };
+    const handleEdit=(id)=>{
+      //dispatch(getProduct(id,'product'))
+    }
+
     const handleClick=()=>{
       dispatch(getOwnerProducts(keyword))
     }
+
+    const handledelete =async(id)=>{
+
+      if(window.confirm("Do you Want to delete Product?")){
+      await dispatch(deleteProduct(id));
+      dispatch(getOwnerProducts(keyword))
+    }
+    }
+
   
   
   return (
     <>
     <MetaData title={'DashBoard'}/>
-    <div className='page'>
+    
+    <div className='page '>
+  
     <Row>
+      
       <Col xs={2}  style={{backgroundColor:'#176B87'}}>
+        
+      
       <div className='p-3'>
         <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
         <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
         <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
       </div>
+     
+    
       </Col>
+
+      {!error?
+     
       <Col className='con' >
       <div className='bodyDashboard'> 
       <h1>Summary Of My Products</h1>      
@@ -170,10 +181,11 @@ const DashBoard = () => {
 
 
   {isLoading?<Loader/>:
-      <table id="dtBasicExample" className="table table-striped table-bordered table-sm" cellSpacing="0" width="100%">
+      <div className='table'>
+      <table id="dtBasicExample" className="productownretable"  cellSpacing="0" width="100%" height = "100%">
   <thead>
     <tr>
-      <th className ='th-sm'>Photos
+      <th className ='th-sm' >Photos
       </th>
       <th className ='th-sm'>Product Id
       </th>
@@ -197,8 +209,8 @@ const DashBoard = () => {
           <td>{formatDate(item.createdAt)}</td>
           <td style={{color:'green'}}>{statuscolor(item.status)}</td>
           <td>
-          <Link to = '..\..\ProductOwner/addProduct/Preview'><button className='btn'>Preview</button></Link>
-        <button className='btn'>Delete</button>
+          <Link to = {`/ProductOwner/${item._id}/edit`}><button className='btn'  /* onClick={handleEdit(item._id) */>Edit</button></Link>
+        <button className='btn' onClick={()=>handledelete(item._id)}>Delete</button>
         
         {item.status==='Active' ?
           <button onClick={()=>toggleEyeClose(item._id)} className='btnicon' ><FontAwesomeIcon icon= {faEye} className='iconeye' /></button>
@@ -230,14 +242,20 @@ const DashBoard = () => {
       
     </tr>
   </tfoot>
-      </table>}
-      </div>   
+      </table>  
+      </div> 
+    }
+
       
       </div>      
+    
+      </div>   
    
       </Col>
+      :<h3><center style={{color:'red'}}>{error}</center></h3>}
     </Row>
     </div>
+ 
 
     </>
     
