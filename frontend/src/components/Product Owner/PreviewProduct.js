@@ -14,8 +14,13 @@ import { useLocation } from "react-router-dom";
 import { Button, Modal, Tab, Tabs } from "react-bootstrap";
 import "./Previw.css";
 import { Navigate } from "react-router-dom";
+<<<<<<< HEAD
 import back from "../../images/back.png";
 
+=======
+import Cookies from "js-cookie";
+import back from "../../images/back.png"
+>>>>>>> a61a14e9949c27546a0468f3807c7111bd46efa9
 
 const PreviewProduct = () => {
 
