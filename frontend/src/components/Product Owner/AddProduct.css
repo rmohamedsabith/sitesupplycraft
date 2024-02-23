@@ -58,3 +58,13 @@
     margin-bottom: auto;
 
 }
+.error{
+    color: red;
+    font-style: italic;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    background-color: rgb(233, 174, 174);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 10px;
+}

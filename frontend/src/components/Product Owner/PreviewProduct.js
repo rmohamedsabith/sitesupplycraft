@@ -14,9 +14,11 @@ import { useLocation } from "react-router-dom";
 import { Button, Modal, Tab, Tabs } from "react-bootstrap";
 import "./Previw.css";
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import back from "../../images/back.png";
+
 
 const PreviewProduct = () => {
+
   // handling the item array
   const [activeTab, setActiveTab] = useState(0);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -75,7 +77,7 @@ const PreviewProduct = () => {
     const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
-      if ((c_name, c_number, c_date, c_cvc)) {
+      if ((c_name && c_number && c_date && c_cvc)) {
         setIsFormValid(true);
       } else {
         setIsFormValid(false);
@@ -146,8 +148,10 @@ const PreviewProduct = () => {
                 <Form.Label htmlFor="date">Valid</Form.Label>
                 <Form.Control
                   onChange={handleCardDate}
-                  type="date"
+                  type= 'month'
                   value={c_date}
+                  //pattern="(0[1-9]|1[0-2])\/(202[2-9]|2030)"
+                  placeholder="MM/YYYY"
                   aria-describedby="passwordHelpBlock"
                   required
                 />
@@ -155,19 +159,20 @@ const PreviewProduct = () => {
               <Col>
                 <Form.Label htmlFor="CVC">CVC</Form.Label>
                 <Form.Control
-                  type="number"
-                  value={c_cvc}
-                  aria-describedby="passwordHelpBlock"
-                  inputMode="numeric"
-                  onChange={handleCardCVC}
-                  required
+                   type="text"
+                   value={c_cvc}
+                   onChange={handleCardCVC}
+                   maxLength={3}
+                   pattern="[0-9]{3}"
+                   inputMode="numeric"
+                   required
                 />
               </Col>
             </Row>
           </>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handlepaymentbutton} disabled={!isFormValid}>
+          <Button style={{border:"none"}} onClick={handlepaymentbutton} disabled={!isFormValid}>
             Pay
           </Button>
         </Modal.Footer>
@@ -177,14 +182,24 @@ const PreviewProduct = () => {
 
   //  ***payment model end ***
 
+
+  
+
   return (
     <div className="d-flex justify-content-center align-item-center">
       <MetaData title={"Preview"} />
       <div style={{ marginLeft: "3px", marginTop: "3px" }}>
         <img
-          src="../images/back.png"
+          src={back}
           alt="back page"
           onClick={handleBackPage}
+          style={{ //position: 'fixed',
+          width: '50px',
+          height: '50px',
+          cursor: 'pointer',
+          
+             }}
+             title="back Page"
         />
       </div>
       <div

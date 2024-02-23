@@ -19,6 +19,9 @@ const Edit_product = () => {
   const { user } = useSelector((state) => state.authState);
 
   const navigate = useNavigate();
+
+  // useState Hook for handling items
+
   const [name, setName] = useState(ProductDetails ? ProductDetails.name : "");
   const [price, setPrice] = useState(
     ProductDetails ? ProductDetails.price : ""
@@ -47,6 +50,7 @@ const Edit_product = () => {
   const [priceType, setPriceType] = useState(
     ProductDetails ? ProductDetails.priceType : ""
   );
+  const [clickedImageIndex, setClickedImageIndex] = useState(null);
   const [items, setItems] = useState([]);
 
   const Categories = [
@@ -62,6 +66,19 @@ const Edit_product = () => {
     "Tools",
     "Plumbing",
   ];
+
+  // useState for handling empty fields
+
+  const [nameError, setNameError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [discountError, setDiscountError] = useState("");
+  const [discriptionError, setDiscriptError] = useState("");
+  const [catagoryError, setCatagoryError] = useState("");
+  const [previewImagesError, setPreviewImagesError] = useState("");
+  const [selectedOptionError, setSelectedOptionError] = useState("");
+  const [priceTypeError, setPriceTypeError] = useState("");
+
+  // empty field useState handling ends
 
   /* ONCHANGE FUNCTIONS */
   const handleNameChange = (event) => {
@@ -92,7 +109,12 @@ const Edit_product = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    files.forEach((file) => {
+    const remaningSlots = 5 - previewImages.length;
+    const selectedImages = files.slice(0, remaningSlots); // ensure there is only 5 images
+    if (files.length > 5 || files.length > remaningSlots) {
+      alert("only 5 images can be added");
+    }
+    selectedImages.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -110,28 +132,112 @@ const Edit_product = () => {
     setPriceType(event.target.value);
     /* console.log(event.target.value); */
   };
-  const handleEditItem = () => {
-    const updatedDetails = [...Details];
-    updatedDetails[activeTabIndex] = {
-      name: name,
-      price: price,
-      discount: discount,
-      description: discription,
-      category: catagory,
-      images: previewImages,
-      type: selectedOption,
-      isRent: isRent,
-      priceType: priceType,
-      owner: user,
-    };
-    sessionStorage.setItem("items", JSON.stringify(updatedDetails));
+  const handleUpdateItem = () => {
+    if (validateFields()) {
+      const updatedDetails = [...Details];
+      updatedDetails[activeTabIndex] = {
+        name: name,
+        price: price,
+        discount: discount,
+        description: discription,
+        category: catagory,
+        images: previewImages,
+        type: selectedOption,
+        isRent: isRent,
+        priceType: priceType,
+        owner: user,
+      };
+      sessionStorage.setItem("items", JSON.stringify(updatedDetails));
 
-    navigate("/ProductOwner/addProduct/Preview");
+      navigate("/ProductOwner/addProduct/Preview");
+    }
   };
   const handleRemoveItem = () => {
     Details.splice(activeTabIndex, 1);
     sessionStorage.setItem("items", JSON.stringify(Details));
     navigate("/ProductOwner/addProduct/Preview");
+  };
+
+  //    ***empty fields handling start
+
+  const validateFields = () => {
+    let isValid = true;
+
+    if (name.trim() === "") {
+      setNameError("***name is required***");
+      isValid = false;
+    } else {
+      setNameError("");
+    }
+
+    if (discount.trim() === "") {
+      setDiscountError("***Discount is required***");
+      isValid = false;
+    } else {
+      setDiscountError("");
+    }
+
+    if (discription.trim() === "") {
+      setDiscriptError("***Discription is required***");
+      isValid = false;
+    } else {
+      setDiscriptError("");
+    }
+
+    if (catagory.trim() === "") {
+      setCatagoryError("***catagory is required***");
+      isValid = false;
+    } else {
+      setCatagoryError("");
+    }
+
+    if (previewImages.length === 0) {
+      setPreviewImagesError("***images is required***");
+      isValid = false;
+    } else {
+      setPreviewImagesError("");
+    }
+
+    if (selectedOption.trim() === "") {
+      setSelectedOptionError("***this feild is requird***");
+      isValid = false;
+    } else {
+      setSelectedOptionError("");
+    }
+
+    if (price.trim() === "") {
+      setPriceError("***price is requird***");
+      isValid = false;
+    } else {
+      setPriceError("");
+    }
+
+    if (selectedOption === "rent") {
+      if (priceType.trim() === "") {
+        setPriceTypeError("***price type  is required***");
+        isValid = false;
+      } else {
+        setPriceTypeError("");
+      }
+    }
+
+    return isValid;
+  };
+  // ***empty fields handling field ends
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...previewImages];
+    updatedImages.splice(index, 1);
+    setPreviewImages(updatedImages);
+
+    const updatedFiles = [...images];
+    updatedFiles.splice(index, 1);
+    setImages(updatedFiles);
+  };
+  const handleImageClick = (index) => {
+    setClickedImageIndex(index === clickedImageIndex ? null : index);
+
+    console.log(clickedImageIndex);
   };
 
   return (
@@ -195,6 +301,9 @@ const Edit_product = () => {
                     </label>
                   </div>
                 </div>
+                {selectedOptionError && (
+                  <span className="error">{selectedOptionError}</span>
+                )}
                 <br />
                 <div>
                   <label>Name: </label>
@@ -206,6 +315,7 @@ const Edit_product = () => {
                     onChange={handleNameChange}
                   />
                 </div>
+                {nameError && <span className="error">{nameError}</span>}
                 <br />
 
                 {isRent ? (
@@ -220,6 +330,9 @@ const Edit_product = () => {
                           onChange={handlePriceChange}
                         />
                       </div>
+                      {priceError && (
+                        <span className="error">{priceError}</span>
+                      )}
                     </Col>
                     <Col>
                       <div>
@@ -235,6 +348,9 @@ const Edit_product = () => {
                           <option value="/perHour">perHour</option>
                         </Form.Select>
                       </div>
+                      {priceTypeError && (
+                        <span className="error">{priceTypeError}</span>
+                      )}
                     </Col>
                   </Row>
                 ) : (
@@ -246,6 +362,7 @@ const Edit_product = () => {
                       value={price}
                       onChange={handlePriceChange}
                     />
+                    {priceError && <span className="error">{priceError}</span>}
                   </div>
                 )}
 
@@ -259,6 +376,9 @@ const Edit_product = () => {
                     value={discount}
                     onChange={handleDiscountChange}
                   />
+                  {discountError && (
+                    <span className="error">{discountError}</span>
+                  )}
                 </div>
 
                 <br />
@@ -273,6 +393,9 @@ const Edit_product = () => {
                     placeholder="Discritption about the item"
                     style={{ height: "100px" }}
                   />
+                  {discriptionError && (
+                    <span className="error">{discriptionError}</span>
+                  )}
                 </div>
 
                 <br />
@@ -292,6 +415,9 @@ const Edit_product = () => {
                       </option>
                     ))}
                   </Form.Select>
+                  {catagoryError && (
+                    <span className="error">{catagoryError}</span>
+                  )}
                 </div>
 
                 <br />
@@ -310,17 +436,34 @@ const Edit_product = () => {
                     />
                   </Form.Group>
                 </div>
-                {previewImages.map((image) => (
-                  <Image
-                    className=" mb-3 mr-2 previewImg"
-                    key={image}
-                    src={image}
-                    alt={`Image Preview`}
-                    width="55"
-                    height="52"
-                  />
-                ))}
-
+                <div>
+                  {previewImages.map((image, index) => (
+                    <>
+                      <Image
+                        className=" mb-3 mr-2 previewImg"
+                        key={image}
+                        src={image}
+                        alt={`Image Preview`}
+                        width="55"
+                        height="52"
+                        onClick={() => handleImageClick(index)}
+                      />
+                      {clickedImageIndex === index && (
+                        <Button
+                          style={{ border: "none" }}
+                          variant="primary"
+                          size="sm"
+                          onClick={() => handleRemoveImage(index)}
+                        >
+                          Remove
+                        </Button>
+                      )}
+                    </>
+                  ))}
+                </div>
+                {previewImagesError && (
+                  <span className="error">{previewImagesError}</span>
+                )}
                 <div style={{ marginLeft: "16%", marginTop: "5px" }}>
                   <Row>
                     <Col>
@@ -339,7 +482,7 @@ const Edit_product = () => {
                         variant="primary"
                         size="lg"
                         style={{ border: "none" }}
-                        onClick={handleEditItem}
+                        onClick={handleUpdateItem}
                       >
                         Update
                       </Button>

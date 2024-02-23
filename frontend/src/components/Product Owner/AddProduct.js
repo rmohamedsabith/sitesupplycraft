@@ -9,14 +9,89 @@ import MetaData from "../Layouts/MetaData";
 import PreviewProduct from "./PreviewProduct"; // Import the PreviewProduct component
 import { useSelector } from "react-redux";
 import Edit_product from "./Edit_product";
+import forword from "../../images/forword.png";
 
 const AddProduct = () => {
   const navigate = useNavigate(); //get the navigate object
 
   const { user } = useSelector((state) => state.authState);
 
-  /* USESTATE HOOKS */
+  //USESTATE FOR HANDLING EMPTY INPUT FIELDS
+  const [nameError, setNameError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [discountError, setDiscountError] = useState("");
+  const [discriptionError, setDiscriptError] = useState("");
+  const [catagoryError, setCatagoryError] = useState("");
+  const [previewImagesError, setPreviewImagesError] = useState("");
+  const [selectedOptionError, setSelectedOptionError] = useState("");
+  const [priceTypeError, setPriceTypeError] = useState("");
 
+  const validateFields = () => {
+    let isValid = true;
+
+    if (name.trim() === "") {
+      setNameError("***name is required***");
+      isValid = false;
+    } else {
+      setNameError("");
+    }
+
+    if (discount.trim() === "") {
+      setDiscountError("***Discount is required***");
+      isValid = false;
+    } else {
+      setDiscountError("");
+    }
+
+    if (discription.trim() === "") {
+      setDiscriptError("***Discription is required***");
+      isValid = false;
+    } else {
+      setDiscriptError("");
+    }
+
+    if (catagory.trim() === "") {
+      setCatagoryError("***catagory is required***");
+      isValid = false;
+    } else {
+      setCatagoryError("");
+    }
+
+    if (previewImages.length === 0) {
+      setPreviewImagesError("***images is required***");
+      isValid = false;
+    } else {
+      setPreviewImagesError("");
+    }
+
+    if (selectedOption.trim() === "") {
+      setSelectedOptionError("***this feild is requird***");
+      isValid = false;
+    } else {
+      setSelectedOptionError("");
+    }
+
+    if (price.trim() === "") {
+      setPriceError("***the price is requird***");
+      isValid = false;
+    } else {
+      setPriceError("");
+    }
+
+    if (selectedOption === "rent") {
+      if (priceType.trim() === "") {
+        setPriceTypeError("***price type  is required***");
+        isValid = false;
+      } else {
+        setPriceTypeError("");
+      }
+    }
+
+    return isValid;
+  };
+
+  /* USESTATE HOOKS */
+  const [hasItems, setHasItems] = useState(false);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
@@ -72,7 +147,12 @@ const AddProduct = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    files.forEach((file) => {
+    const remaningSlots = 5 - previewImages.length;
+    const selectedImages = files.slice(0, remaningSlots); // ensure there is only 5 images
+    if (files.length > 5 || files.length > remaningSlots) {
+      alert("only 5 images can be added");
+    }
+    selectedImages.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -94,37 +174,51 @@ const AddProduct = () => {
   //functions for add more items (creating the items array and adding products to it)
 
   const handleAddItem = () => {
-    const newItem = {
-      //creating newItem to add the array
-      name: name,
-      price: price,
-      discount: discount,
-      description: discription,
-      category: catagory,
-      images: previewImages,
-      type: selectedOption,
-      isRent: isRent,
-      priceType: priceType,
-      owner: user,
-    };
-    const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
-    const updatedArray = [...existingData, newItem]; // Combine existing data with new data
-    setItems(updatedArray);
-    sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
+    if (validateFields()) {
+      const newItem = {
+        //creating newItem to add the array
+        name: name,
+        price: price,
+        discount: discount,
+        description: discription,
+        category: catagory,
+        images: previewImages,
+        type: selectedOption,
+        isRent: isRent,
+        priceType: priceType,
+        owner: user,
+      };
+      const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
+      const updatedArray = [...existingData, newItem]; // Combine existing data with new data
+      setItems(updatedArray);
+      sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
 
-    //placing input field empty again to create a new product
-    setName("");
-    setPrice("");
-    setDiscount("");
-    setDiscript("");
-    setCatagory("");
-    setPreviewImages([]);
-    setSelectedOption("sell");
-    setIsRent(false);
-    setPriceType("");
+      //placing input field empty again to create a new product
+      setName("");
+      setPrice("");
+      setDiscount("");
+      setDiscript("");
+      setCatagory("");
+      setPreviewImages([]);
+      setSelectedOption("sell");
+      setIsRent(false);
+      setPriceType("");
 
+      navigate("preview");
+    }
+  };
+  const handlForwordPage = () => {
     navigate("preview");
   };
+
+  useEffect(() => {
+    const items = JSON.parse(sessionStorage.getItem("items"));
+    if (items && items.length > 0) {
+      setHasItems(true);
+    } else {
+      setHasItems(false);
+    }
+  }, []);
 
   /* functions for buttons */
   /* privew button */
@@ -147,6 +241,25 @@ const AddProduct = () => {
           </div>
         </Col>
         <Col className="addProduct">
+          {hasItems && (
+            <div style={{ marginLeft: "3px", marginTop: "3px" }}>
+              <img
+                src={forword}
+                alt="preview page"
+                onClick={handlForwordPage}
+                style={{
+                  position: "absolute",
+                  //top: '10px',
+                  right: "20px",
+                  cursor: "pointer",
+                  width: "50px",
+                  height: "50px",
+                }}
+                title="Preview page"
+              />
+            </div>
+          )}
+
           <div className="block" style={{ marginBottom: "30px" }}>
             <h1 className="styled-heading">Product Adverticement</h1>
             <br />
@@ -190,7 +303,9 @@ const AddProduct = () => {
                     </label>
                   </div>
                 </div>
-
+                {selectedOptionError && (
+                  <span className="error">{selectedOptionError}</span>
+                )}
                 <br />
 
                 <div>
@@ -203,6 +318,7 @@ const AddProduct = () => {
                     onChange={handleNameChange}
                   />
                 </div>
+                {nameError && <span className="error">{nameError}</span>}
                 <br />
                 {isRent ? (
                   <Row>
@@ -216,6 +332,9 @@ const AddProduct = () => {
                           onChange={handlePriceChange}
                         />
                       </div>
+                      {priceError && (
+                        <span className="error">{priceError}</span>
+                      )}
                     </Col>
                     <Col>
                       <div>
@@ -231,6 +350,9 @@ const AddProduct = () => {
                           <option value="/perHour">perHour</option>
                         </Form.Select>
                       </div>
+                      {priceTypeError && (
+                        <span className="error">{priceTypeError}</span>
+                      )}
                     </Col>
                   </Row>
                 ) : (
@@ -242,6 +364,7 @@ const AddProduct = () => {
                       value={price}
                       onChange={handlePriceChange}
                     />
+                    {priceError && <span className="error">{priceError}</span>}
                   </div>
                 )}
 
@@ -256,7 +379,9 @@ const AddProduct = () => {
                     onChange={handleDiscountChange}
                   />
                 </div>
-
+                {discountError && (
+                  <span className="error">{discountError}</span>
+                )}
                 <br />
 
                 <div>
@@ -269,6 +394,9 @@ const AddProduct = () => {
                     placeholder="Discritption about the item"
                     style={{ height: "100px" }}
                   />
+                  {discriptionError && (
+                    <span className="error">{discriptionError}</span>
+                  )}
                 </div>
 
                 <br />
@@ -316,7 +444,9 @@ const AddProduct = () => {
                     height="52"
                   />
                 ))}
-
+                {previewImagesError && (
+                  <span className="error">{previewImagesError}</span>
+                )}
                 <div
                   className="mb-2 PreviewButtonContainer"
                   style={{ alignContent: "center" }}
