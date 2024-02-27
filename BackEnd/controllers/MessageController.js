@@ -1,5 +1,6 @@
 const asyncHandler=require('express-async-handler')
 const Message=require('../models/messagesModel')
+const User=require('../models/userModel')
 
 //To Send a message  /message/send
  const sentMessage=asyncHandler(async(req,res)=>{
@@ -52,18 +53,20 @@ const messagesFromAdmin=asyncHandler(async(req,res)=>{
 //TO get all messages sent by the product owners Admin/MessagesList
  const adminRecievedMessages=asyncHandler(async(req,res)=>{
     try {
-        const data =await Message.distinct('sender', { receiver: null }).sort('date')
+        const data = await Message.distinct('sender', { receiver: null }).sort({ date: 1 });
         const latestMessages = await Promise.all(
             data.map(async (sender) => {
-                return await Message.findOne({ sender, receiver: null }).sort({ date: -1 });
+                const user = await User.ProductOwner.findById(sender)
+                const latestMessage = await Message.findOne({ sender, receiver: null }).sort({ date: -1 });
+                return { user, message: latestMessage };
             })
-        );
-
-        res.status(200).json({ success: true,count:data.length, Messages: latestMessages });
+        );    
+        res.status(200).json({ success: true, count: data.length, messages: latestMessages });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error fetching messages' });
     }
+    
 })
 
 module.exports={

@@ -34,7 +34,7 @@ const adminSlice=createSlice({
         getProcessingOwnersSuccess(state,action){
             return{
                 isLoading:false,
-                user:action.payload.data
+                users:action.payload.data
             }
         },
         getProcessingOwnersFail(state,action){
@@ -52,8 +52,10 @@ const adminSlice=createSlice({
         },
         verifyOwnerSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
-                user:action.payload.data
+                user:action.payload.data,
+                message:action.payload.message,
             }
         },
         verifyOwnerFail(state,action){
@@ -66,13 +68,16 @@ const adminSlice=createSlice({
         cancelOwnerRequest(state,action){
             return{
                 ...state,
-                isLoading:true
+                isLoading:true,
+                message:null
             }
         },
         cancelOwnerSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
-                user:action.payload.data
+                user:action.payload.data,
+                message:action.payload.message
             }
         },
         cancelOwnerFail(state,action){
@@ -90,6 +95,7 @@ const adminSlice=createSlice({
         },
         getTotalsSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
                 Totals:action.payload
             }
@@ -109,6 +115,7 @@ const adminSlice=createSlice({
         },
         getTotals_per_monthSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
                 datas:action.payload.data
             }
@@ -125,7 +132,8 @@ const adminSlice=createSlice({
             return{
                 ...state,
                 user:null,
-                error:null
+                error:null,
+                message:null,
             }
         },
         
@@ -154,5 +162,5 @@ export const{
     getTotals_per_monthSuccess,
     getTotals_per_monthFail,
     clearError,
-}=actions
+}=actions 
 export default reducer

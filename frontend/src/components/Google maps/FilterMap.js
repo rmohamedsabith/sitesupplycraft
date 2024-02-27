@@ -93,7 +93,19 @@ const Map = ({ center,productLocations,radius}) => {
                     lng:product.location.long}
                   }
         >
-          <div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
+          {
+            model==='laborers'?
+            <div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
+            <strong>{product.firstname} {product.lastname}</strong><br/>
+            <span>price:- {product.price} {product.priceType}/=</span>
+            <div className="ratings mt-auto">
+              <div className="rating-outer">
+                <div className="rating-inner" style={{width:`${product.ratings/ 5 * 100}%`}}></div>
+              </div>
+            </div>     
+            
+          </div>
+            :<div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
             <strong>{product.shopName}</strong><br/>
             <span>product:- {product.name}<br/>
             Pirce:- {product.price}/=</span>
@@ -104,6 +116,7 @@ const Map = ({ center,productLocations,radius}) => {
             </div>     
             
           </div>
+          }
         </InfoWindow>
           
           </>                    
@@ -119,7 +132,19 @@ const Map = ({ center,productLocations,radius}) => {
                     lng:product.location.long}
                   }
         >
-          <div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
+          {
+            model==='laborers'?
+            <div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
+            <strong>{product.firstname} {product.lastname}</strong><br/>
+            <span>price:- Rs.{product.price} {product.priceType}</span>
+            <div className="ratings mt-auto">
+              <div className="rating-outer">
+                <div className="rating-inner" style={{width:`${product.ratings/ 5 * 100}%`}}></div>
+              </div>
+            </div>     
+            
+          </div>
+            :<div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
             <strong>{product.shopName}</strong><br/>
             <span>product:- {product.name}<br/>
             Pirce:- {product.price}/=</span>
@@ -130,6 +155,7 @@ const Map = ({ center,productLocations,radius}) => {
             </div>     
             
           </div>
+          }
         </InfoWindow>
           
           </>                    
@@ -151,21 +177,36 @@ const FilterMap = () => {
   const[radius,setRadius]=useState(null)
   // Assuming you have a function to fetch products with their locations from the productsState
   const products = useSelector((state) => state.productsState.products);
+  const {model} = useSelector((state) => state.productsFilteringState);
 
   const fetchProductLocations = useCallback(() => {
     
-    
+    let locations;
     // Assuming each product in the state has properties like location, name, price, and review
     if(products)
-    {
-      const locations = products.map((product) => ({
-        id:product._id,
-        location: product.owner.location,
-        name:product.name,
-        shopName: product.owner.shopName,
-        price: product.price,
-        ratings: product.ratings,
-      }));
+    {      
+      if(model==='laborers')
+      {
+         locations = products.map((product) => ({
+          id:product._id,
+          location: product.location,
+          firstname:product.firstname,
+          lastname:product.lastname,
+          price: product.price,
+          priceType:product.priceType,
+          ratings: product.ratings,
+        }));
+      }
+      else{
+         locations = products.map((product) => ({
+          id:product._id,
+          location: product.owner.location,
+          name:product.name,
+          shopName: product.owner.shopName,
+          price: product.price,
+          ratings: product.ratings,
+        }));
+      }
       setProductLocations(locations);
     }
 

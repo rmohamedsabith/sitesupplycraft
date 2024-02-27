@@ -19,12 +19,12 @@ const ProductList = () => {
     setCurrentPage(pageNo)
   }
 
-  useEffect(()=>{
+  /* useEffect(()=>{
 
     toast.success("welcome to Site Supply Craft",{
       position:toast.POSITION.BOTTOM_CENTER
     })
-  },[])
+  },[]) */
 
   useEffect(()=>{
     if(error) {

@@ -57,14 +57,18 @@ const messagesSlice=createSlice({
         },
         getMessagesListRequest(state,action)
         {
-            return{isLoading:true}
+            return{
+                ...state,
+                isLoading:true
+            }
         },
         getMessagesListSuccess(state,action)
         {
             return{
+                ...state,
                 isLoading:false,
                 count:action.payload.count,
-                messages:action.payload.Messages,
+                datas:action.payload.messages,
             }
         },
         getMessagesListFail(state,action)
@@ -76,11 +80,14 @@ const messagesSlice=createSlice({
         },
         getMessagesFromAdminRequest(state,action)
         {
-            return{isLoading:true}
+            return{
+                ...state,
+                isLoading:true}
         },
         getMessagesFromAdminSuccess(state,action)
         {
             return{
+                ...state,
                 isLoading:false,
                 count:action.payload.count,
                 messages:action.payload.Messages,

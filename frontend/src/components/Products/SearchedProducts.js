@@ -11,11 +11,9 @@ import FilterMap from '../Google maps/FilterMap'
 
 
 const SearchedProducts = ({district}) => {
-    const dispatch=useDispatch()
-    
+    const dispatch=useDispatch()    
     const {products,totalCount,count,error,isLoading,resPerPage}=useSelector((state)=>state.productsState)
     const{price,category,rating,city,model}=useSelector((state)=>state.productsFilteringState)
-
     const [currentPage,setCurrentPage]=useState(1)
     const{keyword}=useParams();
     

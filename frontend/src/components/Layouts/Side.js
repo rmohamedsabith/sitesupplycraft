@@ -115,7 +115,7 @@ const handleCitySelect = useCallback((city) => {
     'Masonry',
     'Metal',
     'Wood',
-    'Plastics',
+    'Plastics', 
     'Glass',
     'Electrical',
     'Paints',

@@ -55,7 +55,10 @@ const productSlice=createSlice({
         },
         updateProductSuccess(state,action){
             return{
+<<<<<<< HEAD
                 ...state,
+=======
+>>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
                 isLoading:false,
                 isProductUpdated:true,
                 product:action.payload.Product,

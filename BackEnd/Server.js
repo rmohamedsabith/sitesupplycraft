@@ -38,6 +38,7 @@ app.use('/SiteSupplyCraft',require('./routes/processing'))
 app.use('/SiteSupplyCraft',require('./routes/laborers'))
 app.use('/SiteSupplyCraft',require('./routes/messages'))
 app.use('/SiteSupplyCraft',require('./routes/admin'))
+app.use('/SiteSupplyCraft',require('./routes/payment'))
 
 
 app.all('/*', (req, res) => {

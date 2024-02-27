@@ -1,20 +1,157 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import logo from '../../images/logo.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {Dropdown,Image} from 'react-bootstrap'
-import { logout } from '../../actions/authActions'
+import {Button, Dropdown,FloatingLabel,Form,Image, Modal} from 'react-bootstrap'
+import { changePassword, clearAuthError, logout } from '../../actions/authActions'
 import{filter} from '../../actions/productsFilteringActions'
 import { clearProducts } from '../../slices/productsSlice'
 import Favourites from '../Users/Favourites'
+import { toast } from 'react-toastify'
+import Loader from '../Loader'
+import { getTotals, getTotals_per_month } from '../../actions/adminActions'
+import defaultProfile from '../../images/default_avatar.png'
+
+function MyVerticallyCenteredModal(props) {
+  const dispatch=useDispatch()
+  const [oldPassword,setOldPassword]=useState('')
+  const [password,setPassword]=useState('')
+  const [confirmPassword,setConfrimPassword]=useState('')
+  const [formError, setFormError] = useState({});
+  const{isLoading,error,ispasswordChanged}=useSelector((state)=>state.authState)
+
+
+  useEffect(()=>{
+    setConfrimPassword('')
+    setOldPassword('')
+    setPassword('')
+    if(error)
+    {
+      toast.error(error,{
+        position:'bottom-center',
+        onOpen:()=>dispatch(clearAuthError)
+      })
+    }
+    else if(ispasswordChanged)
+    {
+      props.onHide();
+      toast.success('successfully password was changed',{
+        position:'bottom-center',
+        onOpen:()=>dispatch(clearAuthError),
+      })
+      
+    }
+  },[ispasswordChanged,error,dispatch])
+
+  const handleUpdate=()=>{
+    const validationErrors = {}
+    if(!oldPassword.trim()) {
+        validationErrors.oldPassword = "old password is required*"
+    } 
+    if(!password.trim()) {
+        validationErrors.password = "password is required*"
+    } else if(password.length < 6){
+        validationErrors.password = "password should be at least 6 char*"
+    }
+
+    if(confirmPassword !== password) {
+        validationErrors.confirmPassword = "password not matched*"
+    }
+
+    setFormError(validationErrors)
+
+    if(Object.keys(validationErrors).length === 0) {
+        const userData = new FormData();
+        userData.append('password', password)
+        userData.append('confirmPassword',confirmPassword)
+        userData.append('oldPassword', oldPassword);
+       
+        dispatch(changePassword(userData))
+    }
+  }
+
+  const handleClose=()=>{
+    setConfrimPassword('')
+    setOldPassword('')
+    setPassword('')
+    props.onHide()
+  }
+  return (
+    <>
+      <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Change Password
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <center>
+      <div className="col-md-6">
+                     <div className="mb-3">
+                     <div className='float'>     
+                       <div style={{ paddingLeft: '10px',width:'400px' }}>
+                         {formError.oldPassword && oldPassword<=0 ? <div className='error' style={{color:'red',textAlign:'right'}}>{formError.oldPassword}</div>:""}
+                         <FloatingLabel controlId="floatingInput" label="oldPassword" className="mb-3 z-0">
+                           <Form.Control type="password" placeholder='Old Password' name='oldPassword' value={oldPassword} onChange={(e)=>setOldPassword(e.target.value)} />
+                         </FloatingLabel>                            
+                       </div>
+                     </div>
+                     </div>
+                 </div>
+      <div className="col-md-6">
+                     <div className="mb-3">
+                     <div className='float'>     
+                       <div style={{ paddingLeft: '10px',width:'400px' }}>
+                         {formError.password || password<=0 ? <div className='error' style={{color:'red',textAlign:'right'}}>{formError.password}</div>:""}
+                         <FloatingLabel controlId="floatingInput" label="Password" className="mb-3 z-0">
+                           <Form.Control type="password" placeholder='Password' name='password' value={password} onChange={(e)=>setPassword(e.target.value)} />
+                         </FloatingLabel>                            
+                       </div>
+                     </div>
+                     </div>
+                 </div>
+                 <div className="col-md-6">
+                     <div className="mb-3">
+                     <div className='float'>     
+                       <div style={{ paddingLeft: '10px',width:'400px' }}>
+                         {formError.confirmPassword ? <div className='error' style={{color:'red',textAlign:'right'}}>{formError.confirmPassword}</div>:""}
+                         <FloatingLabel controlId="floatingInput" label="Confirm Password" className="mb-3 z-0">
+                           <Form.Control type="password" placeholder='Confirm Password' name='confirmPassword' value={confirmPassword} onChange={(e)=>setConfrimPassword(e.target.value)} />
+                         </FloatingLabel>                            
+                       </div>
+                     </div>
+                     </div>
+                 </div>
+      </center>
+
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleUpdate}disabled={isLoading}>Save Changes</Button>
+      </Modal.Footer>
+    </Modal>
+    </>
+    
+  );
+}
 
 
 
 const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) => {
-  
+  const [modalShow, setModalShow] = useState(false);
   const {isAuthenticated,user}=useSelector((state)=>state.authState)
   const navigate=useNavigate()
   const dispatch=useDispatch()
+
+ /*  useEffect(()=>{
+    dispatch(loadUser)
+  },[dispatch]) */
+
   const logoutHandler=()=>{
     navigate('/')
     dispatch(logout)
@@ -23,12 +160,23 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     setDistrict('')  
     setIsDistrict(false)
     await dispatch(clearProducts())
-    dispatch(filter(null,null,null,null,'products'))  
-    navigate('/')     
+    dispatch(filter(null,null,null,null,'products'))
+    if(user?.isValidEmail||!isAuthenticated)navigate('/') 
+    else{
+      
+      navigate('/register/verify/email')
+    }  
+        
   },[setDistrict,setIsDistrict,dispatch,navigate])
 
+  const handleAdminDashboard=async()=>{
+    await dispatch(getTotals_per_month)
+    await dispatch(getTotals)
+    navigate('Admin/dashboard')
+  }
+
   return (
-    
+    <>
     <div className='heading'>      
       <div className="headRow">
         
@@ -49,14 +197,14 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
               <Dropdown>
                   <Dropdown.Toggle variant='text-white pr-5'  className='no-hover-dropdown' style={{boxShadow:'none',fontWeight:'800', border:'none'}}>
                     <figure className='avatar avatar-nav'>
-                      <Image src={user.profile?user.profile:'../../images/default_avatar.png'} className='rounded-circle' />
+                      <Image src={user.profile?user.profile:defaultProfile} className='rounded-circle' />
                     </figure>
                     <span>{user.role!=='Google User'?user.firstname+' '+user.lastname:user.name}</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu >
-                      { user.role === 'Admin' && <Dropdown.Item onClick={() => {navigate('Admin/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
+                      { user.role === 'Admin' && <Dropdown.Item onClick={handleAdminDashboard} className='text-dark'>Dashboard</Dropdown.Item> }
                       { user.role === 'Product Owner' && <Dropdown.Item onClick={() => {navigate('ProductOwner/dashboard')}} className='text-dark'>Dashboard</Dropdown.Item> }
-                      {user.role!=='Google User'&&user.role!=='Admin'?<Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>:user.role==='Google User'?null:<Dropdown.Item className='text-dark'>Change Password</Dropdown.Item>}
+                      {user.role!=='Google User'&&user.role!=='Admin'?<Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>:user.role==='Google User'?null:<Dropdown.Item className='text-dark'onClick={() => setModalShow(true)}>Change Password</Dropdown.Item>}
                       <Dropdown.Item onClick={logoutHandler} className='text-danger'>Logout</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>        
@@ -70,6 +218,12 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
         
       </div>  
     </div>
+    <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+    </>
+    
   
 )}
 

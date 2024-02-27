@@ -1,6 +1,7 @@
 const asyncHandler=require('express-async-handler')
 const { User, JobSeeker, ProductOwner} = require('../models/userModel')
 const product = require('../models/productModel')
+const Payment = require('../models/paymentModel')
 
 //get total of Advertisments and jobseekers and product owners and customers  -> /totals
 const getTotals=asyncHandler(async(req,res)=>{
@@ -10,7 +11,8 @@ const getTotals=asyncHandler(async(req,res)=>{
         productOwnerCount:await User.countDocuments({status:'verified',isvalidEmail:true,role:'Product Owner'}),
         cutomerCount:await User.countDocuments({isvalidEmail:true,role:'Customer'}),
         adsCount:(await product.countDocuments()),
-        jobSeekerCount:(await User.countDocuments({isvalidEmail:true,role:'Job Seeker'}))
+        jobSeekerCount:(await User.countDocuments({isvalidEmail:true,role:'Job Seeker'})),
+        paymentCount:(await Payment.countDocuments())
       })
 })
 
@@ -21,6 +23,7 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
       const jobseekers=await JobSeeker.find({isvalidEmail:true}).exec()
       const productOwners=await ProductOwner.find({status:'verified',isvalidEmail:true}).exec()
       const customers=await User.find({status:'verified',isvalidEmail:true}).exec()
+      const payments=await Payment.find().exec()
 
   let data={
     "productOwners":{
@@ -78,10 +81,26 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
       "October": 0,
       "November": 0,
       "December": 0
+    },
+    "payments":{
+      "January": 0,
+      "February": 0,
+      "March": 0,
+      "April": 0,
+      "May": 0,
+      "June": 0,
+      "July": 0,
+      "August": 0,
+      "September": 0,
+      "October": 0,
+      "November": 0,
+      "December": 0
     }
   }
   products.map((item)=>{
-      switch(item.createdAt.getMonth())
+      if(item.createdAt.getFullYear()===new Date().getFullYear())
+      {
+        switch(item.createdAt.getMonth())
       {
           case 0:{
               data.products['January']++;
@@ -131,6 +150,7 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
               data.products['December']++;
               break;
           }
+        }
       }
       
   })
@@ -189,6 +209,8 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
       
   })
   jobseekers.map((item)=>{
+    if(item.createdAt.getFullYear()===new Date().getFullYear())
+    {
       switch(item.createdAt.getMonth())
       {
           case 0:{
@@ -237,6 +259,61 @@ const getTotals_per_month=asyncHandler(async(req,res)=>{
           }
           case 11:{
               data.jobseekers['December']++;
+              break;
+          }
+      }
+    }
+      
+  })
+  payments.map((item)=>{
+      switch(item.createdAt.getMonth())
+      {
+          case 0:{
+              data.payments['January']++;
+              break;
+          }
+          case 1:{
+              data.payments['February']++;
+              break;
+          }
+          case 2:{
+              data.payments['March']++;
+              break;
+          }
+          case 3:{
+              data.payments['April']++;
+              break;
+          }
+          case 4:{
+              data.payments['May']++;
+              break;
+          }
+          case 5:{
+              data.payments['June']++;
+              break;
+          }
+          case 6:{
+              data.payments['July']++;
+              break;
+          }
+          case 7:{
+              data.payments['August']++;
+              break;
+          }
+          case 8:{
+              data.payments['September']++;
+              break;
+          }
+          case 9:{
+              data.payments['October']++;
+              break;
+          }
+          case 10:{
+              data.payments['November']++;
+              break;
+          }
+          case 11:{
+              data.payments['December']++;
               break;
           }
       }

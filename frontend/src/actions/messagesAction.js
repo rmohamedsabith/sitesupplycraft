@@ -38,7 +38,7 @@ export const  getMessagesFromAdmin=(id)=>async(dispatch)=>{
 export const getMessagesList=async(dispatch)=>{
     try {
         dispatch(getMessagesListRequest())
-        const{data}=await axios.get(`/SiteSupplyCraft/messagesList`)
+        const{data}=await axios.get(`/SiteSupplyCraft/admin/messagesList`)
         dispatch(getMessagesListSuccess(data))
     } catch (error) {
         dispatch(getMessagesListFail(error.response.data.message))

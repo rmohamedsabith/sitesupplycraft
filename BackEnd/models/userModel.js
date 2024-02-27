@@ -235,7 +235,7 @@ const jobSeekerSchema=new mongoose.Schema({
     },
     ratings:{
         type:Number,
-        required:true,
+        default:0
     },
     numOfReviews: {
         type: Number,
