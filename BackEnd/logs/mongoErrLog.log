@@ -15,3 +15,4 @@
 20240130	12:46:14	b19c66a0-60ba-419d-9bc7-0fa9e3afc3c9	undefined: undefined	undefined	undefined
 20240130	12:51:34	3f3b0b08-e96d-4bf5-8034-2f5215fe0b12	undefined: undefined	undefined	undefined
 20240130	10:11:15	fae72e2a-39f0-4ea5-aeef-db5a390f97ad	undefined: ETIMEOUT	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
+20240221	11:21:11	449c147c-a335-45f9-9f46-55a2552c9221	undefined: ECONNREFUSED	querySrv	_mongodb._tcp.cluster0.yh6jp4w.mongodb.net
