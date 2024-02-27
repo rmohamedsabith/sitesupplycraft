@@ -13,6 +13,7 @@ export const sendMessage=(receiver,role,content)=>async(dispatch)=>{
             DATA=(await axios.post(`/SiteSupplyCraft/message/send`,{receiver,content})).data
         }
         dispatch(sendMessageSuccess(DATA))
+        dispatch(getMessages)
     } catch (error) {
         dispatch(sendMessageFail(error.response.data.message))
     }

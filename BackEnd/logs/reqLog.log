@@ -3024,6 +3024,7 @@
 20240217	22:56:20	ba0f7a95-0c11-4a9d-a827-488883c39fd5	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
 20240217	22:56:20	b32ccc49-cbf5-48d5-af3f-6ee8c09c5f0a	GET	/SiteSupplyCraft/messages	undefined
 >>>>>>> 096de5f64715e298d75915e6075caaa248d89b62
+<<<<<<< HEAD
 20240219	21:10:41	24670f9a-8959-4e45-a7c4-170508aa05b0	GET	/SiteSupplyCraft/products?page=1	undefined
 20240219	21:10:41	5227e791-76eb-4de2-b1fb-8d3838772fa9	GET	/SiteSupplyCraft/myprofile	undefined
 20240219	21:10:42	fde39936-904b-4699-a9e6-de8e7aae6a65	GET	/uploads/products/1708062387445-sand.jpeg	undefined
@@ -18006,3 +18007,46 @@
 20240220	09:47:51	24de350f-475e-4d5e-be73-efc410ec460a	GET	/SiteSupplyCraft/myprofile	undefined
 20240220	09:47:51	22c7c3ff-670f-4ce7-89d0-3d3cd19d7ff6	GET	/SiteSupplyCraft/payment/stripeApi	undefined
 >>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
+=======
+20240220	02:01:48	728265fb-46d0-41cd-9d56-e138c285cb40	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:02:50	7a266734-ef82-4193-b7e0-606fe50d4f9e	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:02:56	80ed5249-6d05-4250-941d-9dc6004faa26	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:02:56	3700f56e-88ea-4994-bd33-38c24a3c2fc6	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:03:04	cc740805-8925-4ec7-8f69-0c5c12f8aa72	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:03:11	41f44442-cfbc-48ec-a5e1-16dc209e5b81	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:03:20	ccf073cd-6af8-494b-bcc9-efdc58056885	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:03:28	a7dc8c07-a4ab-417b-9555-40d8359e1ae1	GET	/favicon.ico	undefined
+20240220	02:03:28	cceb79c1-c1bd-4adc-8ed5-db5748b071bb	GET	/logo512.png	undefined
+20240220	02:03:32	67934328-b062-4320-ac6d-03448d751185	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:03:38	31de72c5-71f8-45a5-9bd5-3a1f35ad1aad	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:03:41	1b6d366a-b751-4b8f-84eb-dff852ca7c3f	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:03:47	9abfe93a-7e42-4743-9baf-37ce7abda53d	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:03:56	9748bbbc-eac6-4a45-a2d6-580a61052e34	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:03:56	71350e7a-fba0-4516-b176-1080d918e345	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:04:52	3ecdd8cb-a227-4596-b723-bca422f5ec74	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:06:16	586b568f-b389-4c1e-aa38-b2128088a3b7	POST	/SiteSupplyCraft/message/send	undefined
+20240220	02:06:32	7ff7a94a-78ad-45c4-b607-7983a5faf5e1	POST	/SiteSupplyCraft/login	undefined
+20240220	02:06:36	792c8987-7690-4a6e-9d3d-2b3d6e1ebfb2	POST	/SiteSupplyCraft/message/send	undefined
+20240220	02:07:31	0b037499-89d0-4aeb-bdf4-6d5126988cb7	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:07:39	2aa99b3f-a0d4-4679-9544-9e75e8e6a250	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:07:39	41477c49-c0b6-4100-a4b6-06d6e5402b20	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:07:57	9ca821e5-301c-406c-ace6-15ee0a88d09e	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:07:58	b1b970c0-fea3-4eae-962e-22f1d427cea1	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:15:44	3d626bdd-7c0c-4717-89f8-e64e760b769c	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:16:40	78f9f69a-73ea-4127-ba76-00cdd7d1c5cf	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:16:41	9e22110b-75e0-400a-983d-5390437dbbc3	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:16:46	c1eedfaa-6ed9-49c8-b3fa-1cf9eb2b21f2	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:16:46	0f28da3a-685d-4810-adf9-14e4bd434309	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:17:16	fe57496f-8a53-46bc-ab82-7e02fb4d3653	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:21:32	50f33c8a-1b88-4bde-97cb-406d3c9440fe	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:22:05	10808ac0-0ca2-4e04-8632-0f837bab5d24	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:22:11	2a01d6c4-5c4e-4f4f-aeea-79a30254e9c4	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:22:11	695b3a14-a7f2-408d-9655-d6e0ed797449	GET	/SiteSupplyCraft/myprofile	undefined
+20240220	02:22:24	a68e7b6a-11f2-46a8-8e13-7d3bf90bf964	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
+20240220	02:22:25	6fdaefee-6af7-4d5b-b8fe-be6db887e0f8	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:22:51	7944bb94-0b23-406b-b2ec-0cbd1affd302	GET	/SiteSupplyCraft/messages	undefined
+20240220	02:22:55	2daef3b8-09a5-4ec9-9e49-74ab2cae160b	GET	/SiteSupplyCraft/messages	undefined
+20240220	03:06:43	0cbd0375-1750-4791-9c44-3a2f280f7f1e	GET	/SiteSupplyCraft/myProducts?	undefined
+20240220	03:06:45	dc7563ac-8b8f-434f-9833-ca7a801193c7	GET	/uploads/products/1708062387445-sand.jpeg	undefined
+20240220	03:06:45	fe16e226-7e19-4139-927a-70c605377344	GET	/uploads/products/1708064639897-pipe2.jpeg	undefined
+>>>>>>> a80f9b29dce01c4357bf4a9ac8c59618aec71a90
