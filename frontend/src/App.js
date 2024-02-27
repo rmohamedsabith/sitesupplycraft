@@ -31,16 +31,16 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
-<<<<<<< HEAD
+
 import Update from './components/Product Owner/Update';
-=======
+
 import Payments from './components/Admin/Payments'
 import PaymentDetails from './components/Admin/PaymentDetails'
 import axios from 'axios';
 import {Element} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
 import MessageDetails from './components/Admin/MessageDetail';
->>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
+
 
 
 
@@ -105,14 +105,14 @@ function App() {
 
           {/* ProductOwner */}
               {/* Tharushi */}
-<<<<<<< HEAD
+
           <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
           <Route path='ProductOwner/Messages' element={<Messages/>}/> 
           <Route path='ProductOwner/:id/edit' element={<Update/>}/> 
-=======
+
           <Route path='ProductOwner/DashBoard' element={<ProtectedRoute><DashBoard/></ProtectedRoute>}/> 
           <Route path='ProductOwner/Messages' element={<ProtectedRoute><Messages/></ProtectedRoute>}/> 
->>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
+
           
           
               {/* Sandeepa */}

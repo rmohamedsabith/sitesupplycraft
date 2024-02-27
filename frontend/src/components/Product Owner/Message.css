@@ -25,7 +25,7 @@ body{
   width: 150%;
   
 }
-<<<<<<< HEAD
+
 
 
 .btnicon{
@@ -125,14 +125,12 @@ border-radius: 20px;
 .chat-day{
   text-align: center;
   color:#4c284b;
-<<<<<<< HEAD
+
   font-weight: bold;
-=======
->>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
-=======
+
   padding-top: 10px;
-  border-bottom: 3px solid grey;
->>>>>>> a80f9b29dce01c4357bf4a9ac8c59618aec71a90
+  border-bottom: 3px solid grey;}
+
 
 
 .btnicon{
@@ -140,7 +138,7 @@ border-radius: 20px;
   
 }
 
-<<<<<<< HEAD
+
 .typebox{
   width: 100%;
   display: flex;
@@ -149,9 +147,7 @@ border-radius: 20px;
   margin-left: 20px;
   
 }
-.inputbox{
-  
-=======
+
 .chat-screen .header{
 background: #454545;
 height: 50px;
@@ -252,7 +248,6 @@ border-radius: 20px;
 }
 .inputbox{
   
->>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
   font-size: 20px;
   margin-right: 20px;
   margin-left: 50px;
@@ -354,10 +349,3 @@ box-sizing: border-box;
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
-=======
->>>>>>> a80f9b29dce01c4357bf4a9ac8c59618aec71a90
