@@ -23,7 +23,7 @@ import AddProduct from './components/Product Owner/AddProduct'
 import PreviewProduct from './components/Product Owner/PreviewProduct';
 import Messages from './components/Product Owner/Messages'
 import AdminDashboard from './components/Admin/Dashboard';
-import AdminMessages from './components/Admin/Messages'
+import Chat from './components/Admin/message/Chat'
 import Verifications from './components/Admin/Verifications'; 
 import Payment from './components/Product Owner/Payment';
 import Verification from './components/Admin/Verification';
@@ -31,24 +31,21 @@ import VerifyingEmail from './components/Auth/VerifyingEmail';
 import SendVerification from './components/Auth/SendVerification';
 import FindLocation from './components/Google maps/FindLocation';
 import AdminLayout from './components/Layouts/AdminLayout';
-import Update from './components/Product Owner/Update';
 import Payments from './components/Admin/Payments'
 import PaymentDetails from './components/Admin/PaymentDetails'
 import axios from 'axios';
 import {Element} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
-import MessageDetails from './components/Admin/MessageDetail';
-
-
-
+import { getUnreadMessages } from './actions/messagesAction';
+import { ChatState } from './chatContex';
 
 
 function App() {
-  
-
+  const {setNotification}=ChatState()
+  const{unreadMessages}=useSelector((state)=>state.messagesState) 
+  const{isAuthenticated,user}=useSelector((state)=>state.authState)
   const[isDistrict,setIsDistrict]=useState(false)
   const[district,setDistrict]=useState('')
-  const {count,products,ActiveProducts,DeactiveProducts}=useSelector((state)=>state.productsState)
   const[hide,setHide]=useState(false)
   const[isHumClicked,setIsHumClicked]=useState(false)
   const[stripeApi,setStripeApi]=useState('')
@@ -56,7 +53,8 @@ function App() {
 
   const isMobile = useMediaQuery({ maxWidth: 1100 });
   useEffect(()=>{
-    dispatch(loadUser)
+    dispatch(loadUser).then(()=>dispatch(getUnreadMessages)/* .then(()=>setNotification(unreadMessages)) */)
+    
     setHide(isMobile)
   },[isMobile])
 
@@ -65,8 +63,8 @@ function App() {
       const {data}=await axios.get('/SiteSupplyCraft/payment/stripeApi')
       setStripeApi(data.stripeApiKey)
     }
-    getStripeAPI();
-  },[])
+    if(isAuthenticated && user.role==='Product Owner')getStripeAPI();
+  },[isAuthenticated])
 
 
   
@@ -119,7 +117,7 @@ function App() {
           <Route path="/admin/*" element={<AdminLayout />}>
             <Route index element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
+            <Route path="messages" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
             <Route path="payments" element={<ProtectedRoute><Payments/></ProtectedRoute>} />
             <Route path="payments/details" element={<ProtectedRoute><PaymentDetails/></ProtectedRoute>} />
           
@@ -127,7 +125,7 @@ function App() {
             <Route path='Verifications' element={<ProtectedRoute><Verifications/></ProtectedRoute>}/>
             <Route path='Verification/:id' element={<ProtectedRoute><Verification/></ProtectedRoute>}/>
           </Route>
-          <Route path="/admin/messages/:id" element={<ProtectedRoute><MessageDetails /></ProtectedRoute>} />
+          {/* <Route path="/admin/messages/:id" element={<ProtectedRoute><MessageDetails /></ProtectedRoute>} /> */}
             
               
           

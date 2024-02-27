@@ -644,6 +644,7 @@ const deleteAllCart=asyncHandler(async(req,res,next)=>{
     })
 })
 
+
 module.exports=
 {
   register,
@@ -660,5 +661,5 @@ module.exports=
   deleteMyprofile,
   addCart,
   deleteOneCart,
-  deleteAllCart
+  deleteAllCart,
 }

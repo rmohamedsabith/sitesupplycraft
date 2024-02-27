@@ -1,0 +1,146 @@
+.chat{
+    display: flex;
+    flex-direction: 'row';
+    height: auto;
+    width: 90%;
+    margin:20px 50px;
+    border:1px solid #ccc;
+    min-height: 80vh;
+}
+
+.messageBar{
+    background-color: rgba(4, 114, 160, 0.646);
+    width: 25%;
+} 
+.divider{
+    border:1px solid #ccc
+}
+.searchMsg{
+    border: none;
+    height: 40px;
+    width: 100%;
+    border-radius: 10px;
+}
+.chatBar{
+    display: flex;
+    flex-direction: 'row';
+    padding: 10px;
+}
+.chatBar:hover{
+ background-color: rgb(94, 206, 206);
+}
+.MsgNo{
+    background-color: rgb(18, 180, 6);
+    padding: 6px ;
+    max-height: 35px;
+}
+.bg-sky-500{
+    background-color: rgb(77, 218, 253);
+}
+.noChat{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+.chatBox{
+    text-align: center;
+    background-color: rgb(6, 99, 99);
+    color: #Ffff;
+}
+.chatContainer{
+    width: 75%;
+}
+.chatBody{
+    max-height: 65vh;
+    min-height: 65vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    
+}
+.chatDate{
+    text-align: center;
+}
+.bottomSend{
+    background-color: rgb(0, 228, 152);
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.messageChat{
+    display:flex;
+    justify-content: flex-start;
+    max-width: 50%;
+    background: #fff;
+    padding: 10px;
+    margin: 10px 20px;
+}
+.nameAdmin{
+    display: flex;
+    flex-direction: row;
+}
+.text{
+    font-size: 12px;
+    padding-top:10px;
+    text-align: right;
+    padding: 0 20px;
+  }
+
+/* CSS talk bubble */
+.talk-bubble {
+    display: inline-block;
+    position: relative;
+	width: 100%;
+	height: auto;
+	background-color: rgb(255, 131, 187);
+}
+.border{
+  border: 8px solid #666;
+}
+.round{
+  border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+
+}
+
+/* Right triangle placed top left flush. */
+.tri-right.left-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+    left: -20px;
+	right: auto;
+    top: 0px;
+	bottom: auto;
+	border: 25px solid;
+	border-color: rgb(255, 131, 187)transparent transparent transparent;
+}
+
+/* Right triangle placed top right flush. */
+.tri-right.right-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+    left: auto;
+	right: -20px;
+    top: 0px;
+	bottom: auto;
+	border: 25px solid;
+	border-color: rgb(116, 139, 253) transparent transparent transparent;
+}
+
+/* talk bubble contents */
+.talktext{
+    padding: 1em;
+    text-align: left;
+    line-height: 1.5em;
+}
+.talktext p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}

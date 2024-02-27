@@ -1,7 +1,5 @@
 // to load environment variables from .env file to process.env object
 require('dotenv').config()
-const express=require('express')
-const app= express()
 const path=require('path')
 const cors=require('cors')
 const {logger, logEvents}=require('./middleware/logger')
@@ -9,6 +7,8 @@ const errorHandler=require('./middleware/errorHandler')
 const DBconnect=require('./config/DB')
 const mongoose=require('mongoose')
 const cookieParser = require('cookie-parser')
+const express = require('express');
+const {app,server}=require('./Socket/socket')
 
 DBconnect()
 
@@ -57,7 +57,7 @@ app.use(errorHandler)
 
 mongoose.connection.once('open',()=>{
     console.log('Connect to mongoDB')
-    app.listen(PORT,()=>{
+    server.listen(PORT,()=>{
         console.log(`Server is running on ${PORT}`)
     })
 })

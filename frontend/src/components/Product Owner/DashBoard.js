@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useState} from 'react';
 import{useDispatch, useSelector} from 'react-redux'
 import { Line } from 'react-chartjs-2';
@@ -15,6 +15,9 @@ import {deleteProduct} from '../../actions/productActions'
 
 import MetaData from '../Layouts/MetaData'
 import { Col, Image, Row } from 'react-bootstrap'
+import { getMessages } from '../../actions/messagesAction';
+
+
 ChartJS.register(
   Title, Tooltip, LineElement, Legend,
   CategoryScale, LinearScale, PointElement, Filler,ArcElement
@@ -22,17 +25,19 @@ ChartJS.register(
 
 
 const DashBoard = () => {
-
+  
   const{isLoading,products,ActiveProducts,DeactiveProducts,count,error} = useSelector((state)=> state.productsState)
-  const{isProductDeleted}=useSelector((state)=> state.productState)
+
   const dispatch=useDispatch()
+  const navigate=useNavigate()
   const [keyword,setKeyword]=useState('')
   const [status, setStatus] = useState(false);
   
 
   useEffect(()=>{
-       
+    
     dispatch(getOwnerProducts(keyword))
+
 
 
   },[dispatch,status,keyword])
@@ -124,6 +129,10 @@ const DashBoard = () => {
     }
     }
 
+    const handleMessage=()=>{
+      dispatch(getMessages).then(()=>navigate('/ProductOwner/Messages'))
+    }
+
   
   
   return (
@@ -134,16 +143,12 @@ const DashBoard = () => {
   
     <Row>
       
-      <Col xs={2}  style={{backgroundColor:'#176B87'}}>
-        
-      
+      <Col xs={2}  style={{backgroundColor:'#176B87'}}>     
       <div className='p-3'>
         <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
         <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
-        <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
-      </div>
-     
-    
+        <button className='btn1' onClick={handleMessage}>Message</button>
+      </div> 
       </Col>
 
       {!error?

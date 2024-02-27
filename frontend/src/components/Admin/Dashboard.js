@@ -3,6 +3,7 @@ import DashboardTile from "./DashboardTile";
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../Loader'
 import { getTotals, getTotals_per_month } from "../../actions/adminActions";
+import { getMessagesList } from "../../actions/messagesAction";
 
 const Dashboard = () => {
   const dispatch=useDispatch()
@@ -10,7 +11,9 @@ const Dashboard = () => {
   useEffect(()=>{
     dispatch(getTotals_per_month)
     dispatch(getTotals)
+    //dispatch(getMessagesList)  
   },[])
+    
 
 const payments = datas?.payments ? Object.keys(datas.payments).map((key) => ({ key: key, value: datas.payments[key] })) : [];
 const jobseekers = datas?.jobseekers ? Object.keys(datas.jobseekers).map((key) => ({ key: key, value: datas.jobseekers[key] })) : [];

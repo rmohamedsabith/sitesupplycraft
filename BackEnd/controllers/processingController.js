@@ -84,8 +84,8 @@ const viewProceesingProduct=asyncHandler(async(req,res)=>{
 ///processing/:id/verify
 const verifyProductOwner=asyncHandler(async(req,res)=>{
     try{
-        const user=await User.findById(req.params.id)
-        if(!user)
+        const data=await User.findById(req.params.id)
+        if(!data)
         {
             return res.status(400).json({message:"There are no product to delete"})
         }
