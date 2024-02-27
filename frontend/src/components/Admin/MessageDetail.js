@@ -99,9 +99,9 @@ const MessageDetails = () => {
               )))}
             </div>
             
-        </tr>
+        <tr>
 
-      <tr>
+      </tr>
         <div className='submit'>
               Message : <input type='text' value={newMessage}   /* onChange={handleChange} */ className='text1'></input>
                         <button className='btnicon'  onClick={handleSubmit}><FontAwesomeIcon icon={faPaperPlane} className='tt'/></button>

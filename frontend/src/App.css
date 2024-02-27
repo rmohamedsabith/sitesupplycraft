@@ -417,19 +417,37 @@ p a{
   margin-bottom: 50px;
 }
 
+.register form{
+  margin:0;
+}
+
 .register{
   display: flex;
   justify-content: center;
   align-items: center; 
+  min-width: 200px;
 }
 .register .frame{
-  width: 50%;
+  max-width: 50%;
+  min-width: 200px;
   padding: 20px;
   margin: 30px;
-  border: 2px solid #c7b8a13b;
+  border: 2px solid #d2bd9d3b;
   box-shadow: 5px 5px 10px #053B50;
-  background-color: #c7b8a13b;
+  background-color: #d5bf9e3b;
   border-radius: 10px;  
+}
+
+.frame .row{
+  display:flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.frame .row .col-md-6{
+  display:flex;
+  justify-content: center;
+  align-items: center; 
 }
 
 .register .card::before{
@@ -439,10 +457,11 @@ p a{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #d7c6ad3b;
+  background-color: #e4d1b482;
   background-position: center;
   background-size: cover;
-  filter: blur(2px); 
+  filter: blur(2px);
+  min-width: 200px; 
 }
   
 .register .error{
