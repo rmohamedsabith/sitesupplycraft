@@ -14,16 +14,10 @@ import { useLocation } from "react-router-dom";
 import { Button, Modal, Tab, Tabs } from "react-bootstrap";
 import "./Previw.css";
 import { Navigate } from "react-router-dom";
-<<<<<<< HEAD
-import back from "../../images/back.png";
+import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
-=======
-import Cookies from "js-cookie";
-import back from "../../images/back.png"
->>>>>>> a61a14e9949c27546a0468f3807c7111bd46efa9
 
 const PreviewProduct = () => {
-
   // handling the item array
   const [activeTab, setActiveTab] = useState(0);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -82,7 +76,7 @@ const PreviewProduct = () => {
     const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
-      if ((c_name && c_number && c_date && c_cvc)) {
+      if (c_name && c_number && c_date && c_cvc) {
         setIsFormValid(true);
       } else {
         setIsFormValid(false);
@@ -109,9 +103,18 @@ const PreviewProduct = () => {
     const handlepaymentbutton = () => {
       if (isFormValid) {
         alert("payment successful");
+          //asigning values to a variable
+        const payDetails ={
+          p_name : c_name,
+          p_number: c_number,
+          p_date:c_date,
+          p_cvc:c_cvc
+        };
+        //console.log(payDetails);
+
         props.onHide();
       } else {
-        alert("fill the required filds");
+        alert("fill all the required filds");
       }
     };
 
@@ -153,7 +156,7 @@ const PreviewProduct = () => {
                 <Form.Label htmlFor="date">Valid</Form.Label>
                 <Form.Control
                   onChange={handleCardDate}
-                  type= 'month'
+                  type="month"
                   value={c_date}
                   //pattern="(0[1-9]|1[0-2])\/(202[2-9]|2030)"
                   placeholder="MM/YYYY"
@@ -164,20 +167,24 @@ const PreviewProduct = () => {
               <Col>
                 <Form.Label htmlFor="CVC">CVC</Form.Label>
                 <Form.Control
-                   type="text"
-                   value={c_cvc}
-                   onChange={handleCardCVC}
-                   maxLength={3}
-                   pattern="[0-9]{3}"
-                   inputMode="numeric"
-                   required
+                  type="text"
+                  value={c_cvc}
+                  onChange={handleCardCVC}
+                  maxLength={3}
+                  pattern="[0-9]{3}"
+                  inputMode="numeric"
+                  required
                 />
               </Col>
             </Row>
           </>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{border:"none"}} onClick={handlepaymentbutton} disabled={!isFormValid}>
+          <Button
+            style={{ border: "none" }}
+            onClick={handlepaymentbutton}
+            disabled={!isFormValid}
+          >
             Pay
           </Button>
         </Modal.Footer>
@@ -187,25 +194,11 @@ const PreviewProduct = () => {
 
   //  ***payment model end ***
 
-
-  
-
   return (
     <div className="d-flex justify-content-center align-item-center">
       <MetaData title={"Preview"} />
       <div style={{ marginLeft: "3px", marginTop: "3px" }}>
-        <img
-          src={back}
-          alt="back page"
-          onClick={handleBackPage}
-          style={{ //position: 'fixed',
-          width: '50px',
-          height: '50px',
-          cursor: 'pointer',
-          
-             }}
-             title="back Page"
-        />
+      <FontAwesomeIcon icon={faArrowLeft} size="3x" onClick={handleBackPage}/>
       </div>
       <div
         className="card productFrame"
@@ -251,7 +244,7 @@ const PreviewProduct = () => {
                               height={400}
                               className="d-block w-100 carouselImage"
                               src={image}
-                              alt="First slide"
+                              alt="First slide" 
                             />
                           </Carousel.Item>
                         ))
@@ -293,7 +286,7 @@ const PreviewProduct = () => {
                       </Col>
                       <Col xs={3}>
                         <Row>
-                          <Col>{product.type}</Col>
+                          <Col className="previewPriceType" >{product.type}</Col>
                         </Row>
                       </Col>
                     </Row>
@@ -314,8 +307,9 @@ const PreviewProduct = () => {
                       <p
                         style={{
                           paddingLeft: "5px",
-                          color: "grey",
+                          color: "black",
                           display: "inline",
+                          
                         }}
                       >
                         {product.priceType}
@@ -350,29 +344,8 @@ const PreviewProduct = () => {
                       {product.owner?.phone}
                     </p>
                     <br />
-                    <Row>
-                      <Col>
-                        <div
-                          style={{
-                            backgroundColor: "#1A9406",
-                            padding: "10px 20px",
-                            borderRadius: "20px",
-                            display: "inline-block",
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faWhatsapp}
-                            style={{
-                              color: "#ffff",
-                              fontSize: "20px",
-                              paddingRight: "10px",
-                            }}
-                          />
-                          <span style={{ color: "#ffff" }}>Whatsapp</span>
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row></Row>
+                    
+                   
                   </Col>
                 </>
               </Row>

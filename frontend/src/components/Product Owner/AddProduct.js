@@ -9,7 +9,8 @@ import MetaData from "../Layouts/MetaData";
 import PreviewProduct from "./PreviewProduct"; // Import the PreviewProduct component
 import { useSelector } from "react-redux";
 import Edit_product from "./Edit_product";
-import forword from "../../images/forword.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
 const AddProduct = () => {
   const navigate = useNavigate(); //get the navigate object
@@ -242,21 +243,8 @@ const AddProduct = () => {
         </Col>
         <Col className="addProduct">
           {hasItems && (
-            <div style={{ marginLeft: "3px", marginTop: "3px" }}>
-              <img
-                src={forword}
-                alt="preview page"
-                onClick={handlForwordPage}
-                style={{
-                  position: "absolute",
-                  //top: '10px',
-                  right: "20px",
-                  cursor: "pointer",
-                  width: "50px",
-                  height: "50px",
-                }}
-                title="Preview page"
-              />
+            <div style={{marginRight:"50px", position:"absolute", right:"10px"}}>
+              <FontAwesomeIcon icon={faArrowRight} size="3x" onClick={handlForwordPage} />
             </div>
           )}
 
@@ -345,9 +333,9 @@ const AddProduct = () => {
                           onChange={handlePriceTypeonChange}
                         >
                           <option></option>
-                          <option value="/perDay">perDay</option>
-                          <option value="/perMonth">perMonth</option>
-                          <option value="/perHour">perHour</option>
+                          <option value="perDay">perDay</option>
+                          <option value="perMonth">perMonth</option>
+                          <option value="perHour">perHour</option>
                         </Form.Select>
                       </div>
                       {priceTypeError && (
@@ -416,6 +404,9 @@ const AddProduct = () => {
                       </option>
                     ))}
                   </Form.Select>
+                  {catagoryError && (
+                    <span className="error">{catagoryError}</span>
+                  )}
                 </div>
 
                 <br />

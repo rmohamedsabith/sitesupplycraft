@@ -1,6 +1,14 @@
-.button.btn.btn-primary.btn-lg{
- background-color: green;
 
+.previewPriceType{
+
+    color: rgb(18, 10, 34);
+    font-size: 30px;
+    display: inline-block;
+    right: 55px;
+    top:3px;
+    font-family:'Georgia', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 600px;
 }
+
 
 
