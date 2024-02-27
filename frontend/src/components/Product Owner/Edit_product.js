@@ -1,5 +1,4 @@
 import React from "react";
-import Payment from "./Payment";
 import "./AddProduct.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Col, Form, Image, Row } from "react-bootstrap";
@@ -8,101 +7,50 @@ import { useState, useEffect } from "react";
 import MetaData from "../Layouts/MetaData";
 import PreviewProduct from "./PreviewProduct"; // Import the PreviewProduct component
 import { useSelector } from "react-redux";
-import Edit_product from "./Edit_product";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
-const AddProduct = () => {
-  const navigate = useNavigate(); //get the navigate object
+const Edit_product = () => {
+  //fetching the index of the element
+
+  const Details = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storage
+  const location = useLocation();
+  const activeTabIndex = location.state || 0;
+  const ProductDetails = Details[activeTabIndex];
 
   const { user } = useSelector((state) => state.authState);
 
-  //USESTATE FOR HANDLING EMPTY INPUT FIELDS
-  const [nameError, setNameError] = useState("");
-  const [priceError, setPriceError] = useState("");
-  const [discountError, setDiscountError] = useState("");
-  const [discriptionError, setDiscriptError] = useState("");
-  const [catagoryError, setCatagoryError] = useState("");
-  const [previewImagesError, setPreviewImagesError] = useState("");
-  const [selectedOptionError, setSelectedOptionError] = useState("");
-  const [priceTypeError, setPriceTypeError] = useState("");
+  const navigate = useNavigate();
 
-  const validateFields = () => {
-    let isValid = true;
+  // useState Hook for handling items
 
-    if (name.trim() === "") {
-      setNameError("***name is required***");
-      isValid = false;
-    } else {
-      setNameError("");
-    }
-
-    if (discount.trim() === "") {
-      setDiscountError("***Discount is required***");
-      isValid = false;
-    } else {
-      setDiscountError("");
-    }
-
-    if (discription.trim() === "") {
-      setDiscriptError("***Discription is required***");
-      isValid = false;
-    } else {
-      setDiscriptError("");
-    }
-
-    if (catagory.trim() === "") {
-      setCatagoryError("***catagory is required***");
-      isValid = false;
-    } else {
-      setCatagoryError("");
-    }
-
-    if (previewImages.length === 0) {
-      setPreviewImagesError("***images is required***");
-      isValid = false;
-    } else {
-      setPreviewImagesError("");
-    }
-
-    if (selectedOption.trim() === "") {
-      setSelectedOptionError("***this feild is requird***");
-      isValid = false;
-    } else {
-      setSelectedOptionError("");
-    }
-
-    if (price.trim() === "") {
-      setPriceError("***the price is requird***");
-      isValid = false;
-    } else {
-      setPriceError("");
-    }
-
-    if (selectedOption === "rent") {
-      if (priceType.trim() === "") {
-        setPriceTypeError("***price type  is required***");
-        isValid = false;
-      } else {
-        setPriceTypeError("");
-      }
-    }
-
-    return isValid;
-  };
-
-  /* USESTATE HOOKS */
-  const [hasItems, setHasItems] = useState(false);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [discription, setDiscript] = useState("");
-  const [catagory, setCatagory] = useState("");
-  const [images, setImages] = useState([]);
-  const [previewImages, setPreviewImages] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("sell");
-  const [isRent, setIsRent] = useState(false);
-  const [priceType, setPriceType] = useState("");
+  const [name, setName] = useState(ProductDetails ? ProductDetails.name : "");
+  const [price, setPrice] = useState(
+    ProductDetails ? ProductDetails.price : ""
+  );
+  const [discount, setDiscount] = useState(
+    ProductDetails ? ProductDetails.discount : ""
+  );
+  const [discription, setDiscript] = useState(
+    ProductDetails ? ProductDetails.description : ""
+  );
+  const [catagory, setCatagory] = useState(
+    ProductDetails ? ProductDetails.category : ""
+  );
+  const [images, setImages] = useState(
+    ProductDetails ? ProductDetails.images : []
+  );
+  const [previewImages, setPreviewImages] = useState(
+    ProductDetails ? ProductDetails.images : []
+  );
+  const [selectedOption, setSelectedOption] = useState(
+    ProductDetails ? ProductDetails.type : "sell"
+  );
+  const [isRent, setIsRent] = useState(
+    ProductDetails ? ProductDetails.type === "rent" : false
+  );
+  const [priceType, setPriceType] = useState(
+    ProductDetails ? ProductDetails.priceType : ""
+  );
+  const [clickedImageIndex, setClickedImageIndex] = useState(null);
   const [items, setItems] = useState([]);
 
   const Categories = [
@@ -118,6 +66,19 @@ const AddProduct = () => {
     "Tools",
     "Plumbing",
   ];
+
+  // useState for handling empty fields
+
+  const [nameError, setNameError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [discountError, setDiscountError] = useState("");
+  const [discriptionError, setDiscriptError] = useState("");
+  const [catagoryError, setCatagoryError] = useState("");
+  const [previewImagesError, setPreviewImagesError] = useState("");
+  const [selectedOptionError, setSelectedOptionError] = useState("");
+  const [priceTypeError, setPriceTypeError] = useState("");
+
+  // empty field useState handling ends
 
   /* ONCHANGE FUNCTIONS */
   const handleNameChange = (event) => {
@@ -171,13 +132,10 @@ const AddProduct = () => {
     setPriceType(event.target.value);
     /* console.log(event.target.value); */
   };
-
-  //functions for add more items (creating the items array and adding products to it)
-
-  const handleAddItem = () => {
+  const handleUpdateItem = () => {
     if (validateFields()) {
-      const newItem = {
-        //creating newItem to add the array
+      const updatedDetails = [...Details];
+      updatedDetails[activeTabIndex] = {
         name: name,
         price: price,
         discount: discount,
@@ -189,44 +147,102 @@ const AddProduct = () => {
         priceType: priceType,
         owner: user,
       };
-      const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
-      const updatedArray = [...existingData, newItem]; // Combine existing data with new data
-      setItems(updatedArray);
-      sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
+      sessionStorage.setItem("items", JSON.stringify(updatedDetails));
 
-      //placing input field empty again to create a new product
-      setName("");
-      setPrice("");
-      setDiscount("");
-      setDiscript("");
-      setCatagory("");
-      setPreviewImages([]);
-      setSelectedOption("sell");
-      setIsRent(false);
-      setPriceType("");
-
-      navigate("preview");
+      navigate("/ProductOwner/addProduct/Preview");
     }
   };
-  const handlForwordPage = () => {
-    navigate("preview");
+  const handleRemoveItem = () => {
+    Details.splice(activeTabIndex, 1);
+    sessionStorage.setItem("items", JSON.stringify(Details));
+    navigate("/ProductOwner/addProduct/Preview");
   };
 
-  useEffect(() => {
-    const items = JSON.parse(sessionStorage.getItem("items"));
-    if (items && items.length > 0) {
-      setHasItems(true);
+  //    ***empty fields handling start
+
+  const validateFields = () => {
+    let isValid = true;
+
+    if (name.trim() === "") {
+      setNameError("***name is required***");
+      isValid = false;
     } else {
-      setHasItems(false);
+      setNameError("");
     }
-  }, []);
 
-  /* functions for buttons */
-  /* privew button */
+    if (discount.trim() === "") {
+      setDiscountError("***Discount is required***");
+      isValid = false;
+    } else {
+      setDiscountError("");
+    }
+
+    if (discription.trim() === "") {
+      setDiscriptError("***Discription is required***");
+      isValid = false;
+    } else {
+      setDiscriptError("");
+    }
+
+    if (catagory.trim() === "") {
+      setCatagoryError("***catagory is required***");
+      isValid = false;
+    } else {
+      setCatagoryError("");
+    }
+
+    if (previewImages.length === 0) {
+      setPreviewImagesError("***images is required***");
+      isValid = false;
+    } else {
+      setPreviewImagesError("");
+    }
+
+    if (selectedOption.trim() === "") {
+      setSelectedOptionError("***this feild is requird***");
+      isValid = false;
+    } else {
+      setSelectedOptionError("");
+    }
+
+    if (price.trim() === "") {
+      setPriceError("***price is requird***");
+      isValid = false;
+    } else {
+      setPriceError("");
+    }
+
+    if (selectedOption === "rent") {
+      if (priceType.trim() === "") {
+        setPriceTypeError("***price type  is required***");
+        isValid = false;
+      } else {
+        setPriceTypeError("");
+      }
+    }
+
+    return isValid;
+  };
+  // ***empty fields handling field ends
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...previewImages];
+    updatedImages.splice(index, 1);
+    setPreviewImages(updatedImages);
+
+    const updatedFiles = [...images];
+    updatedFiles.splice(index, 1);
+    setImages(updatedFiles);
+  };
+  const handleImageClick = (index) => {
+    setClickedImageIndex(index === clickedImageIndex ? null : index);
+
+    console.log(clickedImageIndex);
+  };
 
   return (
     <>
-      <MetaData title={"Add Product"} />
+      <MetaData title={"EditProduct"} />
       <Row>
         <Col xs={2} style={{ backgroundColor: "#176B87" }}>
           <div className="p-3">
@@ -242,14 +258,8 @@ const AddProduct = () => {
           </div>
         </Col>
         <Col className="addProduct">
-          {hasItems && (
-            <div style={{marginRight:"50px", position:"absolute", right:"10px"}}>
-              <FontAwesomeIcon icon={faArrowRight} size="3x" onClick={handlForwordPage} />
-            </div>
-          )}
-
           <div className="block" style={{ marginBottom: "30px" }}>
-            <h1 className="styled-heading">Product Adverticement</h1>
+            <h1 className="styled-heading">Edit Product</h1>
             <br />
 
             {/*FORM ELEMENTS*/}
@@ -295,7 +305,6 @@ const AddProduct = () => {
                   <span className="error">{selectedOptionError}</span>
                 )}
                 <br />
-
                 <div>
                   <label>Name: </label>
                   <Form.Control
@@ -308,6 +317,7 @@ const AddProduct = () => {
                 </div>
                 {nameError && <span className="error">{nameError}</span>}
                 <br />
+
                 {isRent ? (
                   <Row>
                     <Col>
@@ -333,9 +343,9 @@ const AddProduct = () => {
                           onChange={handlePriceTypeonChange}
                         >
                           <option></option>
-                          <option value="perDay">perDay</option>
-                          <option value="perMonth">perMonth</option>
-                          <option value="perHour">perHour</option>
+                          <option value="/perDay">perDay</option>
+                          <option value="/perMonth">perMonth</option>
+                          <option value="/perHour">perHour</option>
                         </Form.Select>
                       </div>
                       {priceTypeError && (
@@ -366,10 +376,11 @@ const AddProduct = () => {
                     value={discount}
                     onChange={handleDiscountChange}
                   />
+                  {discountError && (
+                    <span className="error">{discountError}</span>
+                  )}
                 </div>
-                {discountError && (
-                  <span className="error">{discountError}</span>
-                )}
+
                 <br />
 
                 <div>
@@ -425,33 +436,58 @@ const AddProduct = () => {
                     />
                   </Form.Group>
                 </div>
-                {previewImages.map((image) => (
-                  <Image
-                    className=" mb-3 mr-2 previewImg"
-                    key={image}
-                    src={image}
-                    alt={`Image Preview`}
-                    width="55"
-                    height="52"
-                  />
-                ))}
+                <div>
+                  {previewImages.map((image, index) => (
+                    <>
+                      <Image
+                        className=" mb-3 mr-2 previewImg"
+                        key={image}
+                        src={image}
+                        alt={`Image Preview`}
+                        width="55"
+                        height="52"
+                        onClick={() => handleImageClick(index)}
+                      />
+                      {clickedImageIndex === index && (
+                        <Button
+                          style={{ border: "none" }}
+                          variant="primary"
+                          size="sm"
+                          onClick={() => handleRemoveImage(index)}
+                        >
+                          Remove
+                        </Button>
+                      )}
+                    </>
+                  ))}
+                </div>
                 {previewImagesError && (
                   <span className="error">{previewImagesError}</span>
                 )}
-                <div
-                  className="mb-2 PreviewButtonContainer"
-                  style={{ alignContent: "center" }}
-                >
-                  <div style={{ marginTop: "20px", marginBottom: "2pxs" }}>
-                    <Button
-                      variant="primary"
-                      style={{ marginLeft: "35%", border: "none" }}
-                      size="lg"
-                      onClick={handleAddItem}
-                    >
-                      Add item
-                    </Button>
-                  </div>
+                <div style={{ marginLeft: "16%", marginTop: "5px" }}>
+                  <Row>
+                    <Col>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        style={{ border: "none" }}
+                        onClick={handleRemoveItem}
+                      >
+                        Remove
+                      </Button>
+                    </Col>
+
+                    <Col>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        style={{ border: "none" }}
+                        onClick={handleUpdateItem}
+                      >
+                        Update
+                      </Button>
+                    </Col>
+                  </Row>
                 </div>
               </Form>
             </div>
@@ -461,5 +497,4 @@ const AddProduct = () => {
     </>
   );
 };
-
-export default AddProduct;
+export default Edit_product;

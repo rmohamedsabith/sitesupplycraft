@@ -38,6 +38,9 @@ import {Element} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
 import { getUnreadMessages } from './actions/messagesAction';
 import { ChatState } from './chatContex';
+import Edit_product from './components/Product Owner/Edit_product';
+
+
 
 
 function App() {
@@ -139,7 +142,7 @@ function App() {
          
       </HelmetProvider>
     </div> 
-             
+            
     
  
   );

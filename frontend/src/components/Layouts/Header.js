@@ -184,6 +184,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
 
   const logoutHandler=()=>{
     navigate('/')
+    sessionStorage.removeItem('items')
     dispatch(logout)
   }
   const handleReferesh=useCallback(async()=>{
