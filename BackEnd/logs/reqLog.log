@@ -29121,3 +29121,8 @@
 20240227	16:28:44	9d678e3a-96fd-489e-8c38-290d4485afc4	POST	/SiteSupplyCraft/message/send	http://localhost:4500/
 20240227	16:28:46	1311ec6c-e9a3-410e-8054-f5439c925fad	GET	/SiteSupplyCraft/unread_messages	undefined
 20240227	16:28:46	8841a559-2d5b-4f4d-b8e5-3647aa9478cf	GET	/SiteSupplyCraft/products?page=1	undefined
+20240227	19:06:28	d5b442bf-381d-410b-8279-fb606917d94e	GET	/SiteSupplyCraft/myprofile	undefined
+20240227	19:06:28	a3358693-ccd9-48c7-a169-a7f210e009d9	GET	/SiteSupplyCraft/myprofile	undefined
+20240227	19:06:29	2c640c2a-ec34-413d-98f7-28d69b0874df	GET	/SiteSupplyCraft/payment/stripeApi	undefined
+20240227	19:06:29	1b5999c5-9a0d-438e-9f4c-84582c464be0	GET	/SiteSupplyCraft/products?page=1	undefined
+20240227	19:06:29	dab7050f-6af1-43f1-8697-9234369630c7	GET	/SiteSupplyCraft/unread_messages	undefined
