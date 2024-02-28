@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Payment from './Payment'
 import './update.css'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams,useLocation } from 'react-router-dom'
 import { Col, Form, Image, Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react'
@@ -16,24 +16,28 @@ const Update = () => {
   const{isLoading,product}= useSelector((state)=>state.productState)
   const {id}=useParams()
   const dispatch=useDispatch()
+  const location = useLocation();
+  const activeTabIndex = location.state || 0;
+  const ProductDetails = product && product.length > activeTabIndex ? product[activeTabIndex] : null;
+  
 
 
   useEffect(()=>{
     dispatch(getProduct(id,'product'))
   },[dispatch,id])
  
-  const [name,setName] =useState();
-  const [price,setPrice] =useState('');
-  const [discount,setDiscount] = useState('');
-  const [description,setDiscript] = useState('');
+  const [name,setName] =useState(ProductDetails ? ProductDetails.name : "");
+  const [price,setPrice] =useState(ProductDetails ? ProductDetails.price : "");
+  const [discount,setDiscount] = useState(ProductDetails ? ProductDetails.discount : "");
+  const [description,setDiscript] = useState( ProductDetails ? ProductDetails.description : "");
   const [category,setCatagory] = useState('');
-  const [images,setImages] =useState([]);
-  const [previewImages,setPreviewImages]=useState([])
-  const [selectedOption,setSelectedOption] =useState('sell');
-  const[isRent,setIsRent]=useState(false);
-  const[priceType,setPriceType] =useState('');
-  const[type , setType] = useState('');
-  
+  const [images,setImages] =useState(ProductDetails ? ProductDetails.images : []);
+  const [previewImages,setPreviewImages]=useState(ProductDetails ? ProductDetails.images : [])
+  const [selectedOption,setSelectedOption] =useState( ProductDetails ? ProductDetails.type : "sell");
+  const[isRent,setIsRent]=useState(ProductDetails ? ProductDetails.type === "rent" : false);
+  const[priceType,setPriceType] =useState(ProductDetails ? ProductDetails.priceType : "");
+  const [clickedImageIndex, setClickedImageIndex] = useState(null);
+  const [items, setItems] = useState([]);
 
   const Categories=[
     'Masonry',
@@ -48,6 +52,15 @@ const Update = () => {
     'Tools',
     'Plumbing'
   ]
+
+  const [nameError, setNameError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [discountError, setDiscountError] = useState("");
+  const [discriptionError, setDiscriptError] = useState("");
+  const [catagoryError, setCatagoryError] = useState("");
+  const [previewImagesError, setPreviewImagesError] = useState("");
+  const [selectedOptionError, setSelectedOptionError] = useState("");
+  const [priceTypeError, setPriceTypeError] = useState("");
   
   const [validated, setValidated] = useState(false);
 
@@ -115,23 +128,27 @@ const Update = () => {
     /* console.log(event.target.value); */
   
 
-  const handleImageChange = (e) =>{
-  
-    const files = Array.from(e.target.files);
-    files.forEach(file => {
-        
+    const handleImageChange = (e) => {
+      const files = Array.from(e.target.files);
+      const remaningSlots = 5 - previewImages.length;
+      const selectedImages = files.slice(0, remaningSlots); // ensure there is only 5 images
+      if (files.length > 5 || files.length > remaningSlots) {
+        alert("only 5 images can be added");
+      }
+      selectedImages.forEach((file) => {
         const reader = new FileReader();
-
+  
         reader.onload = () => {
-            if(reader.readyState === 2 ) {
-                setPreviewImages(oldArray => [...oldArray, reader.result])
-                setImages(oldArray => [...oldArray, file])
-            }
-        }
-
-        reader.readAsDataURL(file)
-      })
-  };
+          if (reader.readyState === 2) {
+            setPreviewImages((oldArray) => [...oldArray, reader.result]);
+            setImages((oldArray) => [...oldArray, file]);
+          }
+        };
+  
+        reader.readAsDataURL(file);
+      });
+    };
+  
 
   const handlePriceTypeonChange = (event) =>{
     setPriceType(event.target.value);
@@ -142,20 +159,104 @@ const Update = () => {
  
   const handleUpdate = () => {
     // Prepare updated product data
-    const updatedProduct = {
-      _id: id,
-      name,
-      price,
-      discount,
-      description,
-      category,
-      isRent,
-      priceType,
-      images,
-    };
+    if (validateFields()) {
+      const updatedDetails = [...product];
+      updatedDetails[activeTabIndex] = {
+        name : name,
+        price: price,
+        discount: discount,
+        description: description,
+        category: category,
+        images: previewImages,
+        type: selectedOption,
+        isRent: isRent,
+        priceType: priceType,
+        
+      };
+      dispatch(updateProduct(updatedDetails));
+    }
 
-    dispatch(updateProduct(updatedProduct));
+    
   };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...previewImages];
+    updatedImages.splice(index, 1);
+    setPreviewImages(updatedImages);
+
+    const updatedFiles = [...images];
+    updatedFiles.splice(index, 1);
+    setImages(updatedFiles);
+  };
+  const handleImageClick = (index) => {
+    setClickedImageIndex(index === clickedImageIndex ? null : index);
+
+    console.log(clickedImageIndex);
+  };
+  const validateFields = () => {
+    let isValid = true;
+
+    if (name.trim() === "") {
+      setNameError("***name is required***");
+      isValid = false;
+    } else {
+      setNameError("");
+    }
+    if (typeof discount !== 'string' || discount.trim() === "") {
+      setDiscountError("***Discount is required***");
+      isValid = false;
+    } else {
+      setDiscountError("");
+    }
+    
+
+    if (   description.trim() === "") {
+      setDiscriptError("***Discription is required***");
+      isValid = false;
+    } else {
+      setDiscriptError("");
+    }
+
+    if (category.trim() === "") {
+      setCatagoryError("***catagory is required***");
+      isValid = false;
+    } else {
+      setCatagoryError("");
+    }
+
+    if (previewImages.length === 0) {
+      setPreviewImagesError("***images is required***");
+      isValid = false;
+    } else {
+      setPreviewImagesError("");
+    }
+
+    if (selectedOption.trim() === "") {
+      setSelectedOptionError("***this feild is requird***");
+      isValid = false;
+    } else {
+      setSelectedOptionError("");
+    }
+
+    if (typeof price !== 'string' ||  price.trim() === "") {
+      setPriceError("***price is requird***");
+      isValid = false;
+    } else {
+      setPriceError("");
+    }
+
+    if (selectedOption === "rent") {
+      if (priceType.trim() === "") {
+        setPriceTypeError("***price type  is required***");
+        isValid = false;
+      } else {
+        setPriceTypeError("");
+      }
+    }
+
+    return isValid;
+  };
+
   
   return (
     <>
@@ -287,17 +388,35 @@ const Update = () => {
                  <Form.Control type="file" size="lg" multiple={true} accept="image/*" onChange={handleImageChange} />
                 </Form.Group>
                 {previewImages && previewImages.map((image, index) => (
-    <Image
-        className="image-box"
-        key={index}
-        src={image}
-        alt={`Image Preview `}
-        width="55"
-        height="52"
-    />
-))}
-</div>
-                  
+                    <>
+                      <Image
+                        className=" mb-3 mr-2 previewImg"
+                        key={image}
+                        src={images[index].image}
+                        alt={`Image Preview`}
+                        width="55"
+                        height="52"
+                        onClick={() => handleImageClick(index)}
+                      />
+                      {clickedImageIndex === index && (
+                        <Button
+                          style={{ border: "none" }}
+                          variant="primary"
+                          size="sm"
+                          onClick={() => handleRemoveImage(index)}
+                        >
+                          Remove
+                        </Button>
+                      )}
+                    </>
+                  ))}
+                
+                {previewImagesError && (
+                  <span className="error">{previewImagesError}</span>
+                )}
+
+
+                 </div> 
 
               
                 <div className="mb-2">
