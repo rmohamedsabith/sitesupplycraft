@@ -1,12 +1,16 @@
 
-import{loginFail, loginRequest, loginSuccess,clearError, loadUserRequest, loadUserSuccess, loadUserFail, logoutSuccess, logoutFail, forgetPasswordRequest, forgetPasswordSuccess, forgetPasswordFail, resetPasswordRequest, resetPasswordSuccess, resetPasswordFail, registerRequest, registerSuccess, registerFail} from '../slices/authSlice'
+import{loginFail, loginRequest, loginSuccess,clearError, loadUserRequest, loadUserSuccess, loadUserFail, logoutSuccess, logoutFail, forgetPasswordRequest, forgetPasswordSuccess, forgetPasswordFail, resetPasswordRequest, resetPasswordSuccess, resetPasswordFail, registerRequest, registerSuccess, registerFail, updateProfileRequest, updateProfileSuccess, updateProfileFail, deleteProfileRequest, deleteProfileSuccess, deleteProfileFail, changePasswordRequest, changePasswordSuccess, changePasswordFail, verifyEmailRequest, verifyEmailSuccess, verifyEmailFail, resendEmailRequest, resendEmailSuccess, resendEmailFail, changeEmailRequest, changeEmailSuccess, changeEmailFail} from '../slices/authSlice'
 import axios from 'axios'
 
 export const register=(userData)=>async(dispatch)=>{
     
     try {
         dispatch(registerRequest())
-        
+        const config = {
+            headers: {
+                'Content-type' : 'multipart/form-Data'
+            }
+        }
         if(userData.role!=='Google User'){
         const config = {
             headers: {
@@ -80,4 +84,78 @@ export const resetPassword=(token,password,confirmPassword)=>async(dispatch)=>{
     } catch (error) {
         dispatch(resetPasswordFail(error.response.data.message))
     }
+}
+
+export const updateProfile=userData=>async(dispatch)=>{
+    try {
+        dispatch(updateProfileRequest())
+
+        const config = {
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        }
+
+        const {data}=await axios.put(`/SiteSupplyCraft/myprofile/edit`,userData,config)
+        dispatch(updateProfileSuccess(data))
+    } catch (error) {
+        dispatch(updateProfileFail(error.response.data.message))
+    }
+
+}
+export const deleteProfile=async(dispatch)=>{
+    try {
+        dispatch(deleteProfileRequest())
+        const {data}=await axios.delete(`/SiteSupplyCraft/myprofile/delete`)
+        dispatch(deleteProfileSuccess(data))
+    } catch (error) {
+        dispatch(deleteProfileFail(error.response.data.message))
+    }
+
+}
+export const verifyEmail=token=>async(dispatch)=>{
+    try {
+        dispatch(verifyEmailRequest())
+        const {data}=await axios.put(`/SiteSupplyCraft/email/verify/${token}`)
+        dispatch(verifyEmailSuccess(data))
+    } catch (error) {
+        dispatch(verifyEmailFail(error.response.data.message))
+    }
+
+}
+export const resendEmail=async(dispatch)=>{
+    try {
+        dispatch(resendEmailRequest())
+
+        const {data}=await axios.put(`/SiteSupplyCraft/email/resend`)
+        dispatch(resendEmailSuccess(data))
+    } catch (error) {
+        dispatch(resendEmailFail(error.response.data.message))
+    }
+
+}
+export const changeEmail=(newEmail)=>async(dispatch)=>{
+    try {
+        dispatch(changeEmailRequest())
+        const {data}=await axios.put(`/SiteSupplyCraft/email/change`,{'email':newEmail},)
+        dispatch(changeEmailSuccess(data))
+    } catch (error) {
+        dispatch(changeEmailFail(error.response.data.message))
+    }
+
+}
+export const changePassword=(userData)=>async(dispatch)=>{
+    try {
+        dispatch(changePasswordRequest())
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        const {data}=await axios.put(`/SiteSupplyCraft/myprofile/changepassword`,userData,config)
+        dispatch(changePasswordSuccess(data))
+    } catch (error) {
+        dispatch(changePasswordFail(error.response.data.message))
+    }
+
 }

@@ -15,7 +15,8 @@ class apiFeatures{
             
                  $or:[
                     {name: { $regex: this.queryStr.keyword, $options: 'i' } },
-                    {firstname:{$regex: this.queryStr.keyword, $options: 'i'}}
+                    {firstname:{$regex: this.queryStr.keyword, $options: 'i'}},
+                    {lastname:{$regex: this.queryStr.keyword, $options: 'i'}}
                  ]
                
         }:{};

@@ -134,7 +134,7 @@ const FindLocation = () => {
         <Loader />
       ) : (
         <>
-        <div style={{margin:' auto 20px'}}>
+        <Container style={{margin:'20px auto'}}>
           <MetaData title={'Find Location'} />
           <Row>
             <Col md={8}>
@@ -161,6 +161,7 @@ const FindLocation = () => {
                   <Dropdown.Toggle variant="success" id="dropdown-basic" size='sm'>
                     {transportMode}
                   </Dropdown.Toggle>
+
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={()=>{setTransportMode('DRIVING')}}>DRIVING</Dropdown.Item>
                     <Dropdown.Item onClick={()=>{setTransportMode('WALKING')}}>WALKING</Dropdown.Item>
@@ -174,9 +175,10 @@ const FindLocation = () => {
               <Col style={{color:'blue'}}>{duration}</Col>
             </Row>
           
-          </Col>            
+          </Col>
+            
           </Row>      
-        </div>
+        </Container>
 
          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
          <Modal.Header closeButton>

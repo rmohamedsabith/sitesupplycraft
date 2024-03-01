@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 20240124	07:54:39	3cba2e15-0b8a-47e5-aec2-01bfcb12e69f	TypeError: Cannot read properties of null (reading 'reviews')	DELETE	/SiteSupplyCraft/product/658108d668907ee2ec767d75/deletereview	undefined
 20240127	11:24:05	0cc0578f-029f-42bd-85aa-33c79cce5aef	MissingSchemaError: Schema hasn't been registered for model "model".
 Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938919a7dfdc482472a448/reviews	undefined
@@ -87,3 +88,22 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240216	11:28:25	9d1a2aeb-b7c8-4797-af60-4a904dfce45a	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
 20240216	11:29:05	3aefb978-c111-49c1-9a38-03d87bc3c726	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
 20240216	11:30:31	7ca02d62-5b81-450f-b2f4-5eab061c32fa	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "product"	GET	/SiteSupplyCraft/product/[object%20Object]	undefined
+=======
+20240202	19:40:15	89f274ae-d39c-4eea-ac3e-30f22caf28fa	Error: Received unknown parameters: firstname, lastname	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	19:40:38	97f1834f-95fc-4667-a315-0c0cda297321	SyntaxError: Unexpected string in JSON at position 81	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	19:41:10	a9412df0-4df8-4227-be99-dba77a33c990	Error: Received unknown parameters: district, number, street, postalCode. Did you mean postal_code?	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	19:42:13	702b8bbb-99b6-42cc-9d8a-a451d78a96cc	Error: Received unknown parameter: shipping[address][postalCode]. Did you mean postal_code?	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	19:42:26	30fa1a0b-3272-4a8c-a3b9-d7388ec90a2b	Error: Amount must convert to at least 50 cents. 2.00 ₨ converts to approximately $0.01.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	19:43:00	0c1a8ac2-89a9-406d-8551-bc3579897fce	Error: Amount must convert to at least 50 cents. 2.00 ₨ converts to approximately $0.01.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	21:01:57	0f0b1a33-4f32-4f7c-ba4b-c622c25c0c02	Error: Amount must convert to at least 50 cents. 0.64 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	21:03:02	bc5eec19-98d9-4d92-9e26-96ced1edb585	Error: Amount must convert to at least 50 cents. 1.28 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	21:06:16	72d2c2fb-aaa6-475d-a61a-49090405d785	Error: Amount must convert to at least 50 cents. 6.41 ₨ converts to approximately $0.02.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	21:06:40	72af63a8-7baf-4c9a-b6ea-02c3e9b5e700	Error: Amount must convert to at least 50 cents. 64.09 ₨ converts to approximately $0.20.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	21:07:19	2e1e4b6d-2259-4aa6-9f92-4dfd27aefa8c	Error: Amount must convert to at least 50 cents. 1.00 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	21:10:01	24804972-6458-4eda-8dc0-4e45a91304ce	Error: Amount must convert to at least 50 cents. 1.00 ₨ converts to approximately $0.00.	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	22:23:54	f17abb17-f8ed-4117-9e17-ed2071e12925	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
+20240202	22:26:08	6a78f680-d75b-4cda-a0be-f5cca9bd9720	Error: Received unknown parameters: district, number	POST	/SiteSupplyCraft/payment/process	undefined
+20240214	14:45:46	b312f9c7-874f-433e-a61c-4a8ea4e7a44d	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-02.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products/rent?page=1	undefined
+20240215	17:05:35	fea6142f-ab73-444a-816a-e9c0321f942b	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
+20240215	17:06:25	4bf8b640-9464-4449-977f-29efce92ea75	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
+>>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1

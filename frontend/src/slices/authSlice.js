@@ -4,33 +4,38 @@ const authSlice=createSlice({
     name:'auth',
     initialState:{
         isLoading:false,
-        isAuthenticated:false
+        isAuthenticated:false,
+        message:null,
     },
     reducers:{
         registerRequest(state,action){
             return{
                 ...state,
-                isLoading:true
+                isLoading:true,
+                isAuthenticated:false
             }
         },
         registerSuccess(state,action){
             return{
                 isLoading:false,
                 isAuthenticated:true,
-                user:action.payload.USER
+                user:action.payload.USER,
+                message:action.payload.message
             }
         },
         registerFail(state,action){
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },
         loginRequest(state,action){
             return{
                 ...state,
-                isLoading:true
+                isLoading:true,
+                isAuthenticated:false
             }
         },
         loginSuccess(state,action){
@@ -44,6 +49,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },
@@ -62,14 +68,23 @@ const authSlice=createSlice({
         clearError(state,action){
             return{
                 ...state,
-                user:null,
-                error:null
+                error:null,
+                message:null,
+                ispasswordChanged:false
+            }
+        },
+        clearMessage(state,action){
+            return{
+                ...state,
+                message:null,
+                ispasswordChanged:false
             }
         },
         loadUserRequest(state,action){
             return{
                 ...state,
                 isLoading:true,
+                isAuthenticated:false,
             }
         },
         loadUserSuccess(state,action){
@@ -83,6 +98,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
                 error:action.payload
             }
         },
@@ -112,6 +128,7 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:true,
+                isAuthenticated:false,
                 
             }
         },
@@ -127,6 +144,131 @@ const authSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                isAuthenticated:false,
+                error:action.payload
+            }
+        },
+        deleteProfileRequest(state,action){
+            return {
+                ...state,
+                isLoading:true,
+            }
+        },
+        deleteProfileSuccess(state,action){
+            return{
+                isLoading:false, 
+                user:action.payload.user ,
+                isAuthenticated:false          
+            }
+        },
+        deleteProfileFail(state,action){
+            return {
+                ...state,
+                isLoading:false,
+                error:action.payload
+            }
+        },
+        updateProfileRequest(state,action){
+            return {
+                ...state,
+                isLoading:true}
+        },
+        updateProfileSuccess(state,action){
+            return{
+                ...state,
+                isLoading:false,  
+                user:action.payload.user ,
+                isUpdated:true          
+            }
+        },
+        updateProfileFail(state,action){
+            return {
+                ...state,
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       changePasswordRequest(state,action){
+            return {
+                ...state,
+                isLoading:true,
+                
+            }
+        },
+       changePasswordSuccess(state,action){
+            return{
+                ...state,
+                isLoading:false,  
+                user:action.payload.user ,
+                ispasswordChanged:true          
+            }
+        },
+       changePasswordFail(state,action){
+            return {
+                ...state,
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       verifyEmailRequest(state,action){
+            return {
+                ...state,
+                isLoading:true}
+        },
+       verifyEmailSuccess(state,action){
+            return{
+                ...state,
+                isLoading:false,  
+                user:action.payload.USER,
+                message:action.payload.message
+                        
+            }
+        },
+       verifyEmailFail(state,action){
+            return {
+                ...state,
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       resendEmailRequest(state,action){
+            return {
+                ...state,
+                isLoading:true}
+        },
+       resendEmailSuccess(state,action){
+            return{
+                ...state,
+                isLoading:false, 
+                message:action.payload.message
+                        
+            }
+        },
+       resendEmailFail(state,action){
+            return {
+                ...state,
+                isLoading:false,
+                error:action.payload
+            }
+        },
+       changeEmailRequest(state,action){
+            return {
+                ...state,
+                isLoading:true}
+        },
+       changeEmailSuccess(state,action){
+            return{
+                ...state,
+                isLoading:false,  
+                user:action.payload.USER,
+                message:action.payload.message
+                        
+            }
+        },
+       changeEmailFail(state,action){
+            return {
+                ...state,
+                isLoading:false,
                 error:action.payload
             }
         },
@@ -137,12 +279,31 @@ const authSlice=createSlice({
 
 const{actions,reducer}=authSlice;
 export const{
+   verifyEmailRequest,
+   verifyEmailSuccess,
+   verifyEmailFail,
+   changeEmailRequest,
+   changeEmailSuccess,
+   changeEmailFail,
+   resendEmailRequest,
+   resendEmailSuccess,
+   resendEmailFail,
+   changePasswordRequest,
+   changePasswordSuccess,
+   changePasswordFail,
+    updateProfileRequest,
+    updateProfileSuccess,
+    updateProfileFail,
+    deleteProfileRequest,
+    deleteProfileSuccess,
+    deleteProfileFail,
     registerRequest,
     registerSuccess,
     registerFail,
     loginRequest,
     loginSuccess,
     loginFail,
+    clearMessage,
     clearError,
     loadUserRequest,
     loadUserSuccess,

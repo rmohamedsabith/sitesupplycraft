@@ -31,7 +31,7 @@ const upload = multer({
         const originalName = file.originalname; // Get the original name of the file
         const newName = `${dateSuffix}-${originalName.replace(/\s/g, '_')}`; // Combine timestamp and original name
         cb(null, newName);
-      },
+      }, 
     }),
   });
 

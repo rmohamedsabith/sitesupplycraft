@@ -55,6 +55,7 @@ const productSlice=createSlice({
         },
         updateProductSuccess(state,action){
             return{
+
                 ...state,
                 isLoading:false,
                 isProductUpdated:true,
