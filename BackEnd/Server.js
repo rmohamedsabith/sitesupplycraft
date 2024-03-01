@@ -9,6 +9,7 @@ const mongoose=require('mongoose')
 const cookieParser = require('cookie-parser')
 const express = require('express');
 const {app,server}=require('./Socket/socket')
+const bodyParser=require('body-parser')
 
 DBconnect()
 
@@ -20,6 +21,8 @@ const PORT=process.env.PORT
 app.use(express.json())
 //to use cookie object in the req
 app.use(cookieParser())
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
 app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )

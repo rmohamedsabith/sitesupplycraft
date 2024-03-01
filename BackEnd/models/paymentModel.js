@@ -6,26 +6,7 @@ const paymentSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    postedItems: [{
-        name: {
-            type: String,
-            required: true
-        },
-        image: {
-            type: String,
-            required: true
-        },
-        price: {
-            type: Number,
-            required: true
-        },
-        product: {
-            type: mongoose.SchemaTypes.ObjectId,
-            required: true,
-            ref: 'product'
-        }
-
-    }],
+    postedItems: [],
     totalPrice: {
         type: Number,
         required: true,

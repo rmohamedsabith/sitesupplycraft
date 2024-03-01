@@ -4,7 +4,6 @@ const productSlice=createSlice({
     name:"product",
     initialState:{
         isLoading:false,
-        product: {},
         reviews: [],
         isReviewSubmitted:false,
         isProductAdded:false,
@@ -18,7 +17,7 @@ const productSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
-                product:{},
+                isProductAdded:false
                 }
         },
 
@@ -157,7 +156,7 @@ const productSlice=createSlice({
         },
 
         //Delete Review
-        deleteReviewRequest(state, action){
+        deleteReviewRequest(state, action){ 
             return {
                 ...state,
                 isLoading: true

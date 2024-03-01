@@ -13,7 +13,7 @@ export const createPayment=payment=>async(dispatch)=>
 }
 export const getAllPayments=async(dispatch)=>
 {
-    try {
+    try { 
         dispatch(userpaymentsRequest())
         const {data}=await axios.get(`/SiteSupplyCraft/payments`)
         dispatch(userpaymentsSuccess(data))
@@ -21,11 +21,11 @@ export const getAllPayments=async(dispatch)=>
         dispatch(userpaymentsFail(error.response.data.message))
     }
 }
-export const paymentDetail=async(dispatch)=>
+export const paymentDetail=(id)=>async(dispatch)=>
 {
     try {
-        dispatch(tailRequest())
-        const {data}=await axios.post(`/SiteSupplyCraft/payment/${id}`)
+        dispatch(paymentDetailRequest())
+        const {data}=await axios.get(`/SiteSupplyCraft/payment/${id}`)
         dispatch(paymentDetailSuccess(data))
     } catch (error) {
         dispatch(paymentDetailFail(error.response.data.message))

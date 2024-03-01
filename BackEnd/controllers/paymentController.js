@@ -67,6 +67,7 @@ exports.getAllPayments = asyncHandler(async (req, res, next) => {
     const payments = await Payment.find().populate('user','firstname lastname profile');
 
     let totalAmount = 0;
+    let totalCount=0;
     let data={
         "January": {"no":0,"total":0},
         "February": {"no":0,"total":0},
@@ -149,12 +150,15 @@ exports.getAllPayments = asyncHandler(async (req, res, next) => {
     })
 
     payments.forEach(payment => {
-        totalAmount += payment.totalPrice
+        totalAmount += payment.totalPrice;
+        totalCount+=payment.count
+        
     })
 
     res.status(200).json({
         success: true,
         totalAmount,
+        totalCount,
         post_per_month_Totals:data,
         payments
     })
@@ -162,8 +166,8 @@ exports.getAllPayments = asyncHandler(async (req, res, next) => {
 
 // get single payment detail /payment/:id
 exports.getOnePayment=asyncHandler(async(req,res,next)=>{
-    const {id}=req.params.id;
-    const payment=await Payment.findOne(id).populate('user','firstname lastname profile').exe()
+    const {id}=req.params;
+    const payment=await Payment.findOne({_id:id}).populate('user','_id firstname lastname profile address')
 
     res.status(200).json({
         success:true,

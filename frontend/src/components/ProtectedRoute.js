@@ -5,7 +5,7 @@ import { loadUser } from "../actions/authActions"
 import { toast } from "react-toastify"
 
 
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = ({children,isAdmin,isProductOwner}) => {
     const dispatch =useDispatch()
     const {isAuthenticated,isLoading,user}=useSelector((state)=>state.authState)
     if(!isAuthenticated && !isLoading) {        
@@ -19,6 +19,7 @@ const ProtectedRoute = ({children}) => {
         );
     }
     if(isAuthenticated && user?.isvalidEmail){
+        if((isAdmin && user?.role!=='Admin') || (isProductOwner && user?.role!=='Product Owner'))return <Navigate to={'/'}/>
         return children
     }
     if(isLoading)

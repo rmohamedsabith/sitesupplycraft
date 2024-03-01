@@ -14,21 +14,26 @@ import { useLocation } from "react-router-dom";
 import { Button, Modal, Tab, Tabs } from "react-bootstrap";
 import "./Previw.css";
 import { Navigate } from "react-router-dom";
-import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSquarePlus} from '@fortawesome/free-solid-svg-icons';
+import Payment from "./Payment";
+import { ChatState } from "../../chatContex";
+
 
 
 const PreviewProduct = () => {
   // handling the item array
+  const{postProducts,setPostProducts}=ChatState()
   const [activeTab, setActiveTab] = useState(0);
   const [currentProduct, setCurrentProduct] = useState(null);
 
-  const navigatee = useNavigate();
+  const navigate = useNavigate();
 
+  console.log(postProducts)
   //edit button handler
 
   const onClickEditHandler = () => {
     const activeTabIndex = activeTab;
-    navigatee("/productOwner/addProduct/Preview/Edit", {
+    navigate("/productOwner/addProduct/Preview/Edit", {
       state: activeTabIndex,
     });
     console.log(activeTab);
@@ -39,7 +44,7 @@ const PreviewProduct = () => {
   const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [modalShow, setModalShow] = React.useState(false);
+  //const [modalShow, setModalShow] = React.useState(false);
 
   // Get product details Add Product page
   const Details = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storage
@@ -60,15 +65,19 @@ const PreviewProduct = () => {
     }
   };
   const handleAddMorebutton = () => {
-    navigatee("/productOwner/addProduct");
+    navigate("/productOwner/addProduct");
   };
   const handleBackPage = () => {
-    navigatee("/ProductOwner/addProduct");
+    navigate("/ProductOwner/addProduct");
+  };
+  const handlePay = () => {
+    if(Object.keys(Details).length>0)navigate('/ProductOwner/addProduct/Pay')
   };
 
-  // ***paymet model popup ***
 
-  const PaymentAlert = (props) => {
+   // ***paymet model popup ***
+
+   /* const PaymentAlert = (props) => {
     const [c_name, setCName] = useState("");
     const [c_number, setCNumber] = useState("");
     const [c_date, setCDate] = useState("");
@@ -190,20 +199,20 @@ const PreviewProduct = () => {
         </Modal.Footer>
       </Modal>
     );
-  };
+  }; */
 
   //  ***payment model end ***
-
   return (
     <div className="d-flex justify-content-center align-item-center">
       <MetaData title={"Preview"} />
       <div style={{ marginLeft: "3px", marginTop: "3px" }}>
-      <FontAwesomeIcon icon={faArrowLeft} size="3x" onClick={handleBackPage}/>
+      <FontAwesomeIcon icon={faArrowLeft} size="3x" style={{marginTop:'30px'}} onClick={handleBackPage}/>
       </div>
       <div
         className="card productFrame"
         onDoubleClick={() => setIsClicked(false)}
       >
+        
         <Tabs
           activeKey={activeTab}
           onSelect={(index) => setActiveTab(index)}
@@ -343,9 +352,7 @@ const PreviewProduct = () => {
                     <p style={{ paddingLeft: "10px", color: "red" }}>
                       {product.owner?.phone}
                     </p>
-                    <br />
-                    
-                   
+                    <br />              
                   </Col>
                 </>
               </Row>
@@ -384,32 +391,28 @@ const PreviewProduct = () => {
         </Tabs>
       </div>
       <div style={{ marginRight: "5px" }}>
+      <Col>
+      <Row><FontAwesomeIcon icon={faSquarePlus} size="3x" style={{marginTop:'30px',cursor:'pointer'}} onClick={handleAddMorebutton}/>
+      </Row>
+      <Row>
+        
         <Button
-          onClick={handleAddMorebutton}
-          variant="primary"
-          style={{
-            width: "150px",
-            height: "50px",
-            marginTop: "150px",
-            border: "none",
-          }}
-        >
-          Add More
-        </Button>{" "}
-        <Button
-          className="Preview-buttons"
-          variant="primary"
-          style={{
-            border: "none",
-            width: "150px",
-            height: "50px",
-            marginTop: "20px",
-          }}
-          onClick={() => setModalShow(true)}
-        >
-          Publish
-        </Button>{" "}
-        <PaymentAlert show={modalShow} onHide={() => setModalShow(false)} />
+            className="Preview-buttons"
+            variant="primary"
+            style={{
+              border: "none",
+              marginTop: "20px",
+            }}
+            //onClick={() => setModalShow(true)}
+            onClick={handlePay}
+          >
+            <span style={{fontSize:'20px'}}>Publish</span><br/>
+            Total Amount <br/>{Object.keys(Details).length>1?`${Object.keys(Details).length}x 100`:`${Object.keys(Details).length}x 200`}  = Rs.{Object.keys(Details).length>1?Object.keys(Details).length*100:Object.keys(Details).length*200}
+        </Button>
+      </Row>
+      </Col>
+       
+        {/* <PaymentAlert show={modalShow} onHide={() => setModalShow(false)} /> */}
       </div>
     </div>
   );

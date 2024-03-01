@@ -7,6 +7,7 @@ import authReducers from './slices/authSlice'
 import productReducers from './slices/productSlice'
 import messagesReducers from './slices/messagesSlice'
 import adminReducers from './slices/adminSlice'
+import paymentReducers from './slices/paymentSlice'
 
 
 const reducer = combineReducers({
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   productState:productReducers,
   messagesState:messagesReducers,
   adminState:adminReducers,
+  paymentState:paymentReducers,
 });
 
 const store = configureStore({

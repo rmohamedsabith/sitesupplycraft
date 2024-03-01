@@ -34,11 +34,12 @@ import AdminLayout from './components/Layouts/AdminLayout';
 import Payments from './components/Admin/Payments'
 import PaymentDetails from './components/Admin/PaymentDetails'
 import axios from 'axios';
-import {Element} from '@stripe/react-stripe-js'
+import {Elements} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
 import { getUnreadMessages } from './actions/messagesAction';
 import { ChatState } from './chatContex';
 import Edit_product from './components/Product Owner/Edit_product';
+import Update from './components/Product Owner/Update';
 
 
 
@@ -61,15 +62,21 @@ function App() {
     setHide(isMobile)
   },[isMobile])
 
-  useEffect(()=>{
-    async function getStripeAPI(){
-      const {data}=await axios.get('/SiteSupplyCraft/payment/stripeApi')
-      setStripeApi(data.stripeApiKey)
+  useEffect(() => {
+    if (isAuthenticated && user?.role === 'Product Owner') {
+      async function getStripeAPI() {
+        try {
+          const { data } = await axios.get('/SiteSupplyCraft/payment/stripeApi');
+          setStripeApi(data.stripeApiKey);
+        } catch (error) {
+          console.error('Error fetching Stripe API:', error);
+        }
+      }
+      getStripeAPI();
     }
-    if(isAuthenticated && user.role==='Product Owner')getStripeAPI();
-  },[isAuthenticated])
+  }, [isAuthenticated, user?.role]);
 
-
+//console.log(loadStripe(stripeApi),stripeApi)
   
   return (    
     <div className='App'>
@@ -103,30 +110,33 @@ function App() {
 
           {/* ProductOwner */}
               {/* Tharushi */}
-          <Route path='ProductOwner/DashBoard' element={<DashBoard/>}/> 
-          <Route path='ProductOwner/Messages' element={<Messages/>}/> 
+          <Route path='ProductOwner/DashBoard' element={<ProtectedRoute isProductOwner={true}><DashBoard/></ProtectedRoute>}/> 
+          <Route path='ProductOwner/Messages' element={<ProtectedRoute isProductOwner={true}><Messages/></ProtectedRoute>}/> 
+          <Route path='ProductOwner/:id/edit' element={<ProtectedRoute isProductOwner={true}><Update/></ProtectedRoute>}/> 
+          
           
           
               {/* Sandeepa */}
-          <Route path='ProductOwner/addProduct' element={<ProtectedRoute><AddProduct/></ProtectedRoute>}/>
-          <Route path='ProductOwner/addProduct/Payment' element={<ProtectedRoute><Payment/></ProtectedRoute>}/>   
-          <Route path='ProductOwner/addProduct/Preview' element={<ProtectedRoute><PreviewProduct/></ProtectedRoute>}/>       
-          {stripeApi&&<Route path='ProductOwner/addProduct/Pay' element={<ProtectedRoute><Element stripe={loadStripe(stripeApi)}><Payment/></Element></ProtectedRoute>}/>       
+          <Route path='ProductOwner/addProduct' element={<ProtectedRoute isProductOwner={true}><AddProduct/></ProtectedRoute>}/>
+          <Route path='ProductOwner/addProduct/Payment' element={<ProtectedRoute isProductOwner={true}><Payment/></ProtectedRoute>}/>   
+          <Route path='ProductOwner/addProduct/Preview' element={<ProtectedRoute isProductOwner={true}><PreviewProduct/></ProtectedRoute>}/>
+          <Route path='ProductOwner/addProduct/Preview/Edit' element={<ProtectedRoute isProductOwner={true}><Edit_product/></ProtectedRoute>} />       
+          {stripeApi&&<Route path='ProductOwner/addProduct/Pay' element={<ProtectedRoute isProductOwner={true}><Elements stripe={loadStripe(stripeApi)}><Payment/></Elements></ProtectedRoute>}/>       
 }           
           {/* <Route path='ProductOwner/becomeJobSeeker' element={<BecomeJobSeeker/>}/>  */}
 
           {/* Admin */}
           {/* Navodi */}
           <Route path="/admin/*" element={<AdminLayout />}>
-            <Route index element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="messages" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-            <Route path="payments" element={<ProtectedRoute><Payments/></ProtectedRoute>} />
-            <Route path="payments/details" element={<ProtectedRoute><PaymentDetails/></ProtectedRoute>} />
+            <Route index element={<ProtectedRoute isAdmin={true}><AdminDashboard /></ProtectedRoute>} />
+            <Route path="dashboard" element={<ProtectedRoute isAdmin={true}><AdminDashboard /></ProtectedRoute>} />
+            <Route path="messages" element={<ProtectedRoute isAdmin={true}><Chat /></ProtectedRoute>} />
+            <Route path="payments" element={<ProtectedRoute isAdmin={true}><Payments/></ProtectedRoute>} />
+            <Route path="payments/details" element={<ProtectedRoute isAdmin={true}><PaymentDetails/></ProtectedRoute>} />
           
             {/* Hiran */}
-            <Route path='Verifications' element={<ProtectedRoute><Verifications/></ProtectedRoute>}/>
-            <Route path='Verification/:id' element={<ProtectedRoute><Verification/></ProtectedRoute>}/>
+            <Route path='Verifications' element={<ProtectedRoute isAdmin={true}><Verifications/></ProtectedRoute>}/>
+            <Route path='Verification/:id' element={<ProtectedRoute isAdmin={true}><Verification/></ProtectedRoute>}/>
           </Route>
           {/* <Route path="/admin/messages/:id" element={<ProtectedRoute><MessageDetails /></ProtectedRoute>} /> */}
             

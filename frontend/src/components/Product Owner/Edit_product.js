@@ -7,10 +7,11 @@ import { useState, useEffect } from "react";
 import MetaData from "../Layouts/MetaData";
 import PreviewProduct from "./PreviewProduct"; // Import the PreviewProduct component
 import { useSelector } from "react-redux";
+import { ChatState } from "../../chatContex";
 
 const Edit_product = () => {
   //fetching the index of the element
-
+  const{postProducts,setPostProducts}=ChatState()
   const Details = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storage
   const location = useLocation();
   const activeTabIndex = location.state || 0;
@@ -35,12 +36,8 @@ const Edit_product = () => {
   const [catagory, setCatagory] = useState(
     ProductDetails ? ProductDetails.category : ""
   );
-  const [images, setImages] = useState(
-    ProductDetails ? ProductDetails.images : []
-  );
-  const [previewImages, setPreviewImages] = useState(
-    ProductDetails ? ProductDetails.images : []
-  );
+  const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
   const [selectedOption, setSelectedOption] = useState(
     ProductDetails ? ProductDetails.type : "sell"
   );
@@ -134,8 +131,8 @@ const Edit_product = () => {
   };
   const handleUpdateItem = () => {
     if (validateFields()) {
-      const updatedDetails = [...Details];
-      updatedDetails[activeTabIndex] = {
+      const updatedDetails = Details.filter(product=>Details[activeTabIndex]!==product);
+      const newItem = {
         name: name,
         price: price,
         discount: discount,
@@ -143,11 +140,33 @@ const Edit_product = () => {
         category: catagory,
         images: previewImages,
         type: selectedOption,
-        isRent: isRent,
-        priceType: priceType,
-        owner: user,
+        owner:user,
+        //previewImages:previewImages
       };
-      sessionStorage.setItem("items", JSON.stringify(updatedDetails));
+      if(selectedOption==='rent')
+      {
+        newItem.priceType=priceType;
+      }
+      const updatedArray = [...updatedDetails, newItem]; // Combine existing data with new data
+      sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
+      const filteredFormData =postProducts.filter(product=>postProducts[activeTabIndex]!==product)
+      const formData=new FormData()
+        formData.append('name' , name);
+        formData.append('price' , price);
+        formData.append('discount' , discount);
+        formData.append('description' , discription);
+        formData.append('type' , selectedOption);
+        formData.append('category' , catagory);
+        images.forEach (image => {
+            formData.append('images', image)
+        })
+        if(selectedOption==='rent')
+        {
+          formData.append('priceType' , priceType);
+        }
+
+        if(postProducts.length>0)setPostProducts([...filteredFormData,formData])
+        else setPostProducts([...filteredFormData,formData])
 
       navigate("/ProductOwner/addProduct/Preview");
     }
@@ -155,9 +174,10 @@ const Edit_product = () => {
   const handleRemoveItem = () => {
     Details.splice(activeTabIndex, 1);
     sessionStorage.setItem("items", JSON.stringify(Details));
+    setPostProducts(postProducts.filter(product=>postProducts[activeTabIndex]!==product))
     navigate("/ProductOwner/addProduct/Preview");
   };
-
+  console.log(postProducts)
   //    ***empty fields handling start
 
   const validateFields = () => {
@@ -229,14 +249,12 @@ const Edit_product = () => {
     const updatedImages = [...previewImages];
     updatedImages.splice(index, 1);
     setPreviewImages(updatedImages);
-
     const updatedFiles = [...images];
     updatedFiles.splice(index, 1);
     setImages(updatedFiles);
   };
   const handleImageClick = (index) => {
     setClickedImageIndex(index === clickedImageIndex ? null : index);
-
     console.log(clickedImageIndex);
   };
 
@@ -438,7 +456,7 @@ const Edit_product = () => {
                 </div>
                 <div>
                   {previewImages.map((image, index) => (
-                    <>
+                    <div key={index}>
                       <Image
                         className=" mb-3 mr-2 previewImg"
                         key={image}
@@ -458,7 +476,7 @@ const Edit_product = () => {
                           Remove
                         </Button>
                       )}
-                    </>
+                    </div>
                   ))}
                 </div>
                 {previewImagesError && (

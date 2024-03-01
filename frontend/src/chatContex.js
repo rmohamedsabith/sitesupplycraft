@@ -4,10 +4,11 @@ import { getUnreadMessages } from "./actions/messagesAction";
 
 const ChatContext = createContext();
 const ChatProvider = ({ children }) => {
-    const{user}=useSelector((state)=>state.authState)
+  const{user}=useSelector((state)=>state.authState)
   const [notification, setNotification] = useState([]);
   const dispatch=useDispatch()
   const [users,setUsers]=useState([])
+  const [postProducts,setPostProducts]=useState([])
 
   useEffect(()=>{
     //if(user.role==='Product Owner')dispatch(getUnreadMessages)
@@ -18,7 +19,10 @@ const ChatProvider = ({ children }) => {
       value={{       
         notification,
         setNotification,
-        users,setUsers
+        users,
+        setUsers,
+        postProducts,
+        setPostProducts
       }}
     >
       {children}

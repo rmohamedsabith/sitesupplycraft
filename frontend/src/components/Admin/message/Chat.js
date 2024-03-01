@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import  './Messages.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments } from '@fortawesome/free-regular-svg-icons'
+import MetaData from '../../Layouts/MetaData'
 
 const Chat = () => {
   const {isLoading,datas,error}=useSelector((state)=>state.messagesState)    
@@ -27,6 +28,8 @@ const Chat = () => {
   },[error])
 
   return (
+    <>
+      <MetaData title={'Messages'}/>
     <div className="chat">  {/* overflow-hidden flex sm:h-[450px] md:h-[550px] bg-black-500 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 */}
       <div className="messageBar pt-3">
         <SearchInput users={datas?datas:[]} setFilterUser={setFilterUser}/>
@@ -47,6 +50,7 @@ const Chat = () => {
       </div>
      
     </div>
+    </>
   )
 }
 

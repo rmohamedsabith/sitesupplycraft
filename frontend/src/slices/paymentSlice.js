@@ -37,7 +37,7 @@ const paymentSlice = createSlice({
             }
         },
         userpaymentsRequest(state, action) {
-            return {
+            return { 
                 ...state,
                 isLoading: true
             }
@@ -48,6 +48,7 @@ const paymentSlice = createSlice({
                 isLoading: false,
                 userpayments: action.payload.payments,
                 totalAmount:action.payload.totalAmount,
+                totalCount:action.payload.totalCount,
                 totalsOfCountAmount:action.payload.post_per_month_Totals,
                 
             }

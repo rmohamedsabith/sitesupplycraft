@@ -11,9 +11,13 @@ import { useSelector } from "react-redux";
 import Edit_product from "./Edit_product";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import { toast } from "react-toastify";
+import { ChatState } from "../../chatContex";
 
 const AddProduct = () => {
   const navigate = useNavigate(); //get the navigate object
+  const{postProducts,setPostProducts}=ChatState()
 
   const { user } = useSelector((state) => state.authState);
 
@@ -174,7 +178,9 @@ const AddProduct = () => {
 
   //functions for add more items (creating the items array and adding products to it)
 
-  const handleAddItem = () => {
+  const handleAddItem = async() => {
+    document.getElementById('addItem').disabled=true
+    console.log(images)
     if (validateFields()) {
       const newItem = {
         //creating newItem to add the array
@@ -185,27 +191,64 @@ const AddProduct = () => {
         category: catagory,
         images: previewImages,
         type: selectedOption,
-        isRent: isRent,
-        priceType: priceType,
-        owner: user,
+        owner:user
       };
-      const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
-      const updatedArray = [...existingData, newItem]; // Combine existing data with new data
-      setItems(updatedArray);
-      sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
+      if(selectedOption==='rent')
+      {
+        newItem.priceType=priceType;
+      }
+      
+     
+       const {data}=await axios.post('/SiteSupplyCraft/products/check',{name})
+       if(!data.duplicate)
+       {
+        const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
+        const updatedArray = [...existingData, newItem]; // Combine existing data with new data
+        setItems(updatedArray);
+        sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
 
-      //placing input field empty again to create a new product
-      setName("");
-      setPrice("");
-      setDiscount("");
-      setDiscript("");
-      setCatagory("");
-      setPreviewImages([]);
-      setSelectedOption("sell");
-      setIsRent(false);
-      setPriceType("");
+        const formData=new FormData()
+        formData.append('name' , name);
+        formData.append('price' , price);
+        formData.append('discount' , discount);
+        formData.append('description' , discription);
+        formData.append('type' , selectedOption);
+        formData.append('category' , catagory);
+        images.forEach (image => {
+            formData.append('images', image)
+        })
+        if(selectedOption==='rent')
+        {
+          formData.append('priceType' , priceType);
+        }
 
-      navigate("preview");
+        if(postProducts.length>0)setPostProducts([...postProducts,formData])
+        else setPostProducts([formData])
+
+        
+        console.log(formData)
+  
+        //placing input field empty again to create a new product
+        setName("");
+        setPrice("");
+        setDiscount("");
+        setDiscript("");
+        setCatagory("");
+        setPreviewImages([]);
+        setSelectedOption("sell");
+        setIsRent(false);
+        setPriceType("");
+  
+        navigate("preview");
+       }
+       else{
+        document.getElementById('addItem').disabled=false
+
+        toast.error('There is a duplicate name please change your name',{
+          position:'bottom-center'
+        })
+       }
+      
     }
   };
   const handlForwordPage = () => {
@@ -333,9 +376,9 @@ const AddProduct = () => {
                           onChange={handlePriceTypeonChange}
                         >
                           <option></option>
-                          <option value="perDay">perDay</option>
-                          <option value="perMonth">perMonth</option>
-                          <option value="perHour">perHour</option>
+                          <option value="/perDay">perDay</option>
+                          <option value="/perMonth">perMonth</option>
+                          <option value="/perHour">perHour</option>
                         </Form.Select>
                       </div>
                       {priceTypeError && (
@@ -444,6 +487,7 @@ const AddProduct = () => {
                 >
                   <div style={{ marginTop: "20px", marginBottom: "2pxs" }}>
                     <Button
+                      id="addItem"
                       variant="primary"
                       style={{ marginLeft: "35%", border: "none" }}
                       size="lg"

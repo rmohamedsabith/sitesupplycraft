@@ -554,7 +554,7 @@ p a{
 /* resetPassword */
 .reset{
   width: 60%;
-  height: 60vh; 
+  min-height: 60vh; 
   border-top: 10px solid #053B50; 
 }
 .frame-reset

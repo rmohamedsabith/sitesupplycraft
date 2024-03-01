@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "rc-tooltip/assets/bootstrap.css";
 import { useDispatch } from "react-redux";
 import { getMessagesList } from "../../actions/messagesAction";
+import { getAllPayments } from "../../actions/paymentActions";
 
 const AdminSideBar = () => {
   const location = useLocation();
@@ -26,6 +27,10 @@ const navigate=useNavigate()
    const handleClick=()=>{  
     
       dispatch(getMessagesList).then(()=>navigate('/admin/messages')) 
+    }
+   const handlePayments=()=>{  
+    
+    dispatch(getAllPayments).then(()=>navigate('/admin/payments')) 
     }
   
 
@@ -53,13 +58,13 @@ const navigate=useNavigate()
       >
         Verifications
       </Link>
-      <Link
-        to="/admin/payments"
-        className={`d-block sidebarLink ${isActive("/admin/payments") ? "active" : ""}`}
+      <div
+        onClick={handlePayments}
+        className={`d-block sidebarLink ${isActive("/admin/payments")||isActive("/admin/payments/details") ? "active" : ""}`}
         style={{ cursor: "pointer" }}
       >
         Payments
-      </Link>
+      </div>
     </div>
     </center>
   );

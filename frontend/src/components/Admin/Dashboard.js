@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../Loader'
 import { getTotals, getTotals_per_month } from "../../actions/adminActions";
 import { getMessagesList } from "../../actions/messagesAction";
+import MetaData from "../Layouts/MetaData";
 
 const Dashboard = () => {
   const dispatch=useDispatch()
@@ -25,47 +26,50 @@ const products = datas?.products ? Object.keys(datas.products).map((key) => ({ k
     <>
    {
     isLoading?<Loader/>:
+    <>
+      <MetaData title={'Dashboard'}/>
     <section  className="container mt-2">
       
     <div style={{display: "flex", alignItems: "center", justifyContent: "center",marginTop:'10px'}} className="row">
           <center><u><h3>Monthly Item Counts and Totals for {new Date().getFullYear()}</h3></u></center>
       <div style={{margin: '45px'}} className="col-md-4 mb-3">
         <DashboardTile
-          categoryTitle={"Advertisements"}
+          categoryTitle={"No of Advertisements"}
           CategotyTotalCount={Totals?.adsCount}
           graphData={products.map(item=>item.value)}
         />
       </div>
       <div style={{margin: '45px'}} className="col-md-4 mb-3">
         <DashboardTile
-          categoryTitle={"Customers"}
+          categoryTitle={"No of Customers"}
           CategotyTotalCount={Totals?.cutomerCount}
           graphData={customers.map(item=>item.value)}
         />
       </div>
       <div style={{margin: '45px'}} className="col-md-4 mb-3">
         <DashboardTile
-          categoryTitle={"Product Owners"}
+          categoryTitle={"No of Product Owners"}
           CategotyTotalCount={Totals?.productOwnerCount}
           graphData={productOwners.map(item=>item.value)}
         />
       </div>
       <div style={{margin: '45px'}} className="col-md-4 mb-3">
         <DashboardTile
-          categoryTitle={"Job Seekers"}
+          categoryTitle={"No of Job Seekers"}
           CategotyTotalCount={Totals?.jobSeekerCount}
           graphData={jobseekers.map(item=>item.value)}
         />
       </div>
       <div style={{margin: '45px'}} className="col-md-4 mb-3">
         <DashboardTile
-          categoryTitle={"Payments"}
+          categoryTitle={"No of Payments"}
           CategotyTotalCount={Totals?.paymentCount}
           graphData={payments.map(item=>item.value)}
         />
       </div>
     </div>
   </section>
+  </>
    }
    </>
   );
