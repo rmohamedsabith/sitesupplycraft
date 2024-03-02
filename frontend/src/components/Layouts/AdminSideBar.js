@@ -9,7 +9,7 @@ const AdminSideBar = () => {
   const location = useLocation();
 const navigate=useNavigate()
   const isAdminPath = (path) => {
-    const adminPaths = ["/admin/dashboard", "/admin/messages", "/admin/verifications", "/admin/payments", "/admin/payments/details"];
+    const adminPaths = ["/admin/dashboard", "/admin/messages", "/admin/verifications", "/admin/verification", "/admin/payments", "/admin/payments/details"];
     return adminPaths.includes(location.pathname);
   };
 
@@ -53,7 +53,7 @@ const navigate=useNavigate()
       </div>
       <Link
         to="/admin/verifications"
-        className={`d-block sidebarLink ${isActive("/admin/verifications") ? "active" : ""}`}
+        className={`d-block sidebarLink ${isActive("/admin/verifications")||isActive("/admin/verification") ? "active" : ""}`}
         style={{ cursor: "pointer" }}
       >
         Verifications

@@ -16,7 +16,6 @@ import {deleteProduct} from '../../actions/productActions'
 import MetaData from '../Layouts/MetaData'
 import { Col, Image, Row } from 'react-bootstrap'
 import { getMessages } from '../../actions/messagesAction';
-import { clearProduct } from '../../slices/productSlice';
 
 
 ChartJS.register(
@@ -28,7 +27,7 @@ ChartJS.register(
 const DashBoard = () => {
   
   const{isLoading,products,ActiveProducts,DeactiveProducts,count,error} = useSelector((state)=> state.productsState)
-  const {isLoading:productLoading,products:addProducts,isProductAdded,error:addProductErr}=useSelector(state=>state.productState)
+  const {products:addProducts}=useSelector(state=>state.productState)
 
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -39,7 +38,7 @@ const DashBoard = () => {
 
   useEffect(()=>{
         dispatch(getOwnerProducts(keyword))
-  },[dispatch,status,addProducts])
+  },[dispatch,status,addProducts,keyword])
 
  
 
@@ -212,7 +211,7 @@ const DashBoard = () => {
                       <td>{formatDate(item.createdAt)}</td>
                       <td style={{color:'green'}}>{statuscolor(item.status)}</td>
                       <td>
-                      <Link to = {`/ProductOwner/${item._id}/edit`}><button className='btn'  /* onClick={handleEdit(item._id) */>Edit</button></Link>
+                    <button className='btn'  onClick={()=>handleEdit(item._id)}>Edit</button>
                     <button className='btn' onClick={()=>handledelete(item._id)}>Delete</button>
                     
                     {item.status==='Active' ?

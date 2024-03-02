@@ -203,13 +203,16 @@ const updateProduct=asyncHandler(async(req,res)=>{
         {
             return res.status(400).json({message:"There are no product to update"})
         }
-         // Check for duplicate 
-         const duplicate = await product.findOne({ name:req.body.name}).lean().exec()
+        if(req.body.name)
+        {
+                // Check for duplicate 
+            const duplicate = await product.findOne({ name:req.body.name}).lean().exec()
 
-         // Allow updates to the original user 
-         if (duplicate && duplicate?._id.toString() !== req.params.id) {
-             return res.status(409).json({ message: 'Duplicate username' })
-         }
+            // Allow updates to the original user 
+            if (duplicate && duplicate?._id.toString() !== req.params.id) {
+                return res.status(409).json({ message: 'Duplicate username' })
+            }
+        }
          const oldImages=Product.images;
          let images=[];
          /* req.images.forEach(item => {

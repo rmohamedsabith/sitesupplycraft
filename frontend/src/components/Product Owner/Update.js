@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import './update.css'
-import { Link, useParams,useLocation, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Col, Form, Image, Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react'
 import MetaData from '../Layouts/MetaData'
 import{useDispatch, useSelector} from 'react-redux'
-import {getProduct} from '../../actions/productActions'
 import Loader from '../Loader'
 import {updateProduct} from '../../actions/productActions'
 import { toast } from 'react-toastify'
 import { clearError } from '../../slices/productSlice';
+import { getMessages } from '../../actions/messagesAction';
 
 const Update = () => { 
   const{isLoading,product:ProductDetails,error,isProductUpdated}= useSelector((state)=>state.productState)
@@ -50,7 +50,6 @@ const Update = () => {
   const [discountError, setDiscountError] = useState("");
   const [discriptionError, setDiscriptError] = useState("");
   const [catagoryError, setCatagoryError] = useState("");
-  const [previewImagesError, setPreviewImagesError] = useState("");
   const [selectedOptionError, setSelectedOptionError] = useState("");
   const [priceTypeError, setPriceTypeError] = useState("");
   
@@ -72,7 +71,7 @@ const Update = () => {
         onOpen:dispatch(clearError())
       })
     }
-  },[error,isProductUpdated,dispatch])
+  },[error,isProductUpdated,dispatch,navigate])
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -174,7 +173,7 @@ const Update = () => {
       //dispatch(updateProduct(updatedDetails));
 
       const formData=new FormData()
-      formData.append('name' , name);
+      name!==ProductDetails.name && formData.append('name' , name);
       formData.append('price' , price);
       formData.append('discount' , discount);
       formData.append('description' , description);
@@ -273,17 +272,21 @@ const Update = () => {
     return isValid;
   };
 
+  const handleMessage=()=>{
+    dispatch(getMessages).then(()=>navigate('/ProductOwner/Messages'))
+  }
+
   
   return (
     <>
     <MetaData title={'Add Product'}/>
       <Row>
-      <Col xs={2} style={{backgroundColor:'#176B87'}}>
+      <Col xs={2}  style={{backgroundColor:'#176B87',minHeight:'90vh'}}>     
       <div className='p-3'>
         <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
         <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
-        <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
-      </div>
+        <button className='btn1' onClick={handleMessage}>Message</button>
+      </div> 
       </Col>
       <Col className="addProduct">
       <div className='block'>
@@ -456,9 +459,6 @@ const Update = () => {
                     </div>
                   ))}
                 </div>
-                {previewImagesError && (
-                  <span className="error">{previewImagesError}</span>
-                )}
                  </div>               
                 <div className="mb-2">
                   <Row >

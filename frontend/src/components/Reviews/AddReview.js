@@ -60,10 +60,10 @@ const AddReview = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" style={{border:'none'}} onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="primary" style={{border:'none'}} onClick={handleSubmit}>
             Save
           </Button>
         </Modal.Footer>

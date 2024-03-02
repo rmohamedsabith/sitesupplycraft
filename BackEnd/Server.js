@@ -30,6 +30,7 @@ app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
 // to control how web pages in one domain can request and interact with resources from another domain
 app.use(cors())
 
+
 //to save the error and the response
 app.use(logger)
 
@@ -38,6 +39,9 @@ app.use('/SiteSupplyCraft',require('./routes/products'))
 app.use('/SiteSupplyCraft',require('./routes/auth'))
 app.use('/SiteSupplyCraft',require('./routes/processing'))
 app.use('/SiteSupplyCraft',require('./routes/laborers'))
+app.use('/SiteSupplyCraft',require('./routes/messages'))
+app.use('/SiteSupplyCraft',require('./routes/admin'))
+app.use('/SiteSupplyCraft',require('./routes/payment'))
 
 
 app.all('/*', (req, res) => {
