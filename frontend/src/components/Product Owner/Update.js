@@ -130,24 +130,28 @@ const Update = () => {
 
     const handleImageChange = (e) => {
       const files = Array.from(e.target.files);
-      const remaningSlots = 5 - previewImages.length;
-      const selectedImages = files.slice(0, remaningSlots); // ensure there is only 5 images
-      if (files.length > 5 || files.length > remaningSlots) {
-        alert("only 5 images can be added");
+      const remainingSlots = 5 - previewImages.length;
+      const selectedImages = files.slice(0, remainingSlots); // ensure there are only 5 images
+    
+      if (files.length > 5 || files.length > remainingSlots) {
+        alert("Only 5 images can be added");
       }
+    
       selectedImages.forEach((file) => {
         const reader = new FileReader();
-  
+    
         reader.onload = () => {
           if (reader.readyState === 2) {
-            setPreviewImages((oldArray) => [...oldArray, reader.result]);
-            setImages((oldArray) => [...oldArray, file]);
+            setImages((prevImages) => [...prevImages, file]);
+            setPreviewImages((prevImages) => [...prevImages, reader.result]);
+            
           }
         };
-  
+    
         reader.readAsDataURL(file);
       });
     };
+    
   
 
   const handlePriceTypeonChange = (event) =>{
@@ -158,8 +162,13 @@ const Update = () => {
 
  
   const handleUpdate = () => {
-    // Prepare updated product data
+    
     if (validateFields()) {
+      if (!Array.isArray(product)) {
+        // Handle the case when product is not an array (e.g., not initialized yet)
+        console.error("Product is not available or is not an array.");
+        return;
+      }
       const updatedDetails = [...product];
       updatedDetails[activeTabIndex] = {
         name : name,
@@ -194,15 +203,16 @@ const Update = () => {
     console.log(clickedImageIndex);
   };
   const validateFields = () => {
+    
     let isValid = true;
 
-    if (name.trim() === "") {
+    if (name === "") {
       setNameError("***name is required***");
       isValid = false;
     } else {
       setNameError("");
     }
-    if (typeof discount !== 'string' || discount.trim() === "") {
+    if (!discount || isNaN(parseInt(discount))) {
       setDiscountError("***Discount is required***");
       isValid = false;
     } else {
@@ -210,7 +220,7 @@ const Update = () => {
     }
     
 
-    if (   description.trim() === "") {
+    if (description.trim() === "") {
       setDiscriptError("***Discription is required***");
       isValid = false;
     } else {
@@ -238,8 +248,8 @@ const Update = () => {
       setSelectedOptionError("");
     }
 
-    if (typeof price !== 'string' ||  price.trim() === "") {
-      setPriceError("***price is requird***");
+    if (!price || isNaN(parseInt(price))) {
+      setPriceError("***this feild is requird***");
       isValid = false;
     } else {
       setPriceError("");
@@ -278,7 +288,7 @@ const Update = () => {
                                     {/*FORM ELEMENTS*/}
            {isLoading?<Loader/>:
           <div>
-            <Form className ='box' noValidate validated={validated} onSubmit={handleSubmit} >
+            <Form className ='box'  validated={validated} onSubmit={handleSubmit} >
 
             <div>
               <label>Type:</label>
@@ -300,6 +310,10 @@ const Update = () => {
               </div>
             
             </div>
+            {selectedOptionError && (
+                  <span className="error">{selectedOptionError}</span>
+                )}
+                <br />
 
             <br/>
 
@@ -309,6 +323,8 @@ const Update = () => {
                 <label>Name: </label>
               <Form.Control type="text" placeholder="Name" className='nameCs' value={name} onChange={handleNameChange} />
               </div>
+             
+              {nameError && <span className="error">{nameError}</span>}
             <br/>
             {
               isRent?
@@ -317,9 +333,14 @@ const Update = () => {
                 <div>
               <label>Price:</label>
             <Form.Control type="text" placeholder="Price" value={price} onChange={handlePriceChange}/>
+            
             </div>
+            {priceError && (
+                        <span className="error">{priceError}</span>
+                      )}
                 </Col>
                 <Col>
+                
                 <div>
               <label>Price Type:</label>
                <Form.Select aria-label="Default select example" value={priceType} onChange={handlePriceTypeonChange} >
@@ -328,15 +349,25 @@ const Update = () => {
                   <option value='/perMonth'>perMonth</option>
                   <option value='/perHour'>perHour</option>
                 </Form.Select>
+                {priceTypeError && (
+                        <span className="error">{priceTypeError}</span>
+                      )}
               </div>
+              
                 </Col>
               </Row>
               :
               <div>
               <label>Price:</label>
             <Form.Control type="text"  placeholder="Price" value = {price} onChange={handlePriceChange}/>
+            
             </div>
+           
             }
+            {priceError && (
+                        <span className="error">{priceError}</span>
+                      )}
+            
             
 
             <br/>
@@ -344,10 +375,13 @@ const Update = () => {
             <div>
               <label>Discount:</label>
             <Form.Control type="text" placeholder="Discount" value = {discount} onChange={handleDiscountChange} />
+            {discountError && (
+                    <span className="error">{discountError}</span>
+                  )}
             </div>
-
+            
             <br/>
-
+            
             <div>
               <label>Discription:</label>
             
@@ -358,7 +392,9 @@ const Update = () => {
                placeholder="Discritption about the item"
                style={{ height: '100px' }}
              />
-            
+            {discriptionError && (
+                    <span className="error">{discriptionError}</span>
+                  )}
             </div>
 
                <br/>
@@ -375,7 +411,9 @@ const Update = () => {
                     ))
                 }
                 </Form.Select>
-               
+                {catagoryError && (
+                    <span className="error">{catagoryError}</span>
+                  )}
               </div>
 
                 <br/>
@@ -388,28 +426,28 @@ const Update = () => {
                  <Form.Control type="file" size="lg" multiple={true} accept="image/*" onChange={handleImageChange} />
                 </Form.Group>
                 {previewImages && previewImages.map((image, index) => (
-                    <>
-                      <Image
-                        className=" mb-3 mr-2 previewImg"
-                        key={image}
-                        src={images[index].image}
-                        alt={`Image Preview`}
-                        width="55"
-                        height="52"
-                        onClick={() => handleImageClick(index)}
-                      />
-                      {clickedImageIndex === index && (
-                        <Button
-                          style={{ border: "none" }}
-                          variant="primary"
-                          size="sm"
-                          onClick={() => handleRemoveImage(index)}
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </>
-                  ))}
+          <div key={index} className='container'>
+           <Image
+            className="mb-3 mr-2 previewImg"
+            src={images[index].image} 
+            alt={`Image Preview`}
+            width="55"
+            height="52"
+            onClick={() => handleImageClick(index)}
+    />
+      {clickedImageIndex === index && (
+      <Button
+            style={{ border: "none" }}
+            variant="primary"
+            size="sm"
+            onClick={() => handleRemoveImage(index)}
+      >
+        Remove
+      </Button>
+    )}
+  </div>
+))}
+
                 
                 {previewImagesError && (
                   <span className="error">{previewImagesError}</span>

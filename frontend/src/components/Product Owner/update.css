@@ -53,4 +53,15 @@
 
     background-color: brown;
 }
+.error{
+    color: red;
+} 
+.container{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: none;
+    gap: 20px;
+   
+}
 
