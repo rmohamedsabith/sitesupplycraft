@@ -203,29 +203,36 @@ const updateProduct=asyncHandler(async(req,res)=>{
         {
             return res.status(400).json({message:"There are no product to update"})
         }
-         // Check for duplicate 
-         const duplicate = await product.findOne({ name:req.body.name}).lean().exec()
+        if(req.body.name)
+        {
+                // Check for duplicate 
+            const duplicate = await product.findOne({ name:req.body.name}).lean().exec()
 
-         // Allow updates to the original user 
-         if (duplicate && duplicate?._id.toString() !== req.params.id) {
-             return res.status(409).json({ message: 'Duplicate username' })
-         }
+            // Allow updates to the original user 
+            if (duplicate && duplicate?._id.toString() !== req.params.id) {
+                return res.status(409).json({ message: 'Duplicate username' })
+            }
+        }
          const oldImages=Product.images;
          let images=[];
-        if(req.files.length>0)
-        {
-            req.files.forEach(file=>{
-                let url=`${process.env.BACK_END_URL}/uploads/products/${file.filename}`
-                images.push({image:url})
-            })
-        }
-        req.body.images=images;
-  
+         /* req.images.forEach(item => {
+            if (typeof item === 'string') {
+                images.push(item);
+            }
+          }); */
+            if(req.files?.length>0)
+            {
+                req.files.forEach(file=>{
+                    let url=`${process.env.BACK_END_URL}/uploads/products/${file.filename}`
+                    images.push({image:url})
+                })
+                req.body.images=images; 
+            }
+                   
         const data =await product.findByIdAndUpdate(req.params.id,req.body,{
             new:true,
             runValidators:true
          })
-         
        
         // delete the stored image if the new image is different
         if (oldImages && req.body.images) {
@@ -247,9 +254,10 @@ const updateProduct=asyncHandler(async(req,res)=>{
 
         res.status(200).json({
             success:true,
-            data
+            Product:data
         })
     } catch (error) {
+        console.log(error)
         res.status(400).json({
             success:false,
             message:error.message,

@@ -97,6 +97,7 @@ const handleDistrictSelect = (district) => {
 };
 
 const handleType=async (model)=>{
+  setKeyword(null)
   setRefreshSide(!refreshSide);
   await dispatch(clearProducts())
   dispatch(filter(null,null,null,null,model))

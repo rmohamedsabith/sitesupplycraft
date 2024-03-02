@@ -37,7 +37,6 @@ import axios from 'axios';
 import {Elements} from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
 import { getUnreadMessages } from './actions/messagesAction';
-import { ChatState } from './chatContex';
 import Edit_product from './components/Product Owner/Edit_product';
 import Update from './components/Product Owner/Update';
 
@@ -45,8 +44,6 @@ import Update from './components/Product Owner/Update';
 
 
 function App() {
-  const {setNotification}=ChatState()
-  const{unreadMessages}=useSelector((state)=>state.messagesState) 
   const{isAuthenticated,user}=useSelector((state)=>state.authState)
   const[isDistrict,setIsDistrict]=useState(false)
   const[district,setDistrict]=useState('')
@@ -55,12 +52,12 @@ function App() {
   const[stripeApi,setStripeApi]=useState('')
   const dispatch=useDispatch()
 
-  const isMobile = useMediaQuery({ maxWidth: 1100 });
+  const isMobile = useMediaQuery({ maxWidth: 1210 });
   useEffect(()=>{
     dispatch(loadUser).then(()=>dispatch(getUnreadMessages)/* .then(()=>setNotification(unreadMessages)) */)
     
     setHide(isMobile)
-  },[isMobile])
+  },[isMobile,dispatch])
 
   useEffect(() => {
     if (isAuthenticated && user?.role === 'Product Owner') {
@@ -118,7 +115,6 @@ function App() {
           
               {/* Sandeepa */}
           <Route path='ProductOwner/addProduct' element={<ProtectedRoute isProductOwner={true}><AddProduct/></ProtectedRoute>}/>
-          <Route path='ProductOwner/addProduct/Payment' element={<ProtectedRoute isProductOwner={true}><Payment/></ProtectedRoute>}/>   
           <Route path='ProductOwner/addProduct/Preview' element={<ProtectedRoute isProductOwner={true}><PreviewProduct/></ProtectedRoute>}/>
           <Route path='ProductOwner/addProduct/Preview/Edit' element={<ProtectedRoute isProductOwner={true}><Edit_product/></ProtectedRoute>} />       
           {stripeApi&&<Route path='ProductOwner/addProduct/Pay' element={<ProtectedRoute isProductOwner={true}><Elements stripe={loadStripe(stripeApi)}><Payment/></Elements></ProtectedRoute>}/>       
@@ -136,7 +132,7 @@ function App() {
           
             {/* Hiran */}
             <Route path='Verifications' element={<ProtectedRoute isAdmin={true}><Verifications/></ProtectedRoute>}/>
-            <Route path='Verification/:id' element={<ProtectedRoute isAdmin={true}><Verification/></ProtectedRoute>}/>
+            <Route path='Verification' element={<ProtectedRoute isAdmin={true}><Verification/></ProtectedRoute>}/>
           </Route>
           {/* <Route path="/admin/messages/:id" element={<ProtectedRoute><MessageDetails /></ProtectedRoute>} /> */}
             

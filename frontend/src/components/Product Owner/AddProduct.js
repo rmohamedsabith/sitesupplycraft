@@ -1,22 +1,21 @@
 import React from "react";
-import Payment from "./Payment";
 import "./AddProduct.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Col, Form, Image, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import MetaData from "../Layouts/MetaData";
-import PreviewProduct from "./PreviewProduct"; // Import the PreviewProduct component
-import { useSelector } from "react-redux";
-import Edit_product from "./Edit_product";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ChatState } from "../../chatContex";
+import { getMessages } from "../../actions/messagesAction";
 
 const AddProduct = () => {
   const navigate = useNavigate(); //get the navigate object
+  const dispatch = useDispatch(); //get the navigate object
   const{postProducts,setPostProducts}=ChatState()
 
   const { user } = useSelector((state) => state.authState);
@@ -107,7 +106,7 @@ const AddProduct = () => {
   const [selectedOption, setSelectedOption] = useState("sell");
   const [isRent, setIsRent] = useState(false);
   const [priceType, setPriceType] = useState("");
-  const [items, setItems] = useState([]);
+  //const [items, setItems] = useState([]);
 
   const Categories = [
     "Masonry",
@@ -179,9 +178,10 @@ const AddProduct = () => {
   //functions for add more items (creating the items array and adding products to it)
 
   const handleAddItem = async() => {
-    document.getElementById('addItem').disabled=true
+    
     console.log(images)
     if (validateFields()) {
+      document.getElementById('addItem').disabled=true
       const newItem = {
         //creating newItem to add the array
         name: name,
@@ -204,7 +204,7 @@ const AddProduct = () => {
        {
         const existingData = JSON.parse(sessionStorage.getItem("items")) || []; // get the existing Data from session storag
         const updatedArray = [...existingData, newItem]; // Combine existing data with new data
-        setItems(updatedArray);
+        //setItems(updatedArray);
         sessionStorage.setItem("items", JSON.stringify(updatedArray)); // adding items array to the session storage
 
         const formData=new FormData()
@@ -250,6 +250,9 @@ const AddProduct = () => {
        }
       
     }
+    else{
+      document.getElementById('addItem').disabled=false
+    }
   };
   const handlForwordPage = () => {
     navigate("preview");
@@ -264,26 +267,23 @@ const AddProduct = () => {
     }
   }, []);
 
-  /* functions for buttons */
-  /* privew button */
+
+  const handleMessage=()=>{
+    dispatch(getMessages).then(()=>navigate('/ProductOwner/Messages'))
+  }
+
 
   return (
     <>
       <MetaData title={"Add Product"} />
       <Row>
-        <Col xs={2} style={{ backgroundColor: "#176B87" }}>
-          <div className="p-3">
-            <Link to={"/ProductOwner/DashBoard"}>
-              <button className="btn1">DashBoard</button>
-            </Link>
-            <Link to={"/ProductOwner/addProduct"}>
-              <button className="btn1">Add Product</button>
-            </Link>
-            <Link to="/ProductOwner/Messages">
-              <button className="btn1">Message</button>
-            </Link>
-          </div>
-        </Col>
+      <Col xs={2}  style={{backgroundColor:'#176B87',minHeight:'90vh'}}>     
+      <div className='p-3'>
+        <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
+        <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
+        <button className='btn1' onClick={handleMessage}>Message</button>
+      </div> 
+      </Col>
         <Col className="addProduct">
           {hasItems && (
             <div style={{marginRight:"50px", position:"absolute", right:"10px"}}>

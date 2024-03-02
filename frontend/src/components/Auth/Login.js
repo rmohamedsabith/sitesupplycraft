@@ -72,7 +72,7 @@ const Login = () => {
                 type: 'success'
       })
     }
-  },[isAuthenticated,dispatch,navigate,error,message])
+  },[isAuthenticated,dispatch,navigate,error,message,setNotification,unreadMessages,user])
 
   const handleGoogleLoginSuccess = ({ provider, data }) => {
     const { code } = data; // Obtain the authorization code from the Google Sign-In data
@@ -170,18 +170,18 @@ const Login = () => {
                     <button className='btnstyle marginOff' type='submit' style={{marginTop:'20px'}}  disabled={isLoading}>Log in</button>
  
                 </form>
-                    <div style={{margin: '20px auto', borderTop:'2px solid black'}}> 
-                    <span style={{color:'goldenrod',fontSize:'13px'}}>***** Only Consumers allow to Sign in with Google *****</span>               
-                      <LoginSocialGoogle 
-                        client_id="80050429848-q3g9m08m6b7haih8qqdj12318bo618ek.apps.googleusercontent.com"
-                        scope="openid profile email"
-                        discoveryDocs="claims_supported"
-                        access_type="offline"
-                        onResolve={handleGoogleLoginSuccess}
-                        onReject={handleGoogleLoginFailure}
-                      >
-                        <center><GoogleLoginButton iconSize='30px' text='Sign in With Google' align='center' style={{width: '300px',padding:'20px 10px', fontSize:'15px'}}/></center>
-                      </LoginSocialGoogle>
+                    <div style={{margin: 'auto', borderTop:'2px solid black',minwidth:'50%'}}> 
+                      <p style={{color:'goldenrod',fontSize:'13px'}}>***** Only Consumers allow to Sign in with Google *****</p>               
+                        <LoginSocialGoogle 
+                          client_id="80050429848-q3g9m08m6b7haih8qqdj12318bo618ek.apps.googleusercontent.com"
+                          scope="openid profile email"
+                          discoveryDocs="claims_supported"
+                          access_type="offline"
+                          onResolve={handleGoogleLoginSuccess}
+                          onReject={handleGoogleLoginFailure}
+                        >
+                          <center><GoogleLoginButton iconSize='30px' text='Sign in With Google' align='center' style={{padding:'20px 10px', fontSize:'15px'}}/></center>
+                        </LoginSocialGoogle>
                     </div> 
                 
               </div>
@@ -190,7 +190,7 @@ const Login = () => {
                 <div className='card p-3 mx-0 signup'>
                   <div className='signup-content'>
                     <h1 style={{color:'#053B50'}} >New User</h1>                
-                    <Link to='/register/Customer'><center><div className='location'  style={{backgroundColor:'#053B50', width:'50%'}} disabled={isLoading}>Sign Up</div></center></Link>
+                    <Link to='/register/Customer'><center><div className='location'  style={{backgroundColor:'#053B50'}} disabled={isLoading}>Sign Up</div></center></Link>
                   </div>                
                 </div>
               </Col>
