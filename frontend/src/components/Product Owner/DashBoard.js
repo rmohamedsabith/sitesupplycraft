@@ -171,7 +171,7 @@ const DashBoard = () => {
         </div>
         </div>    
         
-          <div className='table'>
+          <div className='table d-flex flex-column'>
             <h1>My Products</h1><br></br>
             
             <div className='textsearch'>
@@ -248,7 +248,7 @@ const DashBoard = () => {
                   </table>  
                   </div>  
               :
-                <div className='con' style={{position:'relative',top:'70px',right:'200px'}}>
+                <div className='con'>
                   <h3><center style={{color:'red'}}>{error}</center></h3>
                 </div>         
               }        
