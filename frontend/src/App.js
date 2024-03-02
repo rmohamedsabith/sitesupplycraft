@@ -59,6 +59,7 @@ function App() {
     setHide(isMobile)
   },[isMobile,dispatch])
 
+  
   useEffect(() => {
     if (isAuthenticated && user?.role === 'Product Owner') {
       async function getStripeAPI() {
