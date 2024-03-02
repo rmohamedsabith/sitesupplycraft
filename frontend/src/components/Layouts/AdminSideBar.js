@@ -1,10 +1,13 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "rc-tooltip/assets/bootstrap.css";
+import { useDispatch } from "react-redux";
+import { getMessagesList } from "../../actions/messagesAction";
+import { getAllPayments } from "../../actions/paymentActions";
 
 const AdminSideBar = () => {
   const location = useLocation();
-
+const navigate=useNavigate()
   const isAdminPath = (path) => {
     const adminPaths = ["/admin/dashboard", "/admin/messages", "/admin/verifications", "/admin/payments", "/admin/payments/details"];
     return adminPaths.includes(location.pathname);
@@ -20,10 +23,20 @@ const AdminSideBar = () => {
     }
     return false;
   };
+  const dispatch=useDispatch()
+   const handleClick=()=>{  
+    
+      dispatch(getMessagesList).then(()=>navigate('/admin/messages')) 
+    }
+   const handlePayments=()=>{  
+    
+    dispatch(getAllPayments).then(()=>navigate('/admin/payments')) 
+    }
+  
 
   return (
     <center>
-      <div className="adminSide">
+      <div className="adminSide" /* style={{position:'fixed',zIndex:-1}} */>
       <Link
         to="/admin/dashboard"
         className={`d-block sidebarLink ${isActive("/admin/dashboard") ? "active" : ""}`}
@@ -31,13 +44,13 @@ const AdminSideBar = () => {
       >
         Dashboard
       </Link>
-      <Link
-        to="/admin/messages"
+      <div
         className={`d-block sidebarLink ${isActive("/admin/messages") ? "active" : ""}`}
         style={{ cursor: "pointer" }}
+        onClick={handleClick}
       >
         Messages
-      </Link>
+      </div>
       <Link
         to="/admin/verifications"
         className={`d-block sidebarLink ${isActive("/admin/verifications") ? "active" : ""}`}
@@ -45,13 +58,13 @@ const AdminSideBar = () => {
       >
         Verifications
       </Link>
-      <Link
-        to="/admin/payments"
-        className={`d-block sidebarLink ${isActive("/admin/payments") ? "active" : ""}`}
+      <div
+        onClick={handlePayments}
+        className={`d-block sidebarLink ${isActive("/admin/payments")||isActive("/admin/payments/details") ? "active" : ""}`}
         style={{ cursor: "pointer" }}
       >
         Payments
-      </Link>
+      </div>
     </div>
     </center>
   );

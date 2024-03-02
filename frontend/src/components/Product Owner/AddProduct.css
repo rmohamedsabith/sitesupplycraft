@@ -13,8 +13,9 @@
 
  width: 50%;
 
-
 }
+
+
 .addProduct{
     display: flex;
     justify-content: center;
@@ -26,6 +27,7 @@
     border: 1px solid lightgray;
     border-radius: 4px;
     padding: 15px;
+    margin: 40px;
 }
 .nameCs{
     margin-top: 5px;
@@ -51,4 +53,20 @@
 .testing{
 
     background-color: brown;
+}
+
+.PreviewButtonContainer{
+
+    margin-bottom: auto;
+
+}
+.error{
+    color: red;
+    font-style: italic;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    background-color: rgb(233, 174, 174);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 10px;
 }

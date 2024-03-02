@@ -64,7 +64,7 @@ const DashboardTile = ({ categoryTitle, CategotyTotalCount, graphData }) => {
   return (
     <div className="text-center">
       <div className="rounded bg-light p-3">
-        <h5 className="mb-0">No. of {categoryTitle}</h5>
+        <h5 className="mb-0">{categoryTitle}</h5>
         <h5 className="mb-0 text-danger">{CategotyTotalCount}</h5>
       </div>
       <Line options={options} data={data} />

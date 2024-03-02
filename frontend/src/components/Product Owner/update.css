@@ -1,0 +1,55 @@
+.styled-heading {
+    text-align: center; /* Center the text */
+    color: #053B50; /* Set the color to green */
+     
+}
+.previewImg{
+    border: 1px solid #053B50;
+    border-radius: 5px;
+}
+
+.block{
+
+ width: 50%;
+
+}
+
+
+.addProduct{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+.box{
+
+    box-shadow: 3px 0px 0px 20px lightgrey;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 40px;
+}
+.nameCs{
+    margin-top: 5px;
+}
+
+/* .radioCS{
+
+    
+        display: block;
+        width: 100%;
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+} */
+.testing{
+
+    background-color: brown;
+}
