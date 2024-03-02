@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -22,6 +23,7 @@
     "mongoose-sequence": "^5.3.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
+    "socket.io": "^4.7.4",
     "stripe": "^14.14.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"

@@ -1,5 +1,5 @@
 import { MDBCol } from 'mdbreact'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Search from './Products/Search'
 import ProductList from './Products/ProductsList'
 import Side from '../components/Layouts/Side'
@@ -9,11 +9,13 @@ import { Offcanvas } from 'react-bootstrap'
 
 
 
+
 const Home = ({isDistrict,district,setDistrict,setIsDistrict,hide,isHumClicked,setIsHumClicked}) => {
+   
     const location=useLocation()
     const [refreshSide, setRefreshSide] = useState(false);
-    
 
+    
   const handleClose = useCallback(() => setIsHumClicked(false),[setIsHumClicked])
   return (
     <div className='row'>

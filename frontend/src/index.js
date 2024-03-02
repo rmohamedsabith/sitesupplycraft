@@ -8,6 +8,7 @@ import App from './App';
 import store from './store'
 import {Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import ChatProvider from './chatContex'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,8 +16,8 @@ root.render(
   //<React.StrictMode>
   <BrowserRouter>
     <Provider store={store}>
+      <ChatProvider> <App/></ChatProvider>
       
-      <App/>
     </Provider>
     </BrowserRouter>
   //</React.StrictMode>

@@ -80,7 +80,15 @@ const getSell=asyncHandler(async(req,res)=>{
 //create a new product  -> /product/new
 const createProduct=asyncHandler(async(req,res)=>{      
     // Check for duplicate username
-    const duplicate = await product.findOne({name:req.body.name,owner:req.user._id}).lean().exec()
+    const {name} = req.body; // Extract the name from req.body
+        console.log(name)
+        if (!name) {
+            return res.status(400).json({ message: 'Name is required' });
+        }
+
+        const upperCaseName = name.toUpperCase();
+    const duplicate = await product.findOne({name:upperCaseName,owner:req.user._id}).lean().exec()
+    //console.log(duplicate)
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate name' })
     }
@@ -110,12 +118,13 @@ const createProduct=asyncHandler(async(req,res)=>{
     } 
 
     
-}) 
+})
 /* const createProduct = asyncHandler(async(req, res) => {
     // Check if the request body contains an array of products
     if (!Array.isArray(req.body)) {
         return res.status(400).json({ message: 'Request body must be an array of products' });
     }
+
 
     const products = req.body.map(async (productData) => {
         // Check for duplicate product name for each product
@@ -156,6 +165,30 @@ const createProduct=asyncHandler(async(req,res)=>{
         res.status(500).json({ message: 'Internal Server Error' });
     });
 }); */
+
+
+//create a new product  -> /product/duplicate
+const checkDuplicate = asyncHandler(async (req, res) => {      
+    try {
+        const {name} = req.body; // Extract the name from req.body
+        console.log(name)
+        if (!name) {
+            return res.status(400).json({ message: 'Name is required' });
+        }
+
+        const upperCaseName = name.toUpperCase();
+        // Check for duplicate product name
+        const duplicateProduct = await product.findOne({ name: upperCaseName, owner: req.user._id }).lean().exec();
+        //console.log(duplicateProduct);
+        if (duplicateProduct) {
+            return res.status(200).json({ duplicate: true, message: 'Duplicate name' });
+        }
+        return res.status(200).json({ duplicate: false, message: 'There is no duplicate name' });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error); // Internal Server Error
+    }
+});
 
 
 
@@ -537,5 +570,6 @@ module.exports={
     getUserproducts,
     deleteUserAllProducts,
     changeStatus,
-    getTotal_per_month
+    getTotal_per_month,
+    checkDuplicate
 }

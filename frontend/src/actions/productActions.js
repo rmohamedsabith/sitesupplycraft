@@ -38,7 +38,8 @@ export const addProduct=productData=>async(dispatch)=>{
     try {
         dispatch(addProductRequest())
         const {data}=await axios.post(`/SiteSupplyCraft/product/new`,productData)
-        dispatch(addProductSuccess(data))        
+        dispatch(addProductSuccess(data))   
+        console.log(data)     
     } catch (error) {
         dispatch(addProductFail(error.response.data.message))
 

@@ -10,9 +10,13 @@ import {GoogleLoginButton} from 'react-social-login-buttons'
 import {LoginSocialGoogle} from 'reactjs-social-login'
 import axios from 'axios'
 import { getTotals, getTotals_per_month } from '../../actions/adminActions'
+import { getUnreadMessages } from '../../actions/messagesAction'
+import { ChatState } from '../../chatContex'
 const Login = () => {
 
   const {isLoading,isAuthenticated,user,error,message}=useSelector((state)=>state.authState)
+  const {setNotification}=ChatState()
+  const{unreadMessages}=useSelector((state)=>state.messagesState) 
 
 
   const [email,setEmail]=useState('')
@@ -42,6 +46,9 @@ const Login = () => {
         } 
         else if(user && user.role ==='Product Owner')
         {
+            dispatch(getUnreadMessages).then(()=>{
+            setNotification(unreadMessages)
+          })
           return navigate('/ProductOwner/DashBoard')
         } 
         else return navigate('/')

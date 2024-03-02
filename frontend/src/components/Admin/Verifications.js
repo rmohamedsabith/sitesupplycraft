@@ -9,6 +9,7 @@ import { getProcessingOwners } from '../../actions/adminActions';
 import Loader from '../Loader.js'
 import { clearError } from '../../slices/adminSlice.js';
 import { toast } from 'react-toastify';
+import MetaData from '../Layouts/MetaData.js';
 
 
 
@@ -66,6 +67,8 @@ function Verifications() {
     <>
     {
       isLoading?<Loader/>:
+      <>
+      <MetaData title={'Verifications'}/>
       <div style={{padding: '0 150px'}}>
       <h2 style={{textAlign: 'center', margin: '20px 0'}}><u>Verifications</u></h2>
       <MDBDataTable
@@ -75,6 +78,7 @@ function Verifications() {
       data={data}
     />
     </div>
+    </>
     }
     </>
   );

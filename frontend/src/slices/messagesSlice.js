@@ -4,6 +4,7 @@ const messagesSlice=createSlice({
     name:"messages",
     initialState:{
         isLoading:false,
+        unreadMessages:[],
     },
     reducers:{
         
@@ -17,7 +18,7 @@ const messagesSlice=createSlice({
         {
             return{
                 ...state,
-                isLoading:true
+                /* isLoading:true */
             }
         },
         sendMessageSuccess(state,action)
@@ -26,6 +27,7 @@ const messagesSlice=createSlice({
                 ...state,
                 isLoading:false,
                 message:action.payload.Message,
+                messages:action.payload.Messages,
             }
         },
         sendMessageFail(state,action)
@@ -38,14 +40,18 @@ const messagesSlice=createSlice({
         },
         getMessagesRequest(state,action)
         {
-            return{isLoading:true}
+            return{
+                ...state,
+                isLoading:true}
         },
         getMessagesSuccess(state,action)
         {
             return{
+                ...state,
                 isLoading:false,
                 count:action.payload.count,
                 messages:action.payload.Messages,
+                unreadMessages:[]
             }
         },
         getMessagesFail(state,action)
@@ -55,6 +61,7 @@ const messagesSlice=createSlice({
                 error:action.payload
             }
         },
+        
         getMessagesListRequest(state,action)
         {
             return{
@@ -69,6 +76,8 @@ const messagesSlice=createSlice({
                 isLoading:false,
                 count:action.payload.count,
                 datas:action.payload.messages,
+                unread:action.payload.unreadMsg,
+                messages:null,
             }
         },
         getMessagesListFail(state,action)
@@ -82,7 +91,8 @@ const messagesSlice=createSlice({
         {
             return{
                 ...state,
-                isLoading:true}
+                isLoading:true,
+            }
         },
         getMessagesFromAdminSuccess(state,action)
         {
@@ -100,6 +110,28 @@ const messagesSlice=createSlice({
                 error:action.payload
             }
         },
+        getUnreadMessagesRequest(state,action)
+        {
+            return{
+                ...state,
+                isLoading:true
+            }
+        },
+        getUnreadMessagesSuccess(state,action)
+        {
+            return{
+                ...state,
+                isLoading:false,
+                unreadMessages:action.payload.Messages,
+            }
+        },
+        getUnreadMessagesFail(state,action)
+        {
+            return{
+                isLoading:false,
+                error:action.payload
+            }
+        },
 
     
     }
@@ -111,6 +143,9 @@ export const{
     sendMessageRequest,
     sendMessageSuccess,
     sendMessageFail,
+    getUnreadMessagesRequest,
+    getUnreadMessagesSuccess,
+    getUnreadMessagesFail,
     getMessagesRequest,
     getMessagesSuccess,
     getMessagesFail,

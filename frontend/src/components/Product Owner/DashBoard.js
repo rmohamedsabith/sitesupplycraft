@@ -15,6 +15,10 @@ import {deleteProduct} from '../../actions/productActions'
 
 import MetaData from '../Layouts/MetaData'
 import { Col, Image, Row } from 'react-bootstrap'
+import { getMessages } from '../../actions/messagesAction';
+import { clearProduct } from '../../slices/productSlice';
+
+
 ChartJS.register(
   Title, Tooltip, LineElement, Legend,
   CategoryScale, LinearScale, PointElement, Filler,ArcElement
@@ -22,21 +26,22 @@ ChartJS.register(
 
 
 const DashBoard = () => {
-
+  
   const{isLoading,products,ActiveProducts,DeactiveProducts,count,error} = useSelector((state)=> state.productsState)
-  const{isProductDeleted}=useSelector((state)=> state.productState)
+  const {isLoading:productLoading,products:addProducts,isProductAdded,error:addProductErr}=useSelector(state=>state.productState)
+
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const [keyword,setKeyword]=useState('')
   const [status, setStatus] = useState(false);
   
 
+
   useEffect(()=>{
-       
-    dispatch(getOwnerProducts(keyword))
+        dispatch(getOwnerProducts(keyword))
+  },[dispatch,status,addProducts])
 
-
-  },[dispatch,status,keyword])
+ 
 
 
 
@@ -125,6 +130,10 @@ const DashBoard = () => {
     }
     }
 
+    const handleMessage=()=>{
+      dispatch(getMessages).then(()=>navigate('/ProductOwner/Messages'))
+    }
+
   
   
   return (
@@ -135,125 +144,121 @@ const DashBoard = () => {
   
     <Row>
       
-      <Col xs={2}  style={{backgroundColor:'#176B87'}}>
-        
-      
+      <Col xs={2}  style={{backgroundColor:'#176B87',minHeight:'90vh'}}>     
       <div className='p-3'>
         <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
         <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
-        <Link to='/ProductOwner/Messages'><button className='btn1'>Message</button></Link>
-      </div>
-     
-    
+        <button className='btn1' onClick={handleMessage}>Message</button>
+      </div> 
       </Col>
 
-      {!error?
+      
      
       <Col className='con' >
       <div className='bodyDashboard'> 
-      <h1>Summary Of My Products</h1>      
-      <div className="linechart">
-      <Line data={data}/>
-      <div className='phara1'>
-          <h2>Posted Product</h2>
-      </div>
+        <h1>Summary Of My Products</h1>      
+        <div className="linechart">
+        <Line data={data}/>
+        <div className='phara1'>
+            <h2>Posted Product</h2>
+        </div>
 
-      </div>
-      <div className='piechart'>
-        <Pie data={data1}/>
-        <div className='phara2'>
-          <h2>Activation</h2>
-      </div>
-      </div>
-
-      
-    
-      <div className='table'>
-        <h1>My Products</h1><br></br>
+        </div>
+        <div className='piechart'>
+          <Pie data={data1}/>
+          <div className='phara2'>
+            <h2>Activation</h2>
+        </div>
+        </div>    
         
-        <div className='textsearch'>
-        Search Name: <input type="text"
-        value={keyword}
-        onChange={(e)=>setKeyword(e.target.value)}
-        ></input>
-        <button className='btn2' onClick={handleClick}  >Search</button></div>
+          <div className='table d-flex flex-column'>
+            <h1>My Products</h1><br></br>
+            
+            <div className='textsearch'>
+              Search Name: <input type="text"
+              value={keyword}
+              onChange={(e)=>setKeyword(e.target.value)}
+              ></input>
+              <button className='btn2' onClick={handleClick}  >Search</button>
+            </div>
 
-        
+            {!error?
+              isLoading?<Loader/>:
+                  <div className='table'>
+                  <table id="dtBasicExample" className="productownretable"  cellSpacing="0" width="100%" height = "100%">
+              <thead>
+                <tr>
+                  <th className ='th-sm' >Photos
+                  </th>
+                  <th className ='th-sm'>Product Id
+                  </th>
+                  <th className='th-sm'>Product Name
+                  </th>
+                  <th className ='th-sm'>Date
+                  </th>
+                  <th className ='th-sm'>Status
+                  </th>
+                  <th className='th-sm'>Option
+                  </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                  {products && products.map((item) => (
+                    <tr key={item._id}>
+                      <td><Image src={item.images[0].image}alter='pic' className='imp'/></td>
+                      <td>{item._id}</td>
+                      <td >{item.name}</td>
+                      <td>{formatDate(item.createdAt)}</td>
+                      <td style={{color:'green'}}>{statuscolor(item.status)}</td>
+                      <td>
+                      <Link to = {`/ProductOwner/${item._id}/edit`}><button className='btn'  /* onClick={handleEdit(item._id) */>Edit</button></Link>
+                    <button className='btn' onClick={()=>handledelete(item._id)}>Delete</button>
+                    
+                    {item.status==='Active' ?
+                      <button onClick={()=>toggleEyeClose(item._id)} className='btnicon' ><FontAwesomeIcon icon= {faEye} className='iconeye' /></button>
+                      :
+                      <button onClick={()=>toggleEyeOpen(item._id)} className='btnicon' ><FontAwesomeIcon icon={faEyeSlash} className='iconeye' /></button>
+                    }
+                  </td>
+                    </tr>))
+                  
+                }
+              
+                
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Photos
+                  </th>
+                  <th>Product Id
+                  </th>
+                  <th>Product Name</th>
+                  <th>Date
+                  </th>
+                  <th>Status
+                  </th>
+                  <th>Option
+                    </th>
+                  
 
-
-  {isLoading?<Loader/>:
-      <div className='table'>
-      <table id="dtBasicExample" className="productownretable"  cellSpacing="0" width="100%" height = "100%">
-  <thead>
-    <tr>
-      <th className ='th-sm' >Photos
-      </th>
-      <th className ='th-sm'>Product Id
-      </th>
-      <th className='th-sm'>Product Name
-      </th>
-      <th className ='th-sm'>Date
-      </th>
-      <th className ='th-sm'>Status
-      </th>
-      <th className='th-sm'>Option
-      </th>
-      
-    </tr>
-  </thead>
-  <tbody>
-      {products && products.map((item) => (
-        <tr key={item._id}>
-          <td><Image src={item.images[0].image}alter='pic' className='imp'/></td>
-          <td>{item._id}</td>
-          <td >{item.name}</td>
-          <td>{formatDate(item.createdAt)}</td>
-          <td style={{color:'green'}}>{statuscolor(item.status)}</td>
-          <td>
-        <button className='btn'  onClick={()=>handleEdit(item._id)}>Edit</button>
-        <button className='btn' onClick={()=>handledelete(item._id)}>Delete</button>
-        
-        {item.status==='Active' ?
-          <button onClick={()=>toggleEyeClose(item._id)} className='btnicon' ><FontAwesomeIcon icon= {faEye} className='iconeye' /></button>
-          :
-          <button onClick={()=>toggleEyeOpen(item._id)} className='btnicon' ><FontAwesomeIcon icon={faEyeSlash} className='iconeye' /></button>
-        }
-      </td>
-        </tr>))
-      
-    }
-   
-    
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>Photos
-      </th>
-      <th>Product Id
-      </th>
-      <th>Product Name</th>
-      <th>Date
-      </th>
-      <th>Status
-      </th>
-      <th>Option
-        </th>
-      
-
-      
-    </tr>
-  </tfoot>
-      </table>  
-      </div> 
-    }
-
-      
-      </div>      
+                  
+                </tr>
+              </tfoot>
+                  </table>  
+                  </div>  
+              :
+                <div className='con'>
+                  <h3><center style={{color:'red'}}>{error}</center></h3>
+                </div>         
+              }        
+          </div>
+           
     
       </div>   
    
       </Col>
-      :<h3><center style={{color:'red'}}>{error}</center></h3>}
+     
     </Row>
     </div>
  

@@ -1,7 +1,5 @@
 // to load environment variables from .env file to process.env object
 require('dotenv').config()
-const express=require('express')
-const app= express()
 const path=require('path')
 const cors=require('cors')
 const {logger, logEvents}=require('./middleware/logger')
@@ -9,6 +7,9 @@ const errorHandler=require('./middleware/errorHandler')
 const DBconnect=require('./config/DB')
 const mongoose=require('mongoose')
 const cookieParser = require('cookie-parser')
+const express = require('express');
+const {app,server}=require('./Socket/socket')
+const bodyParser=require('body-parser')
 
 DBconnect()
 
@@ -20,6 +21,8 @@ const PORT=process.env.PORT
 app.use(express.json())
 //to use cookie object in the req
 app.use(cookieParser())
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
 app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
@@ -53,7 +56,7 @@ app.use(errorHandler)
 
 mongoose.connection.once('open',()=>{
     console.log('Connect to mongoDB')
-    app.listen(PORT,()=>{
+    server.listen(PORT,()=>{
         console.log(`Server is running on ${PORT}`)
     })
 })

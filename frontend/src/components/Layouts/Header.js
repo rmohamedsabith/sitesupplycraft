@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import logo from '../../images/logo.jpeg'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Button, Dropdown,FloatingLabel,Form,Image, Modal} from 'react-bootstrap'
 import { changePassword, clearAuthError, logout } from '../../actions/authActions'
@@ -11,6 +11,16 @@ import { toast } from 'react-toastify'
 import Loader from '../Loader'
 import { getTotals, getTotals_per_month } from '../../actions/adminActions'
 import defaultProfile from '../../images/default_avatar.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMessage } from '@fortawesome/free-solid-svg-icons'
+import {ChatState} from '../../chatContex'
+import { Effect } from 'react-notification-badge'
+import NotificationBadge from 'react-notification-badge'
+import { getMessages, getUnreadMessages } from '../../actions/messagesAction'
+import { io } from 'socket.io-client'
+
+var socket=io(process.env.REACT_APP_BACKEND_URL)
+
 
 function MyVerticallyCenteredModal(props) {
   const dispatch=useDispatch()
@@ -142,22 +152,45 @@ function MyVerticallyCenteredModal(props) {
 
 
 
-const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) => {
+const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) => { 
+  const{unreadMessages}=useSelector((state)=>state.messagesState) 
   const [modalShow, setModalShow] = useState(false);
   const {isAuthenticated,user}=useSelector((state)=>state.authState)
   const navigate=useNavigate()
   const dispatch=useDispatch()
 
- /*  useEffect(()=>{
-    dispatch(loadUser)
-  },[dispatch]) */
+  const location=useLocation()
+
+  const{notification,setNotification}=ChatState()
+
+  useEffect(()=>{
+    setNotification(unreadMessages)
+  },[unreadMessages])
+   
+ useEffect(()=>{
+  if(user?.role==='Product Owner')
+  {
+    socket.emit("setup",user)
+    socket.on('message_recieved', (data) => {
+    setNotification((prevCount) => [...prevCount,data])})
+    /* console.log("sabith") */
+  }
+  
+
+  return () => {
+    socket.off('new_message');
+  };
+ },[user])
 
   const logoutHandler=()=>{
     navigate('/')
+    sessionStorage.removeItem('items')
     dispatch(logout)
   }
   const handleReferesh=useCallback(async()=>{
     setDistrict('')  
+    /* setNotification(unreadMessages) */
+    dispatch(getUnreadMessages)
     setIsDistrict(false)
     await dispatch(clearProducts())
     dispatch(filter(null,null,null,null,'products'))
@@ -174,6 +207,16 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     await dispatch(getTotals)
     navigate('Admin/dashboard')
   }
+  const handleMessage=()=>{
+    setNotification([])
+    dispatch(getMessages).then(()=>{
+      navigate('/ProductOwner/Messages')
+      
+    }) 
+    
+      
+  }
+  //console.log(notification)
 
   return (
     <>
@@ -192,6 +235,23 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
         
         {isAuthenticated? 
         <div className="headRight">
+
+          {
+            user.role === 'Product Owner' && location.pathname !== '/ProductOwner/Messages'?
+            <div onClick={handleMessage}>
+              <div>
+                <NotificationBadge
+                count={notification?.length}
+                effect={Effect.SCALE}
+                style={{marginRight:'25px',marginTop:'10px'}}
+                />
+              </div>
+              <FontAwesomeIcon icon={faMessage} style={{fontSize: '25px',marginTop:'25px',marginRight:'30px'}} />
+              
+              
+            </div>
+            :null
+          }
             <Favourites/>
                        
               <Dropdown>

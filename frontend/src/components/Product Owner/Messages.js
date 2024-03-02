@@ -11,18 +11,62 @@ import { sendMessage } from '../../actions/messagesAction';
 import { getMessages } from '../../actions/messagesAction';
 import MetaData from '../Layouts/MetaData';
 import { toast } from 'react-toastify';
+import io from 'socket.io-client';
+import Lottie from 'react-lottie'
+import animationData from '../../animation/lottie.json' 
+import { ChatState } from '../../chatContex';
+
+
+var socket,selectedChatCompare
 
 const Messages = () => {
-  const { isLoading, messages } = useSelector((state) => state.messagesState);
+  const {notification,setNotification}=ChatState()
+  const{unreadMessages}=useSelector((state)=>state.messagesState) 
+  const { isLoading, messages:adminMsg } = useSelector((state) => state.messagesState);
   const { user } = useSelector((state) => state.authState);
   const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState('');
+  const [messages,setMessages]=useState([])
   const chatBoxRef = useRef(null);
-  
+  const[socketConnected,setSocketConnected]=useState(false)
+  const[isTyping,setIstyping]=useState(false)
+  const[typing,setTyping]=useState(false)  
+  const [isOnline,setIsOnline]=useState(false)
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  useEffect(()=>{
+    socket=io(process.env.REACT_APP_BACKEND_URL)
+    socket.emit("setup",user)
+    socket.on("connected",()=>setSocketConnected(true))
+    socket.emit('join_chat',user._id)
+    socket.emit("online",user._id)
+    socket.on('online',()=>setIsOnline(true))
+    socket.on('offline',()=>setIsOnline(false))
+    socket.on('typing',()=>setIstyping(true))
+    socket.on('stop_typing',()=>setIstyping(false))
+    return () => {
+      socket.disconnect(); // Cleanup socket connection on component unmount
+      socket.emit("offline",user._id)
+    };
+  },[user])
+
+  console.log(isOnline)
+  
   useEffect(() => {
-    dispatch(getMessages);
-  }, [dispatch]);
+    /* dispatch(getMessages).then(()=>{
+      }) */
+      setMessages(adminMsg)
+      selectedChatCompare=adminMsg
+      
+  }, []);
 
   const scrollToBottom = () => {
     if (chatBoxRef.current) {
@@ -32,12 +76,35 @@ const Messages = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  });
+
+  useEffect(()=>{
+    socket.on("message_recieved",(newMsg)=>{
+        if(!selectedChatCompare)
+        {
+          if(!notification.includes(newMsg))
+          {
+            setMessages((prev)=>[...prev, newMsg]);
+          }
+        }
+        else{ 
+          
+          setMessages([...messages,newMsg])
+        }
+      
+    })
+  })
+
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newMessage !== '') {
-      dispatch(sendMessage(null, user.role, newMessage));
+      socket.emit('stop_typing',user._id)
+      if(isOnline)dispatch(sendMessage({content:newMessage,isViewed:true}))
+      else dispatch(sendMessage({content:newMessage}))
+      socket.emit('new_message',({content:newMessage,date:new Date(),receiver:null,sender:user._id,user}));
+      setMessages([...messages,{content:newMessage,date:new Date(),receiver:null,sender:user._id}])
       setNewMessage('');
     } else {
       toast.warning('Please type something', {
@@ -65,6 +132,38 @@ const Messages = () => {
       currentMessageDate.getFullYear() !== prevMessageDate.getFullYear()
     );
   };
+
+  function adjustTextareaHeight(textarea) {
+    textarea.style.height = 'auto'; // Reset height to auto to adjust dynamically
+    textarea.style.height = textarea.scrollHeight + 'px'; // Set the height to match the content
+  }
+
+
+  const handleTyping=(e)=>{
+    setNewMessage(e.target.value);
+    adjustTextareaHeight(e.target);
+
+    ///typing indicator logic
+    if(!socketConnected)return
+    if(!typing)
+    {
+      setTyping(true)
+      socket.emit("typing",user._id)
+    }
+
+    let lastTypingTime=new Date().getTime()
+    var timeLength=10000;
+    setTimeout(()=>{
+      var TimeNow=new Date().getTime();
+      var timeDiff=TimeNow-lastTypingTime;
+      if(timeDiff>=timeLength && typing)
+      {
+        socket.emit('stop_typing',user._id)
+        setTyping(false)
+      }
+    },timeLength)
+  }
+
 
   return (
     <>
@@ -117,24 +216,42 @@ const Messages = () => {
                          <div
                         key={index}
                         className={
-                          message.receiver === null ? 'message msg' : 'message other-message'
+                          message.receiver !== null ? 'message msg' : 'message other-message'
                         }>
                         <div className='name'>
                           <p className='person'>{message.receiver === null ? 'You' : 'Admin'}</p>
-                          {message.content}
+                          <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',marginBottom:'-8px'}}>
+                          <div style={{fontSize:'15px'}}>{message.content}</div>
+                          <div className='text'>{getTimeFromTimestamp(message.date)}</div>
+                          </div>
                         </div>
-                        <div className='text'>{getTimeFromTimestamp(message.date)}</div>
+                        
                       </div>
                       </>
                      
-                    ))}
-                </div>
+                  ))}         
+                </div>   
+                {isTyping ? (
+                  <div className="typing">
+                      <Lottie
+                        options={defaultOptions}
+                        // height={50}
+                        width={70}
+                        style={{ marginBottom: 15, marginLeft: 0}}
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )}            
+
                 <div className='typebox'>
-                  <input
-                    type='text'
+                  <textarea
+                   maxLength={256}
                     value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    className='inputbox'
+                    onChange={(e) => {
+                      handleTyping(e)
+                    }}
+                    className='inputbox textarea-autosize'
                     placeholder='   Enter Message ..'
                   />
                   <button className='btnicon' onClick={handleSubmit}>

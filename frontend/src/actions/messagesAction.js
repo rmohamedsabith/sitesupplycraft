@@ -1,19 +1,22 @@
 import axios from 'axios'
-import { getMessagesFail, getMessagesFromAdminFail, getMessagesFromAdminRequest, getMessagesFromAdminSuccess, getMessagesListFail, getMessagesListRequest, getMessagesListSuccess, getMessagesRequest, getMessagesSuccess, sendMessageFail, sendMessageRequest, sendMessageSuccess } from "../slices/messagesSlice"
+import { getMessagesFail, getMessagesFromAdminFail, getMessagesFromAdminRequest, getMessagesFromAdminSuccess, getMessagesListFail, getMessagesListRequest, getMessagesListSuccess, getMessagesRequest, getMessagesSuccess, getUnreadMessagesFail, getUnreadMessagesRequest, getUnreadMessagesSuccess, sendMessageFail, sendMessageRequest, sendMessageSuccess } from "../slices/messagesSlice"
 
-export const sendMessage=(receiver,role,content)=>async(dispatch)=>{
+export const sendMessage=(message)=>async(dispatch)=>{
     try {
         dispatch(sendMessageRequest())
         let DATA;
-        if(role==='Product Owner')
+       /*  if(role==='Product Owner')
         {
             DATA=(await axios.post(`/SiteSupplyCraft/message/send`,{content})).data
+            dispatch(sendMessageSuccess(DATA))
+             //dispatch(getMessages) 
         }
-        else{
-            DATA=(await axios.post(`/SiteSupplyCraft/message/send`,{receiver,content})).data
-        }
-        dispatch(sendMessageSuccess(DATA))
-        dispatch(getMessages)
+        else{ */
+            DATA=(await axios.post(`/SiteSupplyCraft/message/send`,message)).data
+            dispatch(sendMessageSuccess(DATA))
+            /* dispatch(getMessagesFromAdmin(receiver)) */
+        //}
+       
     } catch (error) {
         dispatch(sendMessageFail(error.response.data.message))
     }
@@ -23,8 +26,18 @@ export const getMessages=async(dispatch)=>{
         dispatch(getMessagesRequest())
         const{data}=await axios.get(`/SiteSupplyCraft/messages`)
         dispatch(getMessagesSuccess(data))
+        //dispatch(getUnreadMessages)
     } catch (error) {
         dispatch(getMessagesFail(error.response.data.message))
+    }
+}
+export const getUnreadMessages=async(dispatch)=>{
+    try {
+        dispatch(getUnreadMessagesRequest())
+        const{data}=await axios.get(`/SiteSupplyCraft/unread_messages`)
+        dispatch(getUnreadMessagesSuccess(data))
+    } catch (error) {
+        dispatch(getUnreadMessagesFail(error.response.data.message))
     }
 }
 export const  getMessagesFromAdmin=(id)=>async(dispatch)=>{

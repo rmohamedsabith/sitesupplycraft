@@ -4,14 +4,11 @@ const productSlice=createSlice({
     name:"product",
     initialState:{
         isLoading:false,
-        product: {},
         reviews: [],
         isReviewSubmitted:false,
         isProductAdded:false,
         isReviewDeleted:false,
-        isProductDeleted:false,
-        isProductUpdated:false,
-
+        isProductDeleted:false
     },
     reducers:{
        
@@ -21,7 +18,8 @@ const productSlice=createSlice({
                 ...state,
                 isLoading:false,
                 product:{},
-                isProductUpdated:false
+                isProductUpdated:false,
+                isProductAdded:false
                 }
         },
 
@@ -56,7 +54,6 @@ const productSlice=createSlice({
         },
         updateProductSuccess(state,action){
             return{
-
                 ...state,
                 isLoading:false,
                 isProductUpdated:true,
@@ -161,7 +158,7 @@ const productSlice=createSlice({
         },
 
         //Delete Review
-        deleteReviewRequest(state, action){
+        deleteReviewRequest(state, action){ 
             return {
                 ...state,
                 isLoading: true

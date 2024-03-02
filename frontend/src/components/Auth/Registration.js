@@ -326,6 +326,7 @@ const Registration = () => {
           userData.append('priceType', formData.duration)
           userData.append('description', formData.description)
         }
+        console.log(userData)
         dispatch(register(userData))
         console.log(formData)
     }
