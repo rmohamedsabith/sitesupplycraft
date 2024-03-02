@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import Payment from './Payment'
 import './update.css'
-import { Link, useParams,useLocation } from 'react-router-dom'
+import { Link, useParams,useLocation, useNavigate } from 'react-router-dom'
 import { Col, Form, Image, Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react'
@@ -10,34 +9,27 @@ import{useDispatch, useSelector} from 'react-redux'
 import {getProduct} from '../../actions/productActions'
 import Loader from '../Loader'
 import {updateProduct} from '../../actions/productActions'
+import { toast } from 'react-toastify'
+import { clearError } from '../../slices/productSlice';
 
-const Update = () => {
-
-  const{isLoading,product}= useSelector((state)=>state.productState)
+const Update = () => { 
+  const{isLoading,product:ProductDetails,error,isProductUpdated}= useSelector((state)=>state.productState)
+  const navigate = useNavigate();
   const {id}=useParams()
   const dispatch=useDispatch()
-  const location = useLocation();
-  const activeTabIndex = location.state || 0;
-  const ProductDetails = product && product.length > activeTabIndex ? product[activeTabIndex] : null;
-  
-
-
-  useEffect(()=>{
-    dispatch(getProduct(id,'product'))
-  },[dispatch,id])
  
   const [name,setName] =useState(ProductDetails ? ProductDetails.name : "");
   const [price,setPrice] =useState(ProductDetails ? ProductDetails.price : "");
   const [discount,setDiscount] = useState(ProductDetails ? ProductDetails.discount : "");
   const [description,setDiscript] = useState( ProductDetails ? ProductDetails.description : "");
-  const [category,setCatagory] = useState('');
-  const [images,setImages] =useState(ProductDetails ? ProductDetails.images : []);
-  const [previewImages,setPreviewImages]=useState(ProductDetails ? ProductDetails.images : [])
+  const [category,setCatagory] = useState(ProductDetails ? ProductDetails.category:"");
+  const [images,setImages] =useState(/* ProductDetails ? ProductDetails.images :  */[]);
+  const [previewImages,setPreviewImages]=useState(/* ProductDetails ? ProductDetails.images :  */[])
   const [selectedOption,setSelectedOption] =useState( ProductDetails ? ProductDetails.type : "sell");
   const[isRent,setIsRent]=useState(ProductDetails ? ProductDetails.type === "rent" : false);
   const[priceType,setPriceType] =useState(ProductDetails ? ProductDetails.priceType : "");
   const [clickedImageIndex, setClickedImageIndex] = useState(null);
-  const [items, setItems] = useState([]);
+ 
 
   const Categories=[
     'Masonry',
@@ -64,36 +56,33 @@ const Update = () => {
   
   const [validated, setValidated] = useState(false);
 
+  useEffect(()=>{
+    if(isProductUpdated)
+    {
+      toast.success('Successfully updated',{
+        position:'bottom-center',
+        onOpen:dispatch(clearError())
+      })
+      navigate('/ProductOwner/DashBoard')
+    }
+    else if(error)
+    {
+      toast.error(error,{
+        position:'bottom-center',
+        onOpen:dispatch(clearError())
+      })
+    }
+  },[error,isProductUpdated,dispatch])
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
 
-  useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setPrice(product.price);
-      setDiscount(product.discount);
-      setDiscript(product.description);
-      setCatagory(product.category);
-      setSelectedOption(product.isRent ? 'rent' : 'sell');
-      setIsRent(product.isRent);
-      setPriceType(product.priceType);
-      setPreviewImages(product && product.images);
-      setImages(product.images)
-    }
-  }, [product]);
-
-  /* Get Data */
-
-  useEffect(()=>{
-    dispatch(updateProduct)
-  },[dispatch])
 
   
   /* ONCHANGE FUNCTIONS */
@@ -130,24 +119,28 @@ const Update = () => {
 
     const handleImageChange = (e) => {
       const files = Array.from(e.target.files);
-      const remaningSlots = 5 - previewImages.length;
-      const selectedImages = files.slice(0, remaningSlots); // ensure there is only 5 images
-      if (files.length > 5 || files.length > remaningSlots) {
-        alert("only 5 images can be added");
+      const remainingSlots = 5 - previewImages.length;
+      const selectedImages = files.slice(0, remainingSlots); // ensure there are only 5 images
+    
+      if (files.length > 5 || files.length > remainingSlots) {
+        alert("Only 5 images can be added");
       }
+    
       selectedImages.forEach((file) => {
         const reader = new FileReader();
-  
+    
         reader.onload = () => {
           if (reader.readyState === 2) {
-            setPreviewImages((oldArray) => [...oldArray, reader.result]);
-            setImages((oldArray) => [...oldArray, file]);
+            setImages((prevImages) => [...prevImages, file]);
+            setPreviewImages((prevImages) => [...prevImages, reader.result]);
+            
           }
         };
-  
+    
         reader.readAsDataURL(file);
       });
     };
+    
   
 
   const handlePriceTypeonChange = (event) =>{
@@ -158,9 +151,14 @@ const Update = () => {
 
  
   const handleUpdate = () => {
-    // Prepare updated product data
+    
     if (validateFields()) {
-      const updatedDetails = [...product];
+      /* if (!Array.isArray(ProductDetails)) {
+        // Handle the case when product is not an array (e.g., not initialized yet)
+        console.error("Product is not available or is not an array.");
+        return;
+      } */
+      /* const updatedDetails = [...product];
       updatedDetails[activeTabIndex] = {
         name : name,
         price: price,
@@ -172,11 +170,26 @@ const Update = () => {
         isRent: isRent,
         priceType: priceType,
         
-      };
-      dispatch(updateProduct(updatedDetails));
-    }
+      }; */
+      //dispatch(updateProduct(updatedDetails));
 
-    
+      const formData=new FormData()
+      formData.append('name' , name);
+      formData.append('price' , price);
+      formData.append('discount' , discount);
+      formData.append('description' , description);
+      formData.append('type' , selectedOption);
+      formData.append('category' , category);
+      images.length>0 && images.forEach (image => {
+          formData.append('images', image)
+      })
+      if(selectedOption==='rent')
+      {
+        formData.append('priceType' , priceType);
+      }
+      console.log(formData)
+      dispatch(updateProduct(id,formData))
+    }    
   };
 
   const handleRemoveImage = (index) => {
@@ -188,21 +201,24 @@ const Update = () => {
     updatedFiles.splice(index, 1);
     setImages(updatedFiles);
   };
+
+
   const handleImageClick = (index) => {
     setClickedImageIndex(index === clickedImageIndex ? null : index);
 
     console.log(clickedImageIndex);
   };
   const validateFields = () => {
+    
     let isValid = true;
 
-    if (name.trim() === "") {
+    if (name === "") {
       setNameError("***name is required***");
       isValid = false;
     } else {
       setNameError("");
     }
-    if (typeof discount !== 'string' || discount.trim() === "") {
+    if (!discount || isNaN(parseInt(discount))) {
       setDiscountError("***Discount is required***");
       isValid = false;
     } else {
@@ -210,7 +226,7 @@ const Update = () => {
     }
     
 
-    if (   description.trim() === "") {
+    if (description.trim() === "") {
       setDiscriptError("***Discription is required***");
       isValid = false;
     } else {
@@ -224,12 +240,12 @@ const Update = () => {
       setCatagoryError("");
     }
 
-    if (previewImages.length === 0) {
+    /* if (previewImages.length === 0) {
       setPreviewImagesError("***images is required***");
       isValid = false;
     } else {
       setPreviewImagesError("");
-    }
+    } */
 
     if (selectedOption.trim() === "") {
       setSelectedOptionError("***this feild is requird***");
@@ -238,8 +254,8 @@ const Update = () => {
       setSelectedOptionError("");
     }
 
-    if (typeof price !== 'string' ||  price.trim() === "") {
-      setPriceError("***price is requird***");
+    if (!price || isNaN(parseInt(price))) {
+      setPriceError("***this feild is requird***");
       isValid = false;
     } else {
       setPriceError("");
@@ -278,7 +294,7 @@ const Update = () => {
                                     {/*FORM ELEMENTS*/}
            {isLoading?<Loader/>:
           <div>
-            <Form className ='box' noValidate validated={validated} onSubmit={handleSubmit} >
+            <Form className ='box'  validated={validated} onSubmit={handleSubmit} >
 
             <div>
               <label>Type:</label>
@@ -300,6 +316,10 @@ const Update = () => {
               </div>
             
             </div>
+            {selectedOptionError && (
+                  <span className="error">{selectedOptionError}</span>
+                )}
+                <br />
 
             <br/>
 
@@ -309,6 +329,8 @@ const Update = () => {
                 <label>Name: </label>
               <Form.Control type="text" placeholder="Name" className='nameCs' value={name} onChange={handleNameChange} />
               </div>
+             
+              {nameError && <span className="error">{nameError}</span>}
             <br/>
             {
               isRent?
@@ -317,9 +339,14 @@ const Update = () => {
                 <div>
               <label>Price:</label>
             <Form.Control type="text" placeholder="Price" value={price} onChange={handlePriceChange}/>
+            
             </div>
+            {priceError && (
+                        <span className="error">{priceError}</span>
+                      )}
                 </Col>
                 <Col>
+                
                 <div>
               <label>Price Type:</label>
                <Form.Select aria-label="Default select example" value={priceType} onChange={handlePriceTypeonChange} >
@@ -328,15 +355,25 @@ const Update = () => {
                   <option value='/perMonth'>perMonth</option>
                   <option value='/perHour'>perHour</option>
                 </Form.Select>
+                {priceTypeError && (
+                        <span className="error">{priceTypeError}</span>
+                      )}
               </div>
+              
                 </Col>
               </Row>
               :
               <div>
               <label>Price:</label>
             <Form.Control type="text"  placeholder="Price" value = {price} onChange={handlePriceChange}/>
+            
             </div>
+           
             }
+            {priceError && (
+                        <span className="error">{priceError}</span>
+                      )}
+            
             
 
             <br/>
@@ -344,10 +381,13 @@ const Update = () => {
             <div>
               <label>Discount:</label>
             <Form.Control type="text" placeholder="Discount" value = {discount} onChange={handleDiscountChange} />
+            {discountError && (
+                    <span className="error">{discountError}</span>
+                  )}
             </div>
-
+            
             <br/>
-
+            
             <div>
               <label>Discription:</label>
             
@@ -358,7 +398,9 @@ const Update = () => {
                placeholder="Discritption about the item"
                style={{ height: '100px' }}
              />
-            
+            {discriptionError && (
+                    <span className="error">{discriptionError}</span>
+                  )}
             </div>
 
                <br/>
@@ -375,7 +417,9 @@ const Update = () => {
                     ))
                 }
                 </Form.Select>
-               
+                {catagoryError && (
+                    <span className="error">{catagoryError}</span>
+                  )}
               </div>
 
                 <br/>
@@ -387,12 +431,13 @@ const Update = () => {
                  {/* <Form.Label>Large file input example</Form.Label> */}
                  <Form.Control type="file" size="lg" multiple={true} accept="image/*" onChange={handleImageChange} />
                 </Form.Group>
-                {previewImages && previewImages.map((image, index) => (
-                    <>
+                   <div className='d-flex'>
+                  {previewImages.map((image, index) => (
+                    <div key={index}>
                       <Image
                         className=" mb-3 mr-2 previewImg"
                         key={image}
-                        src={images[index].image}
+                        src={image}
                         alt={`Image Preview`}
                         width="55"
                         height="52"
@@ -408,32 +453,28 @@ const Update = () => {
                           Remove
                         </Button>
                       )}
-                    </>
+                    </div>
                   ))}
-                
+                </div>
                 {previewImagesError && (
                   <span className="error">{previewImagesError}</span>
                 )}
-
-
-                 </div> 
-
-              
+                 </div>               
                 <div className="mb-2">
-              <Row >
-                  <Col>
-               <Link to= {`/Product/${id}`} > <Button variant="primary" size="lg" >
-                    Priview
-                 </Button>
-              </Link>
-                 </Col>
+                  <Row >
+                      <Col>
+                  <Link to= {`/ProductOwner/DashBoard`} > <Button variant="primary" size="lg" >
+                        cancel
+                    </Button>
+                  </Link>
+                    </Col>
 
-                <Col className = "d-flex justify-content-end">
-                 <Button variant="primary" size="lg" onClick={handleUpdate}>
-                    Update
-                 </Button>
-                </Col>
-              </Row>
+                    <Col className = "d-flex justify-content-end">
+                    <Button variant="primary" size="lg" onClick={handleUpdate}>
+                        Update
+                    </Button>
+                    </Col>
+                  </Row>
                 </div>
               
 

@@ -18,7 +18,7 @@ const upload = multer({
         cb(null, newName);
       },
     }),
-  });
+  }); 
 
 router.route('/products').get(getAll)
 router.route('/products/sell').get(getSell)

@@ -44,10 +44,10 @@ export const addProduct=productData=>async(dispatch)=>{
 
     }
 }
-export const updateProduct=id=>async(dispatch)=>{
+export const updateProduct=(id,formData)=>async(dispatch)=>{
     try {
         dispatch(updateProductRequest())
-        const {data}=await axios.put(`/SiteSupplyCraft/product/${id}/edit`)
+        const {data}=await axios.put(`/SiteSupplyCraft/product/${id}/edit`,formData)
         dispatch(updateProductSuccess(data))        
     } catch (error) {
         dispatch(updateProductFail(error.response.data.message))

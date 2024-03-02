@@ -78,7 +78,7 @@ const getSell=asyncHandler(async(req,res)=>{
 })
 
 //create a new product  -> /product/new
-/* const createProduct=asyncHandler(async(req,res)=>{      
+const createProduct=asyncHandler(async(req,res)=>{      
     // Check for duplicate username
     const duplicate = await product.findOne({name:req.body.name,owner:req.user._id}).lean().exec()
     if (duplicate) {
@@ -110,8 +110,8 @@ const getSell=asyncHandler(async(req,res)=>{
     } 
 
     
-}) */
-const createProduct = asyncHandler(async(req, res) => {
+}) 
+/* const createProduct = asyncHandler(async(req, res) => {
     // Check if the request body contains an array of products
     if (!Array.isArray(req.body)) {
         return res.status(400).json({ message: 'Request body must be an array of products' });
@@ -155,7 +155,7 @@ const createProduct = asyncHandler(async(req, res) => {
         console.error('Error creating products:', err);
         res.status(500).json({ message: 'Internal Server Error' });
     });
-});
+}); */
 
 
 
@@ -179,20 +179,24 @@ const updateProduct=asyncHandler(async(req,res)=>{
          }
          const oldImages=Product.images;
          let images=[];
-        if(req.files.length>0)
-        {
-            req.files.forEach(file=>{
-                let url=`${process.env.BACK_END_URL}/uploads/products/${file.filename}`
-                images.push({image:url})
-            })
-        }
-        req.body.images=images;
-  
+         /* req.images.forEach(item => {
+            if (typeof item === 'string') {
+                images.push(item);
+            }
+          }); */
+            if(req.files?.length>0)
+            {
+                req.files.forEach(file=>{
+                    let url=`${process.env.BACK_END_URL}/uploads/products/${file.filename}`
+                    images.push({image:url})
+                })
+                req.body.images=images; 
+            }
+                   
         const data =await product.findByIdAndUpdate(req.params.id,req.body,{
             new:true,
             runValidators:true
          })
-         
        
         // delete the stored image if the new image is different
         if (oldImages && req.body.images) {
@@ -214,9 +218,10 @@ const updateProduct=asyncHandler(async(req,res)=>{
 
         res.status(200).json({
             success:true,
-            data
+            Product:data
         })
     } catch (error) {
+        console.log(error)
         res.status(400).json({
             success:false,
             message:error.message,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useState} from 'react';
 import{useDispatch, useSelector} from 'react-redux'
 import { Line } from 'react-chartjs-2';
@@ -26,6 +26,7 @@ const DashBoard = () => {
   const{isLoading,products,ActiveProducts,DeactiveProducts,count,error} = useSelector((state)=> state.productsState)
   const{isProductDeleted}=useSelector((state)=> state.productState)
   const dispatch=useDispatch()
+  const navigate=useNavigate()
   const [keyword,setKeyword]=useState('')
   const [status, setStatus] = useState(false);
   
@@ -109,7 +110,7 @@ const DashBoard = () => {
     
     };
     const handleEdit=(id)=>{
-      //dispatch(getProduct(id,'product'))
+      dispatch(getProduct(id,'product')).then(()=>navigate(`/ProductOwner/${id}/edit`))
     }
 
     const handleClick=()=>{
@@ -209,7 +210,7 @@ const DashBoard = () => {
           <td>{formatDate(item.createdAt)}</td>
           <td style={{color:'green'}}>{statuscolor(item.status)}</td>
           <td>
-          <Link to = {`/ProductOwner/${item._id}/edit`}><button className='btn'  /* onClick={handleEdit(item._id) */>Edit</button></Link>
+        <button className='btn'  onClick={()=>handleEdit(item._id)}>Edit</button>
         <button className='btn' onClick={()=>handledelete(item._id)}>Delete</button>
         
         {item.status==='Active' ?

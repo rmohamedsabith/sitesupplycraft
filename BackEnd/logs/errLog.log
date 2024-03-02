@@ -107,3 +107,4 @@ Use mongoose.model(name, schema)	GET	/SiteSupplyCraft/product/65938a6aa7dfdc4824
 20240215	17:05:35	fea6142f-ab73-444a-816a-e9c0321f942b	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
 20240215	17:06:25	4bf8b640-9464-4449-977f-29efce92ea75	Error: Multipart: Boundary not found	POST	/SiteSupplyCraft/registration	http://localhost:4500/
 >>>>>>> 4a7f5eaa7ceecb8f6bd04a4c2ec7e1c0d5e80ac1
+20240302	15:08:49	f96f75d8-7771-4c99-b7e1-52f8c81605af	TypeError: Cannot read properties of null (reading 'createdAt')	GET	/SiteSupplyCraft/product/65938a6aa7dfdc482472a44d	undefined

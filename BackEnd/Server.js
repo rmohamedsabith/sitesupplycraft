@@ -47,10 +47,6 @@ app.all('/*', (req, res) => {
         res.type('txt').send('404 Not Found')
     }
 })
-app.listen(4501, () => {
-    console.log('Server is running on port 4501');
-  });
-  
 
 app.use(errorHandler)
 

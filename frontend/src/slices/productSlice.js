@@ -21,6 +21,7 @@ const productSlice=createSlice({
                 ...state,
                 isLoading:false,
                 product:{},
+                isProductUpdated:false
                 }
         },
 
