@@ -8150,3 +8150,11 @@
 20240302	19:52:49	4063c61b-7880-497b-85e7-ba9498ba8f1f	GET	/SiteSupplyCraft/admin/counts	undefined
 20240302	19:52:49	b8d30122-eba3-4d7c-ae17-26e99c263b81	GET	/SiteSupplyCraft/admin/totals	undefined
 20240302	19:52:51	71749486-3fc8-4cf0-b477-0d692bf50b00	GET	/uploads/products/1709383025991-sand.jpeg	undefined
+20240302	19:59:47	bf44e651-bb53-462c-8441-58387724f27b	GET	/SiteSupplyCraft/products?page=1	undefined
+20240302	19:59:47	5c585025-219b-4649-b216-3bb2e7080198	GET	/SiteSupplyCraft/myprofile	undefined
+20240302	19:59:47	ca60537a-a091-4137-8714-b16eb44e2d9e	GET	/SiteSupplyCraft/payment/stripeApi	undefined
+20240302	19:59:48	aba8e8d2-f7ad-4a4f-9416-7d358b40b336	GET	/uploads/products/1709383025991-sand.jpeg	undefined
+20240302	19:59:48	8b397d8a-7ddd-47c3-acd2-36a770479668	GET	/SiteSupplyCraft/unread_messages	undefined
+20240302	19:59:51	1633d3d6-fbd4-4baa-af9f-b7fb9a0e1a83	GET	/SiteSupplyCraft/myProducts?	undefined
+20240302	19:59:51	349edcd3-8e6b-4c43-bf6a-647002e7e10b	GET	/uploads/products/1709383025991-sand.jpeg	undefined
+20240302	20:00:04	60a5127e-39d9-4c96-ac8f-39e6ca924d3e	POST	/SiteSupplyCraft/products/check	http://localhost:4500/
