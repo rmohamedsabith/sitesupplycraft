@@ -52,7 +52,7 @@ function App() {
   const[stripeApi,setStripeApi]=useState('')
   const dispatch=useDispatch()
 
-  const isMobile = useMediaQuery({ maxWidth: 1100 });
+  const isMobile = useMediaQuery({ maxWidth: 1210 });
   useEffect(()=>{
     dispatch(loadUser).then(()=>dispatch(getUnreadMessages)/* .then(()=>setNotification(unreadMessages)) */)
     

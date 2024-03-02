@@ -178,9 +178,10 @@ const AddProduct = () => {
   //functions for add more items (creating the items array and adding products to it)
 
   const handleAddItem = async() => {
-    document.getElementById('addItem').disabled=true
+    
     console.log(images)
     if (validateFields()) {
+      document.getElementById('addItem').disabled=true
       const newItem = {
         //creating newItem to add the array
         name: name,
@@ -248,6 +249,9 @@ const AddProduct = () => {
         })
        }
       
+    }
+    else{
+      document.getElementById('addItem').disabled=false
     }
   };
   const handlForwordPage = () => {
