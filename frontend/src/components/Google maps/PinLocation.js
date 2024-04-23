@@ -2,17 +2,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-const PinLocation = ({currentLocation,setCurrentLocation}) => {
+const PinLocation = () => {
+  const [currentLocation, setCurrentLocation] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [clickedLocation, setClickedLocation] = useState(null);
-  const [address, setAddress] = useState(false);
 
   const fetchUserLocation = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, long: longitude });
+          setCurrentLocation({ lat: latitude, lng: longitude });
           setShowModal(false);
         },
         (error) => {
@@ -36,27 +36,11 @@ const PinLocation = ({currentLocation,setCurrentLocation}) => {
   }, [currentLocation]);
 
   const handleMapClick = (event) => {
-    const clickedLocation = {
+    setClickedLocation({
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
-    };
-    setClickedLocation(clickedLocation);
+    })
 
-    // Get the address using reverse geocoding
-    getAddressFromCoordinates(clickedLocation);
-  };
-
-  const getAddressFromCoordinates = async (location) => {
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location }, (results, status) => {
-      if (status === 'OK') {
-        if (results[0]) {
-          setAddress(results[0].formatted_address);
-        }
-      } else {
-        console.error('Geocoder failed due to:', status);
-      }
-    });
   };
 
   const containerStyle = {
@@ -68,8 +52,7 @@ const PinLocation = ({currentLocation,setCurrentLocation}) => {
     <>
          {clickedLocation &&(
             <h1>lat:{clickedLocation.lat}<br/>
-            lng:{clickedLocation.lng}<br/>
-            {address}</h1>
+            lng:{clickedLocation.lng}</h1>
         )}
       <LoadScript googleMapsApiKey={process.env.REACT_APP_MAP_API_KEY}>
         <GoogleMap

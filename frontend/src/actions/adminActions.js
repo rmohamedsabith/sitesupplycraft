@@ -31,7 +31,7 @@ export const verifyOwner=(id)=>async(dispatch)=>{
 export const  cancelOwner=(id)=>async(dispatch)=>{
     try {
         dispatch(cancelOwnerRequest())
-        const{data}=await axios.put(`/SiteSupplyCraft/processing/${id}/cancel`)
+        const{data}=await axios.delete(`/SiteSupplyCraft/processing/${id}/cancel`)
         dispatch(cancelOwnerSuccess(data))
     } catch (error) {
         dispatch(cancelOwnerFail(error.response.data.message))

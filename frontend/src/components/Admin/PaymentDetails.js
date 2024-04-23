@@ -54,7 +54,7 @@ function PaymentDetails() {
 
         <div className="slot">
           <h3>Address : </h3>
-          <p>{paymentDetail.user.address.number}, {paymentDetail.user.address.street}, {paymentDetail.user.address.city}
+          <p>{paymentDetail.user.address.number}, {paymentDetail.user.address.street}, {paymentDetail.user.address.city}, 
           {paymentDetail.user.address.district}-{paymentDetail.user.address.postalCode}</p>
         </div>
         </div>

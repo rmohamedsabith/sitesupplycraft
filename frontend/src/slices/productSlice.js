@@ -17,6 +17,8 @@ const productSlice=createSlice({
             return{
                 ...state,
                 isLoading:false,
+                product:{},
+                isProductUpdated:false,
                 isProductAdded:false
                 }
         },

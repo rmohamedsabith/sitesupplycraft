@@ -1,27 +1,31 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';   
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 import './Verifications.css'
 import React, { useEffect} from 'react';
 import { MDBDataTable } from 'mdbreact';
 import {useDispatch,useSelector} from 'react-redux'
-import { getProcessingOwners } from '../../actions/adminActions';
+import { getProcessingOwners, viewProcessingOwner } from '../../actions/adminActions';
 import Loader from '../Loader.js'
-import { clearError } from '../../slices/adminSlice.js';
-import { toast } from 'react-toastify';
 import MetaData from '../Layouts/MetaData.js';
 
 
 
 function Verifications() {  
   const dispatch=useDispatch()
-  const {isLoading,users,error,message}=useSelector((state)=>state.adminState)
+  const navigate=useNavigate()
+  const {isLoading,users}=useSelector((state)=>state.adminState)
 
   useEffect(()=>{
     dispatch(getProcessingOwners)
   },[dispatch])
 
-
+  const handleView=(id)=>{
+    dispatch(viewProcessingOwner(id))
+    /* navigate(`/admin/verification/${id}`) */
+    navigate('/admin/verification',{ state: { id } })
+    
+  }
 
   const items=users?.map(user=>{
     let statusColor = user.status === 'processing' ? 'green' : user.status === 'verified' ?null: 'red';
@@ -29,7 +33,7 @@ function Verifications() {
         Date: user.createdAt.split("T")[0].replace(/-/g, "/"),
         Name: user.firstname + ' ' + user.lastname,
         Status: <span style={{ color: statusColor }}>{user.status}</span>,
-        Option: <Link to={`/admin/verification/${user._id}`}><button style={{ padding:'8px 20px'}} className='btn'>View</button></Link>
+        Option: <button style={{ padding:'8px 20px'}} className='btn' onClick={()=>handleView(user._id)}>View</button>
     }
   })
   const data = {

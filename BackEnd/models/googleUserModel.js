@@ -31,7 +31,10 @@ const googleUserSchema=new mongoose.Schema({
         type:Number,
         default:0
     },
-
+    isvalidEmail:{
+        type:Boolean,
+        default:true
+    },
 },{
     timestamps:true
 })

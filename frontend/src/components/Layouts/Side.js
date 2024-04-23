@@ -122,27 +122,29 @@ const handleCitySelect = useCallback((city) => {
     'Tiles',
     'Machines',
     'Tools',
-    'Plumbing'
+    'Plumbing',
+    'Others'
   ]
 
   const jobs=[
-    'Electrician',
+    'Electrician', 
     'Plumber',
+    'Meason',
     'Painter',
     'Tiles',
     'A/C Repair',
     'LandScaping',
     'Engineer',
-    'Capenders',
-    'Curtain',
+    'Carpenter',
+    'Curtin',
     'Cleaner',
-    'Concerete Slap',
-    'Interior Designer',
+    'Concrete Slup',
     'Movers',
     'CCTV Technician',
     'Cieling',
-    'Architect',
-    'Contractors'
+    'Architech',
+    'Contractor',
+    'Others'
   ]
 
   return (

@@ -36,7 +36,7 @@ const Footer = () => {
             Copy Right &copy; SiteSupplyCraft {new Date().getFullYear()}
             </center>
        </Col>
-    </Container>
+      </Container>
    </div>
   )
 }

@@ -49,6 +49,14 @@ const FindLocation = () => {
   }, []);
 
   useEffect(() => {
+    let productLocaion;
+    if(product.owner)
+    {
+      productLocaion=[product.owner.location.long, product.owner.location.lat]
+    }
+    else{
+      productLocaion=[product.location.long, product.location.lat]
+    }
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2l0ZXN1cHBseWNyYWZ0IiwiYSI6ImNsczczc2tkODFxOTQybG1rcW15MmN5ZGcifQ.GH9KDmNMrtuYd9Mz6gmvgQ';
     const start = [currentLocation?currentLocation.long: 80.54456792289572,currentLocation?currentLocation.lat:5.94943077152277];
     const map = new mapboxgl.Map({
@@ -60,7 +68,7 @@ const FindLocation = () => {
 
     const markers = [
       { coordinates: [start[0], start[1]], id: 'marker1' },
-      { coordinates: [product.owner.location.long, product.owner.location.lat], id: 'marker2' },
+      { coordinates:productLocaion , id: 'marker2' },
   ];
 
     map.on("load", () => {
@@ -116,12 +124,24 @@ const FindLocation = () => {
 
     // Display popups for each marker
     markers.forEach((marker,i) => {
-      const popup = new mapboxgl.Popup({ offset: 25 })
-      .setHTML(i === 1 ? `<div>
-      <h4>${product.owner.shopName}</h4>
-      <p>${product.owner.address.number},${product.owner.address.street},${product.owner.address.city},<br/>
-      ${product.owner.address.district},${product.owner.address.province},${product.owner.address.postalCode}</p>
-    </div>` : 'My Location');
+      let popup;
+      if(product.owner)
+      {
+        popup = new mapboxgl.Popup({ offset: 25 })
+        .setHTML(i === 1 ? `<div>
+        <h4>${product.owner?.shopName}</h4>
+        <p>${product.owner?.address.number},${product.owner.address.street},${product.owner.address.city},<br/>
+        ${product.owner.address.district},${product.owner.address.province},${product.owner.address.postalCode}</p>
+        </div>` : 'My Location');
+      }
+      else{
+        popup = new mapboxgl.Popup({ offset: 25 })
+        .setHTML(i === 1 ? `<div>
+        <h4>${product.firstname+" "+product.lastname}</h4>
+        <p>${product.address.number},${product.address.street},${product.address.city},<br/>
+        ${product.address.district},${product.address.postalCode}</p>
+        </div>` : 'My Location');
+      }
 
 
         new mapboxgl.Marker()
@@ -226,7 +246,7 @@ return (
                </Row>
                <Row>
                  <Col md={{ span: 4, offset: 1 }}>To:-</Col>
-                 <Col style={{ color: 'blue' }}>{product.owner.shopName}</Col>
+                 <Col style={{ color: 'blue' }}>{product.owner?product.owner.shopName:product.firstname+" "+product.lastname}</Col>
                </Row>
                <Row>
                  <Col md={{ span: 4, offset: 1 }}>Distance:-</Col>

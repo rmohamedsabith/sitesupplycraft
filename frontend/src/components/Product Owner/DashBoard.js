@@ -7,16 +7,15 @@ import {Pie} from 'react-chartjs-2';
 import {Chart as ChartJS, Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler,ArcElement} from 'chart.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { getOwnerProducts } from '../../actions/productsActions'
+import { getOwnerProducts, getTotal_per_month } from '../../actions/productsActions'
 import Loader from '../Loader'
 import './DashBoard.css'
 import { changeStatus, getProduct } from '../../actions/productActions';
 import {deleteProduct} from '../../actions/productActions'
 
 import MetaData from '../Layouts/MetaData'
-import { Col, Image, Row } from 'react-bootstrap'
+import { Alert, Col, Image, Row } from 'react-bootstrap'
 import { getMessages } from '../../actions/messagesAction';
-import { clearProduct } from '../../slices/productSlice';
 
 
 ChartJS.register(
@@ -27,30 +26,34 @@ ChartJS.register(
 
 const DashBoard = () => {
   
-  const{isLoading,products,ActiveProducts,DeactiveProducts,count,error} = useSelector((state)=> state.productsState)
-  const {isLoading:productLoading,products:addProducts,isProductAdded,error:addProductErr}=useSelector(state=>state.productState)
-
+  const{isLoading,products,ActiveProducts,DeactiveProducts,count,error,data:DATA} = useSelector((state)=> state.productsState)
+  const {products:addProducts}=useSelector(state=>state.productState)
+  const {user}=useSelector((state)=>state.authState)
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const [keyword,setKeyword]=useState('')
   const [status, setStatus] = useState(false);
+
+  useEffect(()=>{
+    dispatch(getTotal_per_month)
+  },[dispatch])
   
 
 
   useEffect(()=>{
         dispatch(getOwnerProducts(keyword))
-  },[dispatch,status,addProducts])
+  },[dispatch,status,addProducts,keyword])
 
  
 
 
 
     const data = {
-      labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+      labels:DATA? Object.entries(DATA).map(([key, value]) => key):[],
       datasets: [
         {
           label: "Posted Product",
-          data: [count],
+          data: DATA? Object.entries(DATA).map(([key, value]) => value):[],
           backgroundColor: '#176B87',
           borderColor: '#053B50',
           tension: 0.4,
@@ -115,7 +118,7 @@ const DashBoard = () => {
     
     };
     const handleEdit=(id)=>{
-      //dispatch(getProduct(id,'product'))
+      dispatch(getProduct(id,'product')).then(()=>navigate(`/ProductOwner/${id}/edit`))
     }
 
     const handleClick=()=>{
@@ -133,6 +136,9 @@ const DashBoard = () => {
     const handleMessage=()=>{
       dispatch(getMessages).then(()=>navigate('/ProductOwner/Messages'))
     }
+    const handleNonVerifiedUser=()=>{
+      window.alert('User is not verified yet')
+    }
 
   
   
@@ -147,7 +153,7 @@ const DashBoard = () => {
       <Col xs={2}  style={{backgroundColor:'#176B87',minHeight:'90vh'}}>     
       <div className='p-3'>
         <Link to={'/ProductOwner/DashBoard'}><button className='btn1'>DashBoard</button></Link>
-        <Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>
+        {user.status==='verified'?<Link to={'/ProductOwner/addProduct'}><button className='btn1'>Add Product</button></Link>:<button className='btn1' onClick={handleNonVerifiedUser}>Add Product</button>}
         <button className='btn1' onClick={handleMessage}>Message</button>
       </div> 
       </Col>
@@ -156,7 +162,7 @@ const DashBoard = () => {
      
       <Col className='con' >
       <div className='bodyDashboard'> 
-        <h1>Summary Of My Products</h1>      
+        <h1>Summary of My Products</h1>      
         <div className="linechart">
         <Line data={data}/>
         <div className='phara1'>
@@ -212,7 +218,7 @@ const DashBoard = () => {
                       <td>{formatDate(item.createdAt)}</td>
                       <td style={{color:'green'}}>{statuscolor(item.status)}</td>
                       <td>
-                      <Link to = {`/ProductOwner/${item._id}/edit`}><button className='btn'  /* onClick={handleEdit(item._id) */>Edit</button></Link>
+                    <button className='btn'  onClick={()=>handleEdit(item._id)}>Edit</button>
                     <button className='btn' onClick={()=>handledelete(item._id)}>Delete</button>
                     
                     {item.status==='Active' ?

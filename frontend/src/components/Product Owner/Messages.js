@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import './Message.css';
 import back from '../../images/back.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader';
-import { sendMessage } from '../../actions/messagesAction';
+import { getUnreadMessages, sendMessage } from '../../actions/messagesAction';
 import { getMessages } from '../../actions/messagesAction';
 import MetaData from '../Layouts/MetaData';
 import { toast } from 'react-toastify';
@@ -25,6 +25,7 @@ const Messages = () => {
   const { isLoading, messages:adminMsg } = useSelector((state) => state.messagesState);
   const { user } = useSelector((state) => state.authState);
   const dispatch = useDispatch();
+  const navigate=useNavigate();
   const [newMessage, setNewMessage] = useState('');
   const [messages,setMessages]=useState([])
   const chatBoxRef = useRef(null);
@@ -164,6 +165,11 @@ const Messages = () => {
     },timeLength)
   }
 
+  const handleBack=()=>{
+    dispatch(getUnreadMessages)
+    navigate('/ProductOwner/DashBoard')    
+  }
+
 
   return (
     <>
@@ -173,9 +179,9 @@ const Messages = () => {
         <>
           <MetaData title={'Message'} />
           <div className='_main'>
-            <Link to='/ProductOwner/DashBoard'>
+            <div onClick={handleBack}>
               <img src={back} className='im3' alt='back' />
-            </Link>
+            </div>
             <div className='body1'>
               <div className='app'>
                 <div className='chat-screen'>

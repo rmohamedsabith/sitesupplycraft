@@ -7,12 +7,14 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import { Row,Col } from 'react-bootstrap'
 import { clearProducts } from '../../slices/productsSlice'
+import { ChatState } from '../../chatContex'
 
 
 const Search =React.memo( ({setIsDistrict,setDistrict,district,setRefreshSide,refreshSide}) => {
   const {isLoading}=useSelector((state)=>state.productsState)
   const {model}=useSelector((state)=>state.productsFilteringState)
   const[keyword,setKeyword]=useState(null)
+  const {currentPage,setCurrentPage}=ChatState()
   
 
   const[Districts,setDistricts]=useState([])
@@ -97,8 +99,10 @@ const handleDistrictSelect = (district) => {
 };
 
 const handleType=async (model)=>{
+  setKeyword(null)
   setRefreshSide(!refreshSide);
   await dispatch(clearProducts())
+  setCurrentPage(1)
   dispatch(filter(null,null,null,null,model))
   setDistrict('')  
   setIsDistrict(false) 

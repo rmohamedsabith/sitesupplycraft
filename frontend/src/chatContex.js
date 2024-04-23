@@ -9,6 +9,7 @@ const ChatProvider = ({ children }) => {
   const dispatch=useDispatch()
   const [users,setUsers]=useState([])
   const [postProducts,setPostProducts]=useState([])
+  const [currentPage,setCurrentPage]=useState(1)
 
   useEffect(()=>{
     //if(user.role==='Product Owner')dispatch(getUnreadMessages)
@@ -22,7 +23,9 @@ const ChatProvider = ({ children }) => {
         users,
         setUsers,
         postProducts,
-        setPostProducts
+        setPostProducts,
+        currentPage,
+        setCurrentPage,
       }}
     >
       {children}

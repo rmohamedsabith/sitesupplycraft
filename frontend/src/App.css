@@ -139,7 +139,7 @@ body {
     padding: 20px 0;   
     width: 100%; 
     height: auto; 
-    min-height: 150vh;
+    min-height: 193vh;
     /* padding-left: 20px;
     padding-right: 20px; */
     
@@ -234,6 +234,7 @@ p a{
   width: 80px;
   height: 80px;
   padding-left: 0;
+  margin-bottom: 200px;
 }
 .loader:after {
   content: ' ';
@@ -340,8 +341,7 @@ p a{
   border: 2px solid #c7b8a13b;
   box-shadow: 5px 5px 10px #053B50;
   background-color: #c7b8a13b;
-  border-radius: 10px;  
- 
+  border-radius: 10px;   
 }
 .frame Row{
   display: flex;
@@ -350,16 +350,17 @@ p a{
 }
 .login{
   width: 100%;
-  height: 70vh; 
   border-top: 10px solid #053B50; 
   border-radius: 20px;
+  min-height: 70vh;
 }
 .marginOff{
   margin-right: 60px;
 }
 .signup{
+  min-width: 300px;
   width: 100%;
-  height: 70vh;
+  min-height: 70vh;
   margin-left: 20px;
   border-radius: 20px;
   position: relative;
@@ -426,8 +427,9 @@ p a{
   justify-content: center;
   align-items: center; 
 }
-.register .frame{
-  width: 50%;
+.register .regframe{
+  max-width: 800px;
+  width: 90%;
   padding: 20px;
   margin: 30px;
   border: 2px solid #c7b8a13b;
@@ -578,7 +580,7 @@ p a{
 /* product details */
 .productFrame{
   height:100%;
-  width:70%;
+  width:80%;
   margin:20px 80px;
   border-radius:20px;
   color: #053B50;
@@ -699,8 +701,21 @@ width: 70%;
   height: 80px;
   border: 1px solid #053B50;
 }
+@media only screen and (max-width: 1200px){
+  
+  /*admin side bar*/
+  .adminSide{
+    min-height: 190vh;
+  }
+}
 
 @media only screen and (max-width: 800px){
+  
+  /*admin side bar*/
+  .adminSide{
+    min-height: 170vh;
+  }
+
   /* Searchbar */
     .bar form{
       display: inline;
