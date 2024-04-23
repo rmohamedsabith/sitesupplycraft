@@ -34,11 +34,13 @@ const UserDetail = () => {
                 </>
                 :null}
                 <Row className='mx-3'>
-                  <div className='location' style={{backgroundColor:'#1A9406'}}>
-                <Link to='/myprofile/edit' style={{color:'#ffff'}}>
+                <Link to='/myprofile/edit' className='location' style={{backgroundColor:'#1A9406'}}>
+                  <div  style={{color:'#ffff'}}>
+                
                         Edit My Profile
-                </Link>
+                
                 </div>
+                </Link>
                 </Row>
                  
               </Col>
@@ -85,10 +87,10 @@ const UserDetail = () => {
                         <td>District:</td>
                         <td>{user.address.district}</td>
                       </tr>
-                      <tr >
+                      {/* <tr >
                         <td>Province:</td>
                         <td>{user.address.province}</td>
-                      </tr>
+                      </tr> */}
                       <tr >
                         <td>Postal Code:</td>
                         <td>{user.address.postalCode}</td>
@@ -128,7 +130,7 @@ const UserDetail = () => {
                     </tr>
                     <tr>
                       <td>Status:</td>
-                      <td style={{color:user.status==='verfified'?'#FF5F14':user.status==='processing'?'#1A9406':user.status==='cancelled'?'red':null}}>{user.status}</td>
+                      <td style={{color:user.status==='verified'?'#FF5F14':user.status==='processing'?'#1A9406':user.status==='cancelled'?'red':null}}>{user.status}</td>
                     </tr>                  
                    </>:null
                    }

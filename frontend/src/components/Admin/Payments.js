@@ -26,7 +26,7 @@ const DatatablePage = () => {
     let statusColor = payment.paymentInfo.status === 'succeeded' ? 'green' : null;
     return {
         payment_id:payment.paymentInfo.id,
-        user_name:payment.user.firstname+' '+payment.user.lastname,
+        user_name:payment.user?.firstname+' '+payment.user?.lastname,
         status: <span style={{ color: statusColor }}>{payment.paymentInfo.status}</span>,
         date: payment.paidAt.split("T")[0].replace(/-/g, "/"),
         time: payment.paidAt.split("T")[1].split(".")[0],

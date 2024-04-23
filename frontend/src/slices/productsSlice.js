@@ -7,10 +7,13 @@ const productsSlice=createSlice({
     },
     reducers:{
         productsRequest(state,action){
-            return {isLoading:true}
+            return {
+                ...state,
+                isLoading:true}
         },
         productsSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
                 products:action.payload.Products,
                 count:action.payload.count,
@@ -20,15 +23,19 @@ const productsSlice=createSlice({
         },
         productsFail(state,action){
             return {
+                ...state,
                 isLoading:false,
                 error:action.payload
             }
         },
         myProductsRequest(state,action){
-            return {isLoading:true}
+            return {
+                ...state,
+                isLoading:true}
         },
         myProductsSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
                 products:action.payload.Products,
                 count:action.payload.count,
@@ -38,6 +45,7 @@ const productsSlice=createSlice({
         },
         myProductsFail(state,action){
             return {
+                ...state,
                 isLoading:false,
                 error:action.payload
             }
@@ -45,32 +53,40 @@ const productsSlice=createSlice({
 
         //Delete all my products
         deleteAllMyProductsRequest(state,action){
-            return {isLoading:true}
+            return {
+                ...state,
+                isLoading:true}
         },
         deleteAllMyProductsSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
                 deletedCount:action.payload.deletedCount
             }
         },
         deleteAllMyProductsFail(state,action){
             return {
+                ...state,
                 isLoading:false,
                 error:action.payload
             }
         },
         //get total of  my products based on month
         getTotal_per_monthRequest(state,action){
-            return {isLoading:true}
+            return {
+                ...state,
+                isLoading:true}
         },
         getTotal_per_monthSuccess(state,action){
             return{
+                ...state,
                 isLoading:false,
                 data:action.payload.data
             }
         },
         getTotal_per_monthFail(state,action){
             return {
+                ...state,
                 isLoading:false,
                 error:action.payload
             }

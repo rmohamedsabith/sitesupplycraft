@@ -1,6 +1,6 @@
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button,Dropdown, Modal, Row} from 'react-bootstrap'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import { Button,Dropdown, Modal, Offcanvas, Row} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -74,7 +74,7 @@ const Map = ({ center,productLocations,radius}) => {
     if(model!=='laborers')type='product'
               else type='laborer'
     await dispatch(getProduct(id,type))    
-    navigate(`/${model==='laborers'?'laborer':'product'}/${id}`)
+    navigate(`/product/${id}`)
   }
 
 
@@ -82,19 +82,19 @@ const Map = ({ center,productLocations,radius}) => {
     <LoadScript googleMapsApiKey={process.env.REACT_APP_MAP_API_KEY}>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={8}>       
         {radius!==null?(filteredLocations.map((product, index) => (
-          <>                
-          <Marker key={index}
+          <Fragment key={index}>                
+          <Marker key={`marker-${index}`}
           position={{
             lat: product.location?.lat || 0,
             lng: product.location?.long || 0,
           }}/>
           <InfoWindow 
-          position={{lat:product.location.lat,
-                    lng:product.location.long}
+          position={{lat:product.location?.lat,
+                    lng:product.location?.long}
                   }
         >
           <div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
-            <strong>{product.shopName}</strong><br/>
+          {model !== 'laborers' ? (<><strong>{product.shopName}</strong><br/></>) : null}
             <span>product:- {product.name}<br/>
             Pirce:- {product.price}/=</span>
             <div className="ratings mt-auto">
@@ -106,21 +106,21 @@ const Map = ({ center,productLocations,radius}) => {
           </div>
         </InfoWindow>
           
-          </>                    
+          </Fragment>                    
         ))):(productLocations.map((product, index) => (
-          <>                
-          <Marker key={index}
+          <Fragment key={index}>                
+          <Marker key={`marker-${index}`}
           position={{
             lat: product.location?.lat || 0,
             lng: product.location?.long || 0,
           }}/>
           <InfoWindow 
-          position={{lat:product.location.lat,
-                    lng:product.location.long}
+          position={{lat:product.location?.lat,
+                    lng:product.location?.long}
                   }
         >
           <div onClick={()=>handleRedirect(product.id)} style={{cursor:'pointer'}}>
-            <strong>{product.shopName}</strong><br/>
+          {model !== 'laborers' ? (<><strong>{product.shopName}</strong><br/></>) : null}
             <span>product:- {product.name}<br/>
             Pirce:- {product.price}/=</span>
             <div className="ratings mt-auto">
@@ -132,7 +132,7 @@ const Map = ({ center,productLocations,radius}) => {
           </div>
         </InfoWindow>
           
-          </>                    
+          </Fragment>                    
         )))}
       </GoogleMap>
     </LoadScript>
@@ -143,7 +143,7 @@ const FilterMap = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const {model}=useSelector((state)=>state.productsFilteringState)
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
   const [showModal,setShowModal]=useState(false) 
   const[showError,setShowError]=useState(false)
@@ -158,14 +158,27 @@ const FilterMap = () => {
     // Assuming each product in the state has properties like location, name, price, and review
     if(products)
     {
-      const locations = products.map((product) => ({
-        id:product._id,
-        location: product.owner.location,
-        name:product.name,
-        shopName: product.owner.shopName,
-        price: product.price,
-        ratings: product.ratings,
-      }));
+      let locations;
+      if(model!=='laborers')
+      {
+        locations = products.map((product) => ({
+          id:product._id,
+          location: product.owner?.location,
+          name:product.name,
+          shopName: product.owner?.shopName,
+          price: product.price,
+          ratings: product.ratings,
+        }));
+      }
+      else{
+        locations = products.map((product) => ({
+          id:product._id,
+          location: product.location,
+          name:product.firstname+' '+product.lastname,
+          price: product.price,
+          ratings: product.ratings,
+        }));
+      }
       setProductLocations(locations);
     }
 
@@ -205,7 +218,36 @@ const FilterMap = () => {
     <> 
     <div className='location' onClick={!showModal?handleShow:()=>setShowError(true)}
        style={{backgroundColor:'yellowgreen',padding:'10px'}}>Show Available Shops</div>
-    <Modal show={show} onHide={handleClose} centered>
+    <Offcanvas show={show} onHide={handleClose} placement="end">
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title> Available Shops </Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+          <>
+          <Row>
+            <span>Select the Radius</span>
+            <Dropdown >
+                    <Dropdown.Toggle variant="success" id="dropdown-basic" size='sm'>
+                      {radius===null?'All':`${radius} Km`} 
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={()=>{setRadius(null)}}>All</Dropdown.Item>
+                      <Dropdown.Item onClick={()=>{setRadius(5)}}>5 Km</Dropdown.Item>
+                      <Dropdown.Item onClick={()=>{setRadius(10)}}>10 Km</Dropdown.Item>
+                      <Dropdown.Item onClick={()=>{setRadius(20)}}>20 Km</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+            </Row>
+            <Row>
+            <Map center={center} productLocations={productLocations} radius={radius}/>
+            </Row>
+        </>
+        
+        
+      </Offcanvas.Body>
+    </Offcanvas>
+    {/* <Modal show={show} onHide={handleClose} centered>
     <Modal.Header closeButton>
       <Modal.Title>
       Available Shops
@@ -236,7 +278,7 @@ const FilterMap = () => {
       
       
     </Modal.Body>
-     </Modal>
+     </Modal> */}
      <Modal show={showError} onHide={() =>setShowError(false)} centered>
          <Modal.Header closeButton>
            <Modal.Title>Location Error</Modal.Title>

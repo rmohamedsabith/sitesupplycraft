@@ -106,6 +106,16 @@ const Registration = () => {
     }
   }, [dispatch, error,isAuthenticated]);
 
+  useEffect(()=>{
+    setFormData({
+      ...formData,
+      role:role,
+      lat:currentLocation?.lat,
+      long:currentLocation?.long,
+    })
+
+  },[currentLocation,role])
+
   const onChange = (e) => {
     setIsLoading(false)
     if(e.target.name === 'profile') {
@@ -151,7 +161,7 @@ const Registration = () => {
   }
   
   const [formData, setFormData] = useState({
-    role:role,
+    role:'',
     profile : ProfilePhoto,
     firstname:'',
     lastname:'',
@@ -164,8 +174,8 @@ const Registration = () => {
     city:'',
     district:'',
     postal:'',
-    lat:currentLocation?.lat,
-    long:currentLocation?.long,
+    lat:'',
+    long:'',
     nic:'',
     shopno:'',
     shopName:'',
@@ -190,7 +200,6 @@ const Registration = () => {
     e.preventDefault();
     setIsLoading(true);
     setRegistrationError(null);
-
     const validationErrors = {}
     if(!ProfilePhoto){
       validationErrors.profile = "Please Select a Photo*"
@@ -243,17 +252,17 @@ const Registration = () => {
     validationErrors.postal = "postal code is required*"
   }
 
-  /* if(!formData.lat.trim()&&!formData.long.trim()){
+ if(!currentLocation?.lat&&!currentLocation?.long){
     validationErrors.location = "location is required*"
-  } */
-
-  if(!formData.nic.trim()){
-    validationErrors.nic = "nic is required*"
-  }
+  }  
+ 
 
  }
   if(role==='Product Owner')
   {
+    if(!formData.nic.trim()){
+      validationErrors.nic = "nic is required*"
+    }
     if(!formData.shopno.trim()){
       validationErrors.shopno = "shopno is required*"
     }
@@ -289,6 +298,7 @@ const Registration = () => {
   }
 
   setFormError(validationErrors)
+  console.log(validationErrors)
 
     if(Object.keys(validationErrors).length === 0) {
         const userData = new FormData();
@@ -308,12 +318,12 @@ const Registration = () => {
           userData.append('address.city', city)
           userData.append('address.district', district)
           userData.append('address.postalCode', formData.postal)
-          userData.append('nic', formData.nic)
           userData.append('location.lat', currentLocation.lat)
           userData.append('location.long', currentLocation.long)
         }
         if(role==='Product Owner')
         {
+          userData.append('nic', formData.nic)
           userData.append('shopReg_no', formData.shopno)
           userData.append('shopName', formData.shopName)
           userData.append('currentBill', CurrentBill)
@@ -413,29 +423,30 @@ const handleCitySelect = (city) => {
 const jobs=[
   'Electrician',
   'Plumber',
+  'Meason',
   'Painter',
   'Tiles',
   'A/C Repair',
   'LandScaping',
   'Engineer',
-  'Capenders',
-  'Curtain',
+  'Carpenter',
+  'Curtin',
   'Cleaner',
-  'Concerete Slap',
-  'Interior Designer',
+  'Concrete Slup',
   'Movers',
   'CCTV Technician',
   'Cieling',
-  'Architect',
-  'Contractors'
+  'Architech',
+  'Contractor',
+  'Others'
 ]
   return (
    <>
    {isLoadingAuth?<Loader/>:
      <>
      <div className='register'>
-     <MetaData title={'register'}/>
-       <div className="frame">
+     <MetaData title={'Register'}/>
+       <div className="regframe">
        <div className='card p-3 mx-0 inside'>
        <div className="row" style={{margin:'20px'}}>
          <div className="col-md-12">
@@ -823,7 +834,6 @@ const jobs=[
                  <div className="mb-3">
                    <div className='float'>     
                      <div style={{ paddingLeft: '10px',width:'400px' }}>
-                     {formError.location&&formData.lat<=0&&formData.long<=0 ? <div className='error'>{formError.location}</div>:""}
                        <FloatingLabel controlId="floatingInput" label="lat" className="mb-3 z-0">
                          <Form.Control type="text"readOnly={true} placeholder='lat' name='lat' value={currentLocation?.lat} onChange={handleInput} />
                        </FloatingLabel>
@@ -837,15 +847,16 @@ const jobs=[
 
                <div className="col-md-6">
                  <div className="mb-3">
-                   <div className='float'>     
-                     <div style={{ paddingLeft: '10px',width:'400px' }}>
+                   <div className='float'>
+                   <div style={{ paddingLeft: '10px',width:'400px' }}> 
+                   {formError.location /* &&formData.lat<=0&&formData.long<=0  */? <div className='error'>{formError.location}</div>:""}    
                          <Button name='location' value='location' style={{cursor:'pointer'}} onClick={()=>setModalShow(true)}>Location</Button>                         
                      </div>
                    </div>
                  </div>
                </div>
 
-                 <div className="col-md-6">
+                 {/* <div className="col-md-6">
                      <div className="mb-3">
                      <div className='float'>     
                        <div style={{ paddingLeft: '10px',width:'400px' }}>
@@ -856,7 +867,7 @@ const jobs=[
                        </div>
                      </div>
                      </div>
-                 </div>
+                 </div> */}
                  
                  <div className="col-md-6">
                      <div className="mb-3">
@@ -899,7 +910,7 @@ const jobs=[
                          <FloatingLabel controlId="floatingInput" label="Duration" className="mb-3 z-0">
                            <Form.Select aria-label='duration' name='duration' value={formData.duration}  onChange={handleInput}>
                              <option value={''}>Select the payment type</option>
-                             <option value="/PerHour">Per Hour</option>  
+                             <option value="/perHour">Per Hour</option>  
                              <option value="/perDay">Per Day</option>
                              <option value="/perMonth">Per Month</option>
                            </Form.Select>
@@ -911,13 +922,13 @@ const jobs=[
 
                  <div className="col-md-6">
                      <div className="mb-3">
-                     <div className='float'>     
-                       <div style={{ paddingLeft: '65px',width:'400px' }}>
+                     <div className='float'>  
+                     <div style={{ paddingLeft: '10px',width:'400px' }}>                   
                        {formError.description&&formData.description<=0 ? <div className='error'>{formError.description}</div>:""}
-                         <FloatingLabel controlId="floatingTextarea2" label="Description" className="mb-3 z-0">
-                           <Form.Control as="textarea" placeholder='description' name='description' value={formData.description} style={{height:'100px', width:'600px'}} onChange={handleInput}/>
+                       <FloatingLabel controlId="floatingTextarea2" label="Description" className="mb-3 z-0">
+                           <Form.Control as="textarea" placeholder='description' name='description' value={formData.description} style={{height:'100px',width:'100%'}} onChange={handleInput}/>
                          </FloatingLabel>
-                       </div>
+                      </div>  
                      </div>
                      </div>
                  </div>

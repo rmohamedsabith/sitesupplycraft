@@ -171,20 +171,20 @@ const ProductDetails = () => {
               <p style={{paddingLeft:'10px',color:'red'}}>{product.owner?.phone}</p><br/>
               <Row>
                <Col>
-              <div style={{backgroundColor:'#1A9406', padding:'10px 20px',borderRadius:'20px',display:'inline-block'}}>
+              {/* <div style={{backgroundColor:'#1A9406', padding:'10px 20px',borderRadius:'20px',display:'inline-block'}}>
                  <FontAwesomeIcon icon={faWhatsapp} style={{ color: '#ffff', fontSize: '20px', paddingRight:'10px' }} />
                  <span style={{color:'#ffff'}}>Whatsapp</span>
-              </div>
+              </div> */}
               </Col> 
-              <Col>
+              <Col xl='3'>
               <AddReview/>
               </Col>
               
               </Row> 
               <Row>
-              <div style={{backgroundColor:'goldenrod', cursor:'pointer'}}  className='location'>
+              {/* <div style={{backgroundColor:'goldenrod', cursor:'pointer'}}  className='location'>
                 Add to Card
-              </div> 
+              </div>  */}
               <Link to={`/product/${id}/location`} className='location'>
                 <div>Find Location</div>
               </Link>
@@ -248,21 +248,21 @@ const ProductDetails = () => {
                 <p style={{paddingLeft:'10px',color:'red'}}>{product.phone}</p><br/>
                 <Row>
                  <Col>
-                <div style={{backgroundColor:'#1A9406', padding:'10px 20px',borderRadius:'20px',display:'inline-block'}}>
+               {/*  <div style={{backgroundColor:'#1A9406', padding:'10px 20px',borderRadius:'20px',display:'inline-block'}}>
                    <FontAwesomeIcon icon={faWhatsapp} style={{ color: '#ffff', fontSize: '20px', paddingRight:'10px' }} />
                    <span style={{color:'#ffff'}}>Whatsapp</span>
-                </div>
+                </div> */}
                 </Col> 
-                <Col>
+                <Col xl={3}>
                 <AddReview/>
                 </Col>
                 
                 </Row> 
                 <Row>
                 
-                <div style={{backgroundColor:'goldenrod', cursor:'pointer'}}  className='location'>
+                {/* <div style={{backgroundColor:'goldenrod', cursor:'pointer'}}  className='location'>
                 Add to Card
-              </div> 
+              </div> */} 
       
                 <Link to={`/product/${id}/location`} className='location'>
                   <div>Find Location</div>

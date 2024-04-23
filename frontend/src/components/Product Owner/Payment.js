@@ -36,27 +36,34 @@ const Payment = () => {
         {
             if(postedItems?.length>0) setPostedItems([...postedItems, product])
             else setPostedItems([product])
-            console.log(postedItems)
+            console.log("posted items",postedItems)
         }
     },[product]);
     
     useEffect(() => {
-        console.log("welcome",postedItems)
-        if (isProductAdded && postedItems?.length === Details.length) {
-            postItems.postedItems=postedItems
-            postItems.paymentInfo =paymentInfo
-            console.log("postitems",postItems)
-            dispatch(createPayment(postItems));
-            toast('Product Created Successfully!', {
-                type: 'success',
-                position: toast.POSITION.BOTTOM_CENTER,
-                onOpen: () => dispatch(clearProduct())
-            });
-            sessionStorage.removeItem("items");
-            setPostProducts([]);
-            navigate('/ProductOwner/DashBoard');
-        }
+        const createPaymentAndDisplayToast = async () => {
+            console.log("welcome", postedItems);
+            if (isProductAdded && postedItems?.length === Details.length) {
+                // Assuming postItems and paymentInfo are defined elsewhere
+                postItems.postedItems = postedItems;
+                postItems.paymentInfo = paymentInfo;
+                console.log("postitems", postItems);
+                await dispatch(createPayment(postItems));
+                // After createPayment finishes, display toast and perform other actions
+                toast('Product Created Successfully!', {
+                    type: 'success',
+                    position: toast.POSITION.BOTTOM_CENTER,
+                    onOpen: () => dispatch(clearProduct())
+                });
+                sessionStorage.removeItem("items");
+                setPostProducts([]);
+                navigate('/ProductOwner/DashBoard');
+            }
+        };
+    
+        createPaymentAndDisplayToast();
     }, [isProductAdded, postedItems?.length]);
+    
 
 
 
@@ -234,7 +241,7 @@ const Payment = () => {
                         type="submit"
                         className="btn btn-block py-3" 
                         style={{fontSize:'16px',fontWeight:'bolder',color:'orangered',textTransform:'capitalize'}}                   >
-                        Pay - { ` Rs.${Details.length*100}` }
+                        Pay - {Object.keys(Details).length>1?`${Object.keys(Details).length}x 100`:`${Object.keys(Details).length}x 200`}  = Rs.{Object.keys(Details).length>1?Object.keys(Details).length*100:Object.keys(Details).length*200}
                         </button>
             
                     </form>

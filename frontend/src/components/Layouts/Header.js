@@ -18,6 +18,7 @@ import { Effect } from 'react-notification-badge'
 import NotificationBadge from 'react-notification-badge'
 import { getMessages, getUnreadMessages } from '../../actions/messagesAction'
 import { io } from 'socket.io-client'
+import { getProducts } from '../../actions/productsActions'
 
 var socket=io(process.env.REACT_APP_BACKEND_URL)
 
@@ -156,6 +157,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
   const{unreadMessages}=useSelector((state)=>state.messagesState) 
   const [modalShow, setModalShow] = useState(false);
   const {isAuthenticated,user}=useSelector((state)=>state.authState)
+  const{price,category,rating,model}=useSelector((state)=>state.productsFilteringState)
   const navigate=useNavigate()
   const dispatch=useDispatch()
 
@@ -194,11 +196,11 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
     setIsDistrict(false)
     await dispatch(clearProducts())
     dispatch(filter(null,null,null,null,'products'))
-    if(user?.isValidEmail||!isAuthenticated)navigate('/') 
-    else{
-      
-      navigate('/register/verify/email')
-    }  
+    dispatch(getProducts(null, price, category, rating,null,null, 1,model))
+    if(user?.isvalidEmail||!isAuthenticated) return navigate('/') 
+   else{       
+      return navigate('/register/verify/email')
+    }
         
   },[setDistrict,setIsDistrict,dispatch,navigate])
 
@@ -224,7 +226,7 @@ const Header = ({hide,setIsHumClicked,isHumClicked,setDistrict,setIsDistrict}) =
       <div className="headRow">
         
         <div className="logo">
-          <Link to={'./Side.js'}><img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/></Link>
+          {/* <Link to={'./Side.js'}> */}<img id="siteimg" src={logo} alt="Logo" onClick={()=>handleReferesh()}/>{/* </Link> */}
           <span id="sitesupplycraft">Site Supply Craft</span>
         </div>
         {hide?

@@ -389,19 +389,14 @@ const PreviewProduct = () => {
             </Tab>
           ))}
         </Tabs>
-      </div>
-      <div style={{ marginRight: "5px" }}>
-      <Col>
-      <Row><FontAwesomeIcon icon={faSquarePlus} size="3x" style={{marginTop:'30px',cursor:'pointer'}} onClick={handleAddMorebutton}/>
-      </Row>
-      <Row>
-        
+        <div className="d-flex justify-content-center align-item-center">
         <Button
             className="Preview-buttons"
             variant="primary"
             style={{
               border: "none",
-              marginTop: "20px",
+            
+              width:'500px'
             }}
             //onClick={() => setModalShow(true)}
             onClick={handlePay}
@@ -409,9 +404,12 @@ const PreviewProduct = () => {
             <span style={{fontSize:'20px'}}>Publish</span><br/>
             Total Amount <br/>{Object.keys(Details).length>1?`${Object.keys(Details).length}x 100`:`${Object.keys(Details).length}x 200`}  = Rs.{Object.keys(Details).length>1?Object.keys(Details).length*100:Object.keys(Details).length*200}
         </Button>
-      </Row>
-      </Col>
-       
+        </div>
+        
+      </div>
+      
+      <div style={{ marginRight: "5px" }}>
+     <FontAwesomeIcon icon={faSquarePlus} size="3x" style={{marginTop:'30px',cursor:'pointer'}} onClick={handleAddMorebutton}/>       
         {/* <PaymentAlert show={modalShow} onHide={() => setModalShow(false)} /> */}
       </div>
     </div>

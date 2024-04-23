@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Verification.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { cancelOwner, verifyOwner} from '../../actions/adminActions';
 import Loader from '../Loader';
@@ -9,9 +9,12 @@ import { clearError } from '../../slices/adminSlice';
 import { Col, Row } from 'react-bootstrap'
 
 const Verification = () => {
+  const location=useLocation()
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const {isLoading,user,error,message}=useSelector((state)=>state.adminState)
-  const{id}=useParams();
+  /* const{id}=useParams(); */
+  const {id}=location.state
+  console.log(location.state)
   const dispatch=useDispatch()
   const navigate=useNavigate()
 
@@ -63,39 +66,39 @@ const Verification = () => {
             <form style={{ display: 'table-row' }}>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="seller_id" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>Seller ID:</label>
-                <input type="text" id="seller_id" name="seller_id" defaultValue={user?._id} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="text" id="seller_id" readOnly={true} name="seller_id" defaultValue={user?._id} style={{ display: 'table-cell', padding: '5px',border:'none',width: '300px',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="full_name" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>Owner/Full Name:</label>
-                <input type="text" id="full_name" name="full_name" defaultValue={user?.firstname + " " + user?.lastname} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="text" id="full_name" readOnly={true} name="full_name" defaultValue={user?.firstname + " " + user?.lastname} style={{ display: 'table-cell', width: '300px', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="license_no" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>Shop Registration No:</label>
-                <input type="text" id="license_no" name="license_no" defaultValue={user?.shopReg_no} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="text" id="license_no" readOnly={true} name="license_no" defaultValue={user?.shopReg_no} style={{ display: 'table-cell', padding: '5px', width: '300px',border:'none',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="email" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>E-mail:</label>
-                <input type="email" id="email" name="email" defaultValue={user?.email} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="email" id="email" readOnly={true} name="email" defaultValue={user?.email} style={{ display: 'table-cell', padding: '5px',border:'none', width: '300px',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="phone_no" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>Phone No.:</label>
-                <input type="tel" id="phone_no" name="phone_no" defaultValue={user?.phone} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="tel" id="phone_no" readOnly={true} name="phone_no" defaultValue={user?.phone} style={{ display: 'table-cell', padding: '5px',border:'none', width: '300px',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="address" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>Address:</label>
-                <input type="text" id="address" name="address" defaultValue={user?.address.number + " " + user?.address.street} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="text" id="address" readOnly={true} name="address" defaultValue={user?.address.number + " " + user?.address.street} style={{ display: 'table-cell',width: '300px', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="city" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>City:</label>
-                <input type="text" id="city" name="city" defaultValue={user?.address.city} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="text" id="city" readOnly={true} name="city" defaultValue={user?.address.city} style={{ display: 'table-cell', padding: '5px',width: '300px',border:'none',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="district" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>District:</label>
-                <input type="text" id="district" name="district" defaultValue={user?.address.district} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
+                <input type="text" id="district" readOnly={true} name="district" defaultValue={user?.address.district} style={{ display: 'table-cell',width: '300px', padding: '5px',border:'none',borderBottom:'2px solid green' }} required />
               </div>
               <div style={{ display: 'table-row' }}>
                 <label htmlFor="landmark" style={{ display: 'table-cell', padding: '5px', verticalAlign: 'top' }}>Postal Code:</label>
-                <input type="text" id="landmark" name="landmark" defaultValue={user?.address.postalCode} style={{ display: 'table-cell', padding: '5px',border:'none',borderBottom:'2px solid green' }} />
+                <input type="text" id="landmark" readOnly={true} name="landmark" defaultValue={user?.address.postalCode} style={{ display: 'table-cell',width: '300px', padding: '5px',border:'none',borderBottom:'2px solid green' }} />
               </div>
             </form>
           </div>
@@ -122,7 +125,7 @@ const Verification = () => {
           <button className="verificationBtn" type="submit" name="approve" onClick={handleApprove}>Approve</button>
         </Col>
         <Col>
-          <button className="verificationBtn" type="reset" name="cancel" onClick={handleCancel}>Cancel</button>
+          <button className="verificationBtn" type="submit" name="cancel" onClick={handleCancel}>Cancel</button>
         </Col>
       </Row>
     </center>

@@ -40,7 +40,7 @@ const Product = ({product}) => {
 
       <div className="card-body d-flex flex-column">
       {model!=='laborers'?
-      <span id="no_of_reviews" style={{fontSize:'x-small',marginLeft:'0'}}>{product.owner.shopName}</span>:<span id="no_of_reviews" style={{fontSize:'x-small',marginLeft:'0'}}>{product.job}</span>}
+      <span id="no_of_reviews" style={{fontSize:'x-small',marginLeft:'0'}}>{product.owner?.shopName}</span>:<span id="no_of_reviews" style={{fontSize:'x-small',marginLeft:'0'}}>{product.job}</span>}
         <h5 className="card-title">
           {model==='laborers'?product.firstname+' '+product.lastname : product.name}
         </h5>
@@ -57,7 +57,7 @@ const Product = ({product}) => {
          
       </div>
     </div>
-  </div>
+    </div>
   )
 }
 

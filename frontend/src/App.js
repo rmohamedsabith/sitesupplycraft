@@ -79,8 +79,7 @@ function App() {
     <div className='App'>
       <HelmetProvider>
         <Header hide={hide} setIsHumClicked={setIsHumClicked} isHumClicked={isHumClicked} setDistrict={setDistrict} setIsDistrict={setIsDistrict}/>         
-        <ToastContainer theme='dark'/>    
-                   
+        <ToastContainer theme='dark'/>                 
         <Routes>
           {/*Products Routes*/} 
           <Route path='/' element={<Home isDistrict={isDistrict} setIsDistrict={setIsDistrict} district={district} setDistrict={setDistrict} hide={hide} isHumClicked={isHumClicked} setIsHumClicked={setIsHumClicked}/>}/>

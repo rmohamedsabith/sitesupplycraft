@@ -172,28 +172,30 @@ const productOwnerSchema=new mongoose.Schema({
 })
 
 const jobSeekerSchema=new mongoose.Schema({
+    
     job:{
         type: String,
         required: true,                
         enum: {
-            values: [
-                'Electrician',
+            values: [ 
+                'Electrician', 
                 'Plumber',
                 'Meason',
                 'Painter',
                 'Tiles',
-                'A/C',
+                'A/C Repair',
                 'LandScaping',
                 'Engineer',
-                'Capander',
+                'Carpenter',
                 'Curtin',
                 'Cleaner',
-                'Concrete slub',
+                'Concrete Slup',
                 'Movers',
                 'CCTV Technician',
                 'Cieling',
-                'Arichitech',
-                'Constractor'
+                'Architech',
+                'Contractor',
+                'Others'
             ],
             message : "Please select a job"
         }
@@ -225,7 +227,7 @@ const jobSeekerSchema=new mongoose.Schema({
         type:String,
         default:'/perDay',
         enum:{
-            values:['/perDay','/perMonth','/PerHour']
+            values:['/perDay','/perMonth','/perHour']
         }
         
 

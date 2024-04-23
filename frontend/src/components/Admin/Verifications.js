@@ -22,7 +22,8 @@ function Verifications() {
 
   const handleView=(id)=>{
     dispatch(viewProcessingOwner(id))
-    navigate('/admin/verification')
+    /* navigate(`/admin/verification/${id}`) */
+    navigate('/admin/verification',{ state: { id } })
     
   }
 

@@ -42,7 +42,8 @@ const Update = () => {
     'Tiles',
     'Machines',
     'Tools',
-    'Plumbing'
+    'Plumbing',
+    'Others'
   ]
 
   const [nameError, setNameError] = useState("");
@@ -56,7 +57,7 @@ const Update = () => {
   const [validated, setValidated] = useState(false);
 
   useEffect(()=>{
-    if(isProductUpdated)
+    if(isProductUpdated) 
     {
       toast.success('Successfully updated',{
         position:'bottom-center',

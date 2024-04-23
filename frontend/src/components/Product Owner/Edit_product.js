@@ -60,8 +60,9 @@ const Edit_product = () => {
     "Paints",
     "Tiles",
     "Machines",
-    "Tools",
+    "Tools", 
     "Plumbing",
+    "Others"
   ];
 
   // useState for handling empty fields
@@ -387,7 +388,7 @@ const Edit_product = () => {
                 <br />
 
                 <div>
-                  <label>Discount:</label>
+                  <label>Discounted Price:</label>
                   <Form.Control
                     type="number"
                     placeholder="Discount"

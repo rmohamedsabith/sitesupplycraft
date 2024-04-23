@@ -139,7 +139,7 @@ const Favourites = () => {
               </Offcanvas.Body>
             </Offcanvas>
         
-    </>
+    </> 
   )
 }
 

@@ -14,7 +14,7 @@ const Messages = ({filterUser,setSelectedUser}) => {
   const {isLoading,datas,error,unread}=useSelector((state)=>state.messagesState)
   const {isAuthenticated,user}=useSelector((state)=>state.authState)
   const initialSelectedState = filterUser.reduce((acc, item) => {
-    acc[item.user._id] = false;
+    acc[item.user?._id] = false;
     return acc;
   }, {});  
   const [isSelected, setIsSelected] = useState(initialSelectedState);

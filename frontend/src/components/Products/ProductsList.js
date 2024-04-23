@@ -6,13 +6,15 @@ import { toast } from 'react-toastify'
 import {clearProductsError, getProducts } from '../../actions/productsActions'
 import Product from './Product'
 import Pagination from 'react-js-pagination'
+import { ChatState } from '../../chatContex'
 
 
 const ProductList = () => {
   const dispatch=useDispatch()
+  const {currentPage,setCurrentPage}=ChatState()
   const {products,totalCount,count,error,isLoading,resPerPage}=useSelector((state)=>state.productsState)
   const{price,category,rating,model}=useSelector((state)=>state.productsFilteringState)
-  const [currentPage,setCurrentPage]=useState(1)
+  /* const [currentPage,setCurrentPage]=useState(1) */
 
 
   const setCurrentPageNo=(pageNo)=>{
@@ -26,7 +28,7 @@ const ProductList = () => {
     })
   },[]) */
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     if(error) {
         return toast.error(error,{
             position: toast.POSITION.BOTTOM_CENTER,

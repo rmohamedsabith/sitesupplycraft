@@ -120,6 +120,7 @@ const AddProduct = () => {
     "Machines",
     "Tools",
     "Plumbing",
+    "Others"
   ];
 
   /* ONCHANGE FUNCTIONS */
@@ -355,13 +356,13 @@ const AddProduct = () => {
                   <Row>
                     <Col>
                       <div>
-                        <label>Price:</label>
+                        <label>Discounted Price:</label>
                         <Form.Control
                           type="number"
-                          placeholder="Price"
+                          placeholder="Discounted Price"
                           value={price}
                           onChange={handlePriceChange}
-                        />
+                         />
                       </div>
                       {priceError && (
                         <span className="error">{priceError}</span>
@@ -388,10 +389,10 @@ const AddProduct = () => {
                   </Row>
                 ) : (
                   <div>
-                    <label>Price:</label>
+                    <label>Discounted Price:</label>
                     <Form.Control
                       type="number"
-                      placeholder="Price"
+                      placeholder="Discounted Price"
                       value={price}
                       onChange={handlePriceChange}
                     />
@@ -402,10 +403,10 @@ const AddProduct = () => {
                 <br />
 
                 <div>
-                  <label>Discount:</label>
+                  <label>Price:</label>
                   <Form.Control
                     type="number"
-                    placeholder="Discount"
+                    placeholder="Price"
                     value={discount}
                     onChange={handleDiscountChange}
                   />

@@ -8,13 +8,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../../actions/productsActions'
 import { useParams } from 'react-router-dom'
 import FilterMap from '../Google maps/FilterMap'
+import { ChatState } from '../../chatContex'
 
 
 const SearchedProducts = ({district}) => {
+  const {currentPage,setCurrentPage}=ChatState()
     const dispatch=useDispatch()    
     const {products,totalCount,count,error,isLoading,resPerPage}=useSelector((state)=>state.productsState)
     const{price,category,rating,city,model}=useSelector((state)=>state.productsFilteringState)
-    const [currentPage,setCurrentPage]=useState(1)
+    /* const [currentPage,setCurrentPage]=useState(1) */
     const{keyword}=useParams();
     
    

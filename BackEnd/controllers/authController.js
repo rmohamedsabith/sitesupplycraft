@@ -448,7 +448,11 @@ const updateMyprofile=asyncHandler(async(req,res,next)=>{
     if(req.body.lastname)user.lastname=req.body.lastname
     if(req.body.email)user.email=req.body.email
     if(req.body.profile)user.profile=req.body.profile
-    if(req.body.address)user.address=req.body.address
+    if(req.body.number)user.address.number=req.body.number
+    if(req.body.street)user.address.street=req.body.street
+    if(req.body.city)user.address.city=req.body.city
+    if(req.body.district)user.address.district=req.body.district
+    if(req.body.postalCode)user.address.postalCode=req.body.postalCode
     if(req.body.phone)user.phone=req.body.phone
     if(req.body.nic)user.nic=req.body.nic
     if(req.body.emp_id)user.emp_id=req.body.emp_id
@@ -459,23 +463,23 @@ const updateMyprofile=asyncHandler(async(req,res,next)=>{
     if(req.body.currentBill)user.currentBill=req.body.currentBill
     if(req.body.job)user.job=req.body.job
     if(req.body.price)user.price=req.body.price
-    if(req.body.discription)user.discription=req.body.discription
+    if(req.body.priceType)user.priceType=req.body.priceType
+    if(req.body.description)user.description=req.body.description
+    if(req.body.lat)user.location.lat=req.body.lat
+    if(req.body.long)user.location.long=req.body.long
    
-    if(user.role==='Product Owner') // need to change if only changes happend we need to change the code
+   /*  if(user.role==='Product Owner') // need to change if only changes happend we need to change the code
     {
       user.status='processing'
       await user.save()
-      /* res.status(200).json({
-        success:true,
-        message:'success it is on the processing status',
-      }) */
+      
 
     }
     else
     {
       await user.save()
-    } 
-      
+    }  */
+    await user.save()
     // delete the stored image if the new image is different
       if (profile && req.body.profile) {
         const oldProfileFilename = path.basename(new URL(profile).pathname);
@@ -538,7 +542,7 @@ const deleteMyprofile=asyncHandler(async(req,res)=>{
       }
     }
     if (currentBill) {
-      const oldCurrentBillFilename = encodeURI(path.basename(new URL(profile).pathname));
+      const oldCurrentBillFilename = encodeURI(path.basename(new URL(currentBill).pathname));
       console.log(oldCurrentBillFilename)
       const oldCurrentBillFilePath = path.join(__dirname,'..','uploads', 'users', oldCurrentBillFilename);
       // Check if the file exists before attempting to delete
@@ -551,7 +555,7 @@ const deleteMyprofile=asyncHandler(async(req,res)=>{
       }
     }
     if (certificate) {
-      const oldcertificateFilename = encodeURI(path.basename(new URL(profile).pathname));
+      const oldcertificateFilename = encodeURI(path.basename(new URL(certificate).pathname));
       console.log(oldcertificateFilename)
       const oldcertificateFilePath = path.join(__dirname,'..','uploads', 'users', oldcertificateFilename);
       // Check if the file exists before attempting to delete

@@ -54,7 +54,7 @@ const productSchema= new mongoose.Schema({
         enum: {
             values: [
                 'Masonry',
-                'Metal',
+                'Metal', 
                 'Wood',
                 'Plastics',
                 'Glass',
@@ -63,7 +63,8 @@ const productSchema= new mongoose.Schema({
                 'Paints',
                 'Tiles',
                 'Machines',
-                'Tools'
+                'Tools',
+                'Others'
             ],
             message : "Please select correct category"
         }

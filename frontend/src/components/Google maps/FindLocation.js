@@ -139,7 +139,7 @@ const FindLocation = () => {
         .setHTML(i === 1 ? `<div>
         <h4>${product.firstname+" "+product.lastname}</h4>
         <p>${product.address.number},${product.address.street},${product.address.city},<br/>
-        ${product.address.district},${product.address.province},${product.address.postalCode}</p>
+        ${product.address.district},${product.address.postalCode}</p>
         </div>` : 'My Location');
       }
 
