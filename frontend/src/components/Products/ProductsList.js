@@ -30,12 +30,12 @@ const ProductList = () => {
 
   useEffect(()=>{ 
     if(error) {
-        return toast.error(error,{
+        toast.error(error,{
             position: toast.POSITION.BOTTOM_CENTER,
             onOpen: ()=> { dispatch(clearProductsError) }
         })
     } 
-    dispatch(getProducts(null, price, category, rating,null,null, currentPage,model))
+    else dispatch(getProducts(null, price, category, rating,null,null, currentPage,model))
   }, [error,dispatch,currentPage,price,category,rating,model])
   return (
     <>

@@ -37,7 +37,7 @@ const cancelleingReq=asyncHandler(async(req,res)=>{
   //Send my about product owner Status
   try {
     const message = `Hi ${data.firstname} ${data.lastname},\n\n
-                    Your Account is Cancelled. Please recheck your Certificate and Current Bill details are match with your given details after Re-register your profile.
+                    Your Account is Cancelled. Please recheck your Certificate and Current Bill details are match with your given details and Re-register your profile.
                     \n\n
                     To go our website use this ${resetURL}\n\n
                     Thanks! – The Site Supply Craft team

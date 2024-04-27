@@ -17,7 +17,7 @@ const Chat = () => {
   const [selectedUser,setSelectedUser]=useState(null)
    
  
-  useEffect(()=>{
+  /* useEffect(()=>{
     if(error)
     {
       toast.error(error,{
@@ -25,7 +25,7 @@ const Chat = () => {
         onOpen:clearError()
       })
     }
-  },[error])
+  },[error]) */
 
   return (
     <>

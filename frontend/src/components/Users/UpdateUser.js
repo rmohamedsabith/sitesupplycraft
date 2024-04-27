@@ -47,7 +47,7 @@ const UpdateUser = () => {
   const [areas,setAreas]=useState([])
   const [ProfilePhoto, setProfilePhoto] = useState('')
   const [ProfilePhotoPreview, setProfilePhotoPreview] = useState(user.profile)
-  const [currentLocation, setCurrentLocation] = useState({lat:user?.location.lat,long:user?.location.long});
+  const [currentLocation, setCurrentLocation] = useState({lat:user?.location?.lat,long:user?.location?.long});
   const navigate = useNavigate();
   const [selectedJob, setSelectedJob] = useState();
   const [selectedPayment, setSelectedPayment] = useState();
@@ -148,11 +148,11 @@ const UpdateUser = () => {
     confirmPassword: '',
     oldPassword: '',
     nic:user?.nic,
-    no:user?.address.number,
-    street: user?.address.street,
-    city: user?.address.city,
-    district: user?.address.district,
-    postal: user?.address.postalCode,
+    no:user?.address?.number,
+    street: user?.address?.street,
+    city: user?.address?.city,
+    district: user?.address?.district,
+    postal: user?.address?.postalCode,
     price: user?.price,
     job:user?.job,
     duration:user?.priceType,

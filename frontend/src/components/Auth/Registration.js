@@ -570,7 +570,7 @@ const jobs=[
                      <div className="mb-3">
                      <div className='float'>     
                        <div style={{ paddingLeft: '10px',width:'400px' }}>
-                         {/* <FloatingLabel controlId="floatingInput" label="District" className="mb-3 z-0">
+                          {/* <FloatingLabel controlId="floatingInput" label="District" className="mb-3 z-0">
                            <Form.Control type="text" placeholder='District' name='district' value={formData.district} onChange={handleInput} />
                          </FloatingLabel> */}
                          {formError.district&&formData.district<=0 ? <div className='error'>{formError.district}</div>:""}

@@ -47,7 +47,7 @@ const productsSlice=createSlice({
             return {
                 ...state,
                 isLoading:false,
-                error:action.payload
+                /* error:action.payload */
             }
         },
 
@@ -88,7 +88,7 @@ const productsSlice=createSlice({
             return {
                 ...state,
                 isLoading:false,
-                error:action.payload
+                /* error:action.payload */
             }
         },
         clearError(state, action){

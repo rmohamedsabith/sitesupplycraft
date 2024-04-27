@@ -1,0 +1,4 @@
+20240424	13:24:23	62afe4be-ccdf-412a-a6dd-e19494523329	TypeError: Cannot read properties of null (reading 'role')	GET	/SiteSupplyCraft/unread_messages	undefined
+20240424	16:10:17	3dc0e041-07d4-4aab-a93a-a7f9057afbc3	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
+20240424	16:10:47	c8e81511-7539-4ec8-829d-70147472e8e5	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined
+20240424	16:10:51	fb93b6f3-d5f0-4b6b-a47a-ebfc7e35bfda	MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xnhyr7r-shard-00-00.yh6jp4w.mongodb.net	GET	/SiteSupplyCraft/products?page=1	undefined

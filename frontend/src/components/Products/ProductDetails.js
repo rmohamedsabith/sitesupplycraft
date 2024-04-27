@@ -147,9 +147,9 @@ const ProductDetails = () => {
                         <FontAwesomeIcon icon={faHeart} style={{fontSize:'25px',cursor:'pointer'}} onClick={handleCart}/>
                         }
                       </Col>
-                      <Col>
+                      {/* <Col>
                       <FontAwesomeIcon icon={faShareNodes} style={{fontSize:'25px'}}/>
-                      </Col>
+                      </Col> */}
                     </Row>
                   </Col>
                 </Row>
@@ -228,9 +228,9 @@ const ProductDetails = () => {
                         <FontAwesomeIcon icon={faHeart} style={{fontSize:'25px',cursor:'pointer'}} onClick={handleCart}/>
                         }
                       </Col>
-                      <Col>
-                      <FontAwesomeIcon icon={faShareNodes} style={{fontSize:'25px'}}/>
-                      </Col>
+                      {/* <Col>
+                       <FontAwesomeIcon icon={faShareNodes} style={{fontSize:'25px'}}/> 
+                      </Col> */}
                     </Row>
                   </Col>
                 </Row> 

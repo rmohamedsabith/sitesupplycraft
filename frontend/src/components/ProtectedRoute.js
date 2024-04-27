@@ -10,13 +10,15 @@ const ProtectedRoute = ({children,isAdmin,isProductOwner}) => {
     const {isAuthenticated,isLoading,user}=useSelector((state)=>state.authState)
     if(!isAuthenticated && !isLoading) {        
             dispatch(loadUser) 
-            return  <Navigate to="/login" />
-        
+            return  <Navigate to={"/login"} />        
     }
-    if (!user?.isvalidEmail) {  
-        return (
-            <Navigate to={`/register/verify/email`} />
-        );
+    if(user)
+    {
+        if (!user?.isvalidEmail) {  
+            return (
+                <Navigate to={`/register/verify/email`} />
+            );
+        }
     }
     if(isAuthenticated && user?.isvalidEmail){
         if((isAdmin && user?.role!=='Admin') || (isProductOwner && user?.role!=='Product Owner'))return <Navigate to={'/'}/>
