@@ -84,7 +84,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4500",
+  "proxy": "https://vercel.com/rmohamedsabiths-projects",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "babel-preset-react-app": "^10.0.1"
